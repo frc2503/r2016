@@ -1,0 +1,26 @@
+# Java Class files
+*.class
+
+# Package Files
+build/
+dist/
+*.war
+*.ear
+
+# Crash error files.
+hs_err_pid*
+
+
+# Eclipse-related project files.
+.metadata
+.gradle
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+.loadpath
+
+# Locally stored "Eclipse launch configurations"
+*.launch

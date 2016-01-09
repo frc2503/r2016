@@ -3,6 +3,7 @@ package org.usfirst.frc.team2503.r2016;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
+	
 	public Robot() {
 	}
 	
@@ -32,4 +33,5 @@ public class Robot extends IterativeRobot {
 	
 	public void testPeriodic() {
 	}
+	
 }

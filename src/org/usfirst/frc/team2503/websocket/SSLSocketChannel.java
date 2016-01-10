@@ -23,7 +23,7 @@ import javax.net.ssl.SSLEngineResult.Status;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 
-public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
+public class SSLSocketChannel implements ByteChannel, WrappedByteChannel {
 	protected static ByteBuffer emptybuffer = ByteBuffer.allocate( 0 );
 
 	protected ExecutorService exec;
@@ -43,7 +43,7 @@ public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
 
 	protected int bufferallocations = 0;
 
-	public SSLSocketChannel2( SocketChannel channel , SSLEngine sslEngine , ExecutorService exec , SelectionKey key ) throws IOException {
+	public SSLSocketChannel( SocketChannel channel , SSLEngine sslEngine , ExecutorService exec , SelectionKey key ) throws IOException {
 		if( channel == null || sslEngine == null || exec == null )
 			throw new IllegalArgumentException( "parameter must not be null" );
 

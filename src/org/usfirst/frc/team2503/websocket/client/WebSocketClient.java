@@ -22,7 +22,7 @@ import org.usfirst.frc.team2503.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.websocket.framing.Framedata;
 import org.usfirst.frc.team2503.websocket.framing.Framedata.Opcode;
 import org.usfirst.frc.team2503.websocket.handshake.HandshakeImpl1Client;
-import org.usfirst.frc.team2503.websocket.handshake.Handshakedata;
+import org.usfirst.frc.team2503.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshake;
 
 public abstract class WebSocketClient extends WebSocketAdapter implements Runnable, WebSocket {
@@ -200,7 +200,7 @@ public abstract class WebSocketClient extends WebSocketAdapter implements Runnab
 	}
 
 	@Override
-	public final void onWebsocketOpen(WebSocket conn, Handshakedata handshake) {
+	public final void onWebsocketOpen(WebSocket conn, HandshakeData handshake) {
 		connectLatch.countDown();
 		onOpen((ServerHandshake) handshake);
 	}

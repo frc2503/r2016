@@ -12,7 +12,7 @@ import org.usfirst.frc.team2503.websocket.WebSocket.Role;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidFrameException;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidHandshakeException;
-import org.usfirst.frc.team2503.websocket.exceptions.LimitExedeedException;
+import org.usfirst.frc.team2503.websocket.exceptions.LimitExceededException;
 import org.usfirst.frc.team2503.websocket.exceptions.NotSendableException;
 import org.usfirst.frc.team2503.websocket.framing.CloseFrameBuilder;
 import org.usfirst.frc.team2503.websocket.framing.FrameBuilder;
@@ -22,7 +22,7 @@ import org.usfirst.frc.team2503.websocket.framing.FramedataImpl1;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.websocket.handshake.HandshakeBuilder;
-import org.usfirst.frc.team2503.websocket.handshake.Handshakedata;
+import org.usfirst.frc.team2503.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshakeBuilder;
 import org.usfirst.frc.team2503.websocket.util.Base64;
@@ -46,8 +46,8 @@ public class Draft_10 extends Draft {
 		}
 	}
 
-	public static int readVersion( Handshakedata handshakedata ) {
-		String vers = handshakedata.getFieldValue( "Sec-WebSocket-Version" );
+	public static int readVersion( HandshakeData handshakeData ) {
+		String vers = handshakeData.getFieldValue( "Sec-WebSocket-Version" );
 		if( vers.length() > 0 ) {
 			int v;
 			try {
@@ -240,7 +240,7 @@ public class Draft_10 extends Draft {
 	}
 
 	@Override
-	public List<Framedata> translateFrame( ByteBuffer buffer ) throws LimitExedeedException , InvalidDataException {
+	public List<Framedata> translateFrame( ByteBuffer buffer ) throws LimitExceededException , InvalidDataException {
 		List<Framedata> frames = new LinkedList<Framedata>();
 		Framedata cur;
 
@@ -340,7 +340,7 @@ public class Draft_10 extends Draft {
 				}
 				long length = new BigInteger( bytes ).longValue();
 				if( length > Integer.MAX_VALUE ) {
-					throw new LimitExedeedException( "Payloadsize is to big..." );
+					throw new LimitExceededException( "Payloadsize is to big..." );
 				} else {
 					payloadlength = (int) length;
 				}

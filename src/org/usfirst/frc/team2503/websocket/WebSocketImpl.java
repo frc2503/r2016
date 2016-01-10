@@ -30,7 +30,7 @@ import org.usfirst.frc.team2503.websocket.framing.Framedata;
 import org.usfirst.frc.team2503.websocket.framing.Framedata.Opcode;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshakeBuilder;
-import org.usfirst.frc.team2503.websocket.handshake.Handshakedata;
+import org.usfirst.frc.team2503.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshakeBuilder;
 import org.usfirst.frc.team2503.websocket.server.WebSocketServer.WebSocketWorker;
@@ -213,7 +213,7 @@ public class WebSocketImpl implements WebSocket {
 							try {
 								d.setParseMode( role );
 								socketBuffer.reset();
-								Handshakedata tmphandshake = d.translateHandshake( socketBuffer );
+								HandshakeData tmphandshake = d.translateHandshake( socketBuffer );
 								if( tmphandshake instanceof ClientHandshake == false ) {
 									flushAndClose( CloseFrame.PROTOCOL_ERROR, "wrong http function", false );
 									return false;
@@ -248,7 +248,7 @@ public class WebSocketImpl implements WebSocket {
 						return false;
 					} else {
 						// special case for multiple step handshakes
-						Handshakedata tmphandshake = draft.translateHandshake( socketBuffer );
+						HandshakeData tmphandshake = draft.translateHandshake( socketBuffer );
 						if( tmphandshake instanceof ClientHandshake == false ) {
 							flushAndClose( CloseFrame.PROTOCOL_ERROR, "wrong http function", false );
 							return false;
@@ -266,7 +266,7 @@ public class WebSocketImpl implements WebSocket {
 					}
 				} else if( role == Role.CLIENT ) {
 					draft.setParseMode( role );
-					Handshakedata tmphandshake = draft.translateHandshake( socketBuffer );
+					HandshakeData tmphandshake = draft.translateHandshake( socketBuffer );
 					if( tmphandshake instanceof ServerHandshake == false ) {
 						flushAndClose( CloseFrame.PROTOCOL_ERROR, "wrong http function", false );
 						return false;
@@ -656,7 +656,7 @@ public class WebSocketImpl implements WebSocket {
 		}
 	}
 
-	private void open( Handshakedata d ) {
+	private void open( HandshakeData d ) {
 		if( DEBUG )
 			System.out.println( "open using draft: " + draft.getClass().getSimpleName() );
 		readystate = READYSTATE.OPEN;

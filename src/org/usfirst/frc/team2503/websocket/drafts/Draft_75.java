@@ -9,7 +9,7 @@ import java.util.Random;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidFrameException;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidHandshakeException;
-import org.usfirst.frc.team2503.websocket.exceptions.LimitExedeedException;
+import org.usfirst.frc.team2503.websocket.exceptions.LimitExceededException;
 import org.usfirst.frc.team2503.websocket.exceptions.NotSendableException;
 import org.usfirst.frc.team2503.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.websocket.framing.FrameBuilder;
@@ -172,7 +172,7 @@ public class Draft_75 extends Draft {
 		return ByteBuffer.allocate(INITIAL_FAMESIZE);
 	}
 
-	public ByteBuffer increaseBuffer(ByteBuffer full) throws LimitExedeedException, InvalidDataException {
+	public ByteBuffer increaseBuffer(ByteBuffer full) throws LimitExceededException, InvalidDataException {
 		full.flip();
 		ByteBuffer newbuffer = ByteBuffer.allocate(checkAlloc(full.capacity() * 2));
 		newbuffer.put(full);

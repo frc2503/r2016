@@ -21,7 +21,7 @@ import org.usfirst.frc.team2503.websocket.framing.Framedata.Opcode;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.websocket.handshake.HandshakeBuilder;
-import org.usfirst.frc.team2503.websocket.handshake.Handshakedata;
+import org.usfirst.frc.team2503.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshakeBuilder;
 
@@ -172,7 +172,7 @@ public class Draft_76 extends Draft_75 {
 	}
 
 	@Override
-	public Handshakedata translateHandshake( ByteBuffer buf ) throws InvalidHandshakeException {
+	public HandshakeData translateHandshake( ByteBuffer buf ) throws InvalidHandshakeException {
 
 		HandshakeBuilder bui = translateHandshakeHttp( buf, role );
 		// the first drafts are lacking a protocol number which makes them difficult to distinguish. Sec-WebSocket-Key1 is typical for draft76

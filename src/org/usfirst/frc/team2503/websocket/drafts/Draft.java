@@ -10,7 +10,7 @@ import org.usfirst.frc.team2503.websocket.WebSocket.Role;
 import org.usfirst.frc.team2503.websocket.exceptions.IncompleteHandshakeException;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidHandshakeException;
-import org.usfirst.frc.team2503.websocket.exceptions.LimitExedeedException;
+import org.usfirst.frc.team2503.websocket.exceptions.LimitExceededException;
 import org.usfirst.frc.team2503.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.websocket.framing.FrameBuilder;
 import org.usfirst.frc.team2503.websocket.framing.Framedata;
@@ -21,7 +21,7 @@ import org.usfirst.frc.team2503.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.websocket.handshake.HandshakeBuilder;
 import org.usfirst.frc.team2503.websocket.handshake.HandshakeImpl1Client;
 import org.usfirst.frc.team2503.websocket.handshake.HandshakeImpl1Server;
-import org.usfirst.frc.team2503.websocket.handshake.Handshakedata;
+import org.usfirst.frc.team2503.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshakeBuilder;
 import org.usfirst.frc.team2503.websocket.util.Charsetfunctions;
@@ -118,8 +118,8 @@ public abstract class Draft {
 
 	public abstract HandshakeState acceptHandshakeAsServer( ClientHandshake handshakedata ) throws InvalidHandshakeException;
 
-	protected boolean basicAccept( Handshakedata handshakedata ) {
-		return handshakedata.getFieldValue( "Upgrade" ).equalsIgnoreCase( "websocket" ) && handshakedata.getFieldValue( "Connection" ).toLowerCase( Locale.ENGLISH ).contains( "upgrade" );
+	protected boolean basicAccept( HandshakeData handshakeData ) {
+		return handshakeData.getFieldValue( "Upgrade" ).equalsIgnoreCase( "websocket" ) && handshakeData.getFieldValue( "Connection" ).toLowerCase( Locale.ENGLISH ).contains( "upgrade" );
 	}
 
 	public abstract ByteBuffer createBinaryFrame( Framedata framedata ); // TODO Allow to send data on the base of an Iterator or InputStream
@@ -156,26 +156,26 @@ public abstract class Draft {
 
 	public abstract void reset();
 
-	public List<ByteBuffer> createHandshake( Handshakedata handshakedata, Role ownrole ) {
-		return createHandshake( handshakedata, ownrole, true );
+	public List<ByteBuffer> createHandshake( HandshakeData handshakeData, Role ownrole ) {
+		return createHandshake( handshakeData, ownrole, true );
 	}
 
-	public List<ByteBuffer> createHandshake( Handshakedata handshakedata, Role ownrole, boolean withcontent ) {
+	public List<ByteBuffer> createHandshake( HandshakeData handshakeData, Role ownrole, boolean withcontent ) {
 		StringBuilder bui = new StringBuilder( 100 );
-		if( handshakedata instanceof ClientHandshake ) {
+		if( handshakeData instanceof ClientHandshake ) {
 			bui.append( "GET " );
-			bui.append( ( (ClientHandshake) handshakedata ).getResourceDescriptor() );
+			bui.append( ( (ClientHandshake) handshakeData ).getResourceDescriptor() );
 			bui.append( " HTTP/1.1" );
-		} else if( handshakedata instanceof ServerHandshake ) {
-			bui.append( "HTTP/1.1 101 " + ( (ServerHandshake) handshakedata ).getHttpStatusMessage() );
+		} else if( handshakeData instanceof ServerHandshake ) {
+			bui.append( "HTTP/1.1 101 " + ( (ServerHandshake) handshakeData ).getHttpStatusMessage() );
 		} else {
 			throw new RuntimeException( "unknow role" );
 		}
 		bui.append( "\r\n" );
-		Iterator<String> it = handshakedata.iterateHttpFields();
+		Iterator<String> it = handshakeData.iterateHttpFields();
 		while ( it.hasNext() ) {
 			String fieldname = it.next();
-			String fieldvalue = handshakedata.getFieldValue( fieldname );
+			String fieldvalue = handshakeData.getFieldValue( fieldname );
 			bui.append( fieldname );
 			bui.append( ": " );
 			bui.append( fieldvalue );
@@ -184,7 +184,7 @@ public abstract class Draft {
 		bui.append( "\r\n" );
 		byte[] httpheader = Charsetfunctions.asciiBytes( bui.toString() );
 
-		byte[] content = withcontent ? handshakedata.getContent() : null;
+		byte[] content = withcontent ? handshakeData.getContent() : null;
 		ByteBuffer bytebuffer = ByteBuffer.allocate( ( content == null ? 0 : content.length ) + httpheader.length );
 		bytebuffer.put( httpheader );
 		if( content != null )
@@ -207,11 +207,11 @@ public abstract class Draft {
 	 * */
 	public abstract Draft copyInstance();
 
-	public Handshakedata translateHandshake( ByteBuffer buf ) throws InvalidHandshakeException {
+	public HandshakeData translateHandshake( ByteBuffer buf ) throws InvalidHandshakeException {
 		return translateHandshakeHttp( buf, role );
 	}
 
-	public int checkAlloc( int bytecount ) throws LimitExedeedException , InvalidDataException {
+	public int checkAlloc( int bytecount ) throws LimitExceededException , InvalidDataException {
 		if( bytecount < 0 )
 			throw new InvalidDataException( CloseFrame.PROTOCOL_ERROR, "Negative count" );
 		return bytecount;

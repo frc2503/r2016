@@ -7,7 +7,7 @@ import org.usfirst.frc.team2503.websocket.drafts.Draft;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.websocket.framing.Framedata;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshake;
-import org.usfirst.frc.team2503.websocket.handshake.Handshakedata;
+import org.usfirst.frc.team2503.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshakeBuilder;
 
@@ -95,7 +95,7 @@ public interface WebSocketListener {
 	 * @param conn
 	 *            The <tt>WebSocket</tt> instance this event is occuring on.
 	 */
-	public void onWebsocketOpen( WebSocket conn, Handshakedata d );
+	public void onWebsocketOpen( WebSocket conn, HandshakeData d );
 
 	/**
 	 * Called after <tt>WebSocket#close</tt> is explicity called, or when the

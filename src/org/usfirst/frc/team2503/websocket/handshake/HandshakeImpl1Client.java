@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2503.websocket.handshake;
 
-public class HandshakeImpl1Client extends HandshakedataImpl1 implements ClientHandshakeBuilder {
+public class HandshakeImpl1Client extends HandshakeDataImpl1 implements ClientHandshakeBuilder {
 	private String resourceDescriptor = "*";
 
 	public HandshakeImpl1Client() {

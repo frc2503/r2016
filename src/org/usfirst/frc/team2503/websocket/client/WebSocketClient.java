@@ -21,7 +21,7 @@ import org.usfirst.frc.team2503.websocket.exceptions.InvalidHandshakeException;
 import org.usfirst.frc.team2503.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.websocket.framing.Framedata;
 import org.usfirst.frc.team2503.websocket.framing.Framedata.Opcode;
-import org.usfirst.frc.team2503.websocket.handshake.HandshakeImpl1Client;
+import org.usfirst.frc.team2503.websocket.handshake.HandshakeImplClient;
 import org.usfirst.frc.team2503.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshake;
 
@@ -169,7 +169,7 @@ public abstract class WebSocketClient extends WebSocketAdapter implements Runnab
 		int port = getPort();
 		String host = uri.getHost() + (port != WebSocket.DEFAULT_PORT ? ":" + port : "");
 
-		HandshakeImpl1Client handshake = new HandshakeImpl1Client();
+		HandshakeImplClient handshake = new HandshakeImplClient();
 		handshake.setResourceDescriptor(path);
 		handshake.put("Host", host);
 		if(headers != null) {

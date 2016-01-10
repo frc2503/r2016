@@ -19,8 +19,8 @@ import org.usfirst.frc.team2503.websocket.framing.FramedataImpl1;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.websocket.handshake.HandshakeBuilder;
-import org.usfirst.frc.team2503.websocket.handshake.HandshakeImpl1Client;
-import org.usfirst.frc.team2503.websocket.handshake.HandshakeImpl1Server;
+import org.usfirst.frc.team2503.websocket.handshake.HandshakeImplClient;
+import org.usfirst.frc.team2503.websocket.handshake.HandshakeImplServer;
 import org.usfirst.frc.team2503.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshakeBuilder;
@@ -90,13 +90,13 @@ public abstract class Draft {
 
 		if( role == Role.CLIENT ) {
 			// translating/parsing the response from the SERVER
-			handshake = new HandshakeImpl1Server();
+			handshake = new HandshakeImplServer();
 			ServerHandshakeBuilder serverhandshake = (ServerHandshakeBuilder) handshake;
 			serverhandshake.setHttpStatus( Short.parseShort( firstLineTokens[ 1 ] ) );
 			serverhandshake.setHttpStatusMessage( firstLineTokens[ 2 ] );
 		} else {
 			// translating/parsing the request from the CLIENT
-			ClientHandshakeBuilder clienthandshake = new HandshakeImpl1Client();
+			ClientHandshakeBuilder clienthandshake = new HandshakeImplClient();
 			clienthandshake.setResourceDescriptor( firstLineTokens[ 1 ] );
 			handshake = clienthandshake;
 		}

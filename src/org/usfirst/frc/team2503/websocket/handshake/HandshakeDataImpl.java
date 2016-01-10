@@ -4,11 +4,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-public class HandshakeDataImpl1 implements HandshakeBuilder {
+public class HandshakeDataImpl implements HandshakeBuilder {
 	private byte[] content;
 	private TreeMap<String,String> map;
 
-	public HandshakeDataImpl1() {
+	public HandshakeDataImpl() {
 		map = new TreeMap<String,String>( String.CASE_INSENSITIVE_ORDER );
 	}
 

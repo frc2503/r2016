@@ -9,7 +9,7 @@ import org.usfirst.frc.team2503.websocket.framing.Framedata;
 import org.usfirst.frc.team2503.websocket.framing.Framedata.Opcode;
 import org.usfirst.frc.team2503.websocket.framing.FramedataImpl1;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshake;
-import org.usfirst.frc.team2503.websocket.handshake.HandshakeImpl1Server;
+import org.usfirst.frc.team2503.websocket.handshake.HandshakeImplServer;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.websocket.handshake.ServerHandshakeBuilder;
 
@@ -25,7 +25,7 @@ public abstract class WebSocketAdapter implements WebSocketListener {
 	 */
 	@Override
 	public ServerHandshakeBuilder onWebsocketHandshakeReceivedAsServer( WebSocket conn, Draft draft, ClientHandshake request ) throws InvalidDataException {
-		return new HandshakeImpl1Server();
+		return new HandshakeImplServer();
 	}
 
 	@Override

@@ -1,9 +1,9 @@
 package org.usfirst.frc.team2503.websocket.handshake;
 
-public class HandshakeImpl1Client extends HandshakeDataImpl1 implements ClientHandshakeBuilder {
+public class HandshakeImplClient extends HandshakeDataImpl implements ClientHandshakeBuilder {
 	private String resourceDescriptor = "*";
 
-	public HandshakeImpl1Client() {
+	public HandshakeImplClient() {
 	}
 
 	public void setResourceDescriptor( String resourceDescriptor ) throws IllegalArgumentException {

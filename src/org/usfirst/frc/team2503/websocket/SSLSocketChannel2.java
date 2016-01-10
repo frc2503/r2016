@@ -1,8 +1,3 @@
-/**
- * Copyright (C) 2003 Alexander Kout
- * Originally from the jFxp project (http://jfxp.sourceforge.net/).
- * Copied with permission June 11, 2012 by Femi Omojola (fomojola@ideasynthesis.com).
- */
 package org.usfirst.frc.team2503.websocket;
 
 import java.io.EOFException;
@@ -28,39 +23,24 @@ import javax.net.ssl.SSLEngineResult.Status;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 
-/**
- * Implements the relevant portions of the SocketChannel interface with the SSLEngine wrapper.
- */
 public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
-	/**
-	 * This object is used to feed the {@link SSLEngine}'s wrap and unwrap methods during the handshake phase.
-	 **/
 	protected static ByteBuffer emptybuffer = ByteBuffer.allocate( 0 );
 
 	protected ExecutorService exec;
 
 	protected List<Future<?>> tasks;
 
-	/** raw payload incomming */
 	protected ByteBuffer inData;
-	/** encrypted data outgoing */
 	protected ByteBuffer outCrypt;
-	/** encrypted data incoming */
 	protected ByteBuffer inCrypt;
 
-	/** the underlying channel */
 	protected SocketChannel socketChannel;
-	/** used to set interestOP SelectionKey.OP_WRITE for the underlying channel */
 	protected SelectionKey selectionKey;
 
 	protected SSLEngine sslEngine;
 	protected SSLEngineResult readEngineResult;
 	protected SSLEngineResult writeEngineResult;
 
-	/**
-	 * Should be used to count the buffer allocations.
-	 * But because of #190 where HandshakeStatus.FINISHED is not properly returned by nio wrap/unwrap this variable is used to check whether {@link #createBuffers(SSLSession)} needs to be called.
-	 **/
 	protected int bufferallocations = 0;
 
 	public SSLSocketChannel2( SocketChannel channel , SSLEngine sslEngine , ExecutorService exec , SelectionKey key ) throws IOException {
@@ -79,8 +59,7 @@ public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
 			this.selectionKey = key;
 		}
 		createBuffers( sslEngine.getSession() );
-		// kick off handshake
-		socketChannel.write( wrap( emptybuffer ) );// initializes res
+		socketChannel.write( wrap( emptybuffer ) );
 		processHandshake();
 	}
 
@@ -102,13 +81,9 @@ public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
 		}
 	}
 
-	/**
-	 * This method will do whatever necessary to process the sslengine handshake.
-	 * Thats why it's called both from the {@link #read(ByteBuffer)} and {@link #write(ByteBuffer)}
-	 **/
 	private synchronized void processHandshake() throws IOException {
 		if( sslEngine.getHandshakeStatus() == HandshakeStatus.NOT_HANDSHAKING )
-			return; // since this may be called either from a reading or a writing thread and because this method is synchronized it is necessary to double check if we are still handshaking.
+			return;
 		if( !tasks.isEmpty() ) {
 			Iterator<Future<?>> it = tasks.iterator();
 			while ( it.hasNext() ) {
@@ -147,9 +122,9 @@ public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
 				return;
 			}
 		}
-		assert ( sslEngine.getHandshakeStatus() != HandshakeStatus.NOT_HANDSHAKING );// this function could only leave NOT_HANDSHAKING after createBuffers was called unless #190 occurs which means that nio wrap/unwrap never return HandshakeStatus.FINISHED
+		assert ( sslEngine.getHandshakeStatus() != HandshakeStatus.NOT_HANDSHAKING );
 
-		bufferallocations = 1; // look at variable declaration why this line exists and #190. Without this line buffers would not be be recreated when #190 AND a rehandshake occur.
+		bufferallocations = 1;
 	}
 	private synchronized ByteBuffer wrap( ByteBuffer b ) throws SSLException {
 		outCrypt.compact();
@@ -158,9 +133,6 @@ public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
 		return outCrypt;
 	}
 
-	/**
-	 * performs the unwrap operation by unwrapping from {@link #inCrypt} to {@link #inData}
-	 **/
 	private synchronized ByteBuffer unwrap() throws SSLException {
 		int rem;
 		do {
@@ -209,10 +181,7 @@ public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
 			processHandshake();
 			return 0;
 		}
-		// assert ( bufferallocations > 1 ); //see #190
-		//if( bufferallocations <= 1 ) {
-		//	createBuffers( sslEngine.getSession() );
-		//}
+
 		int num = socketChannel.write( wrap( src ) );
         if (writeEngineResult.getStatus() == SSLEngineResult.Status.CLOSED) {
             throw new EOFException("Connection is closed");
@@ -221,12 +190,6 @@ public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
 
 	}
 
-	/**
-	 * Blocks when in blocking mode until at least one byte has been decoded.<br>
-	 * When not in blocking mode 0 may be returned.
-	 * 
-	 * @return the number of bytes read.
-	 **/
 	public int read( ByteBuffer dst ) throws IOException {
 		if( !dst.hasRemaining() )
 			return 0;
@@ -242,20 +205,11 @@ public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
 				}
 			}
 		}
-		// assert ( bufferallocations > 1 ); //see #190
-		//if( bufferallocations <= 1 ) {
-		//	createBuffers( sslEngine.getSession() );
-		//}
-		/* 1. When "dst" is smaller than "inData" readRemaining will fill "dst" with data decoded in a previous read call.
-		 * 2. When "inCrypt" contains more data than "inData" has remaining space, unwrap has to be called on more time(readRemaining)
-		 */
+		
 		int purged = readRemaining( dst );
 		if( purged != 0 )
 			return purged;
 
-		/* We only continue when we really need more data from the network.
-		 * Thats the case if inData is empty or inCrypt holds to less data than necessary for decryption
-		 */
 		assert ( inData.position() == 0 );
 		inData.clear();
 
@@ -273,20 +227,19 @@ public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
 
 		int transfered = transfereTo( inData, dst );
 		if( transfered == 0 && isBlocking() ) {
-			return read( dst ); // "transfered" may be 0 when not enough bytes were received or during rehandshaking
+			return read( dst );
 		}
 		return transfered;
 	}
-	/**
-	 * {@link #read(ByteBuffer)} may not be to leave all buffers(inData, inCrypt)
-	 **/
+
 	private int readRemaining( ByteBuffer dst ) throws SSLException {
 		if( inData.hasRemaining() ) {
 			return transfereTo( inData, dst );
 		}
+		
 		if( !inData.hasRemaining() )
 			inData.clear();
-		// test if some bytes left from last read (e.g. BUFFER_UNDERFLOW)
+		
 		if( inCrypt.hasRemaining() ) {
 			unwrap();
 			int amount = transfereTo( inData, dst );

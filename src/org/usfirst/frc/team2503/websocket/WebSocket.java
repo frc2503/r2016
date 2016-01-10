@@ -17,11 +17,22 @@ public interface WebSocket {
 		NOT_YET_CONNECTED, CONNECTING, OPEN, CLOSING, CLOSED;
 	}
 
+	/**
+	 * The default port of WebSockets, as defined in the spec. If the nullary
+	 * constructor is used, DEFAULT_PORT will be the port the WebSocketServer
+	 * is binded to. Note that ports under 1024 usually require root permissions.
+	 */
 	public static final int DEFAULT_PORT = 80;
+
 	public static final int DEFAULT_WSS_PORT = 443;
 
-	public void close(int code);
-	public void close(int code, String message);
+	/**
+	 * sends the closing handshake.
+	 * may be send in response to an other handshake.
+	 */
+	public void close( int code, String message );
+
+	public void close( int code );
 
 	/** Convenience function which behaves like close(CloseFrame.NORMAL) */
 	public void close();
@@ -30,7 +41,7 @@ public interface WebSocket {
 	 * This will close the connection immediately without a proper close handshake.
 	 * The code and the message therefore won't be transfered over the wire also they will be forwarded to onClose/onWebsocketClose.
 	 **/
-	public abstract void closeConnection(int code, String message);
+	public abstract void closeConnection( int code, String message );
 
 	/**
 	 * Send Text data to the other end.
@@ -38,7 +49,7 @@ public interface WebSocket {
 	 * @throws IllegalArgumentException
 	 * @throws NotYetConnectedException
 	 */
-	public abstract void send(String text) throws NotYetConnectedException;
+	public abstract void send( String text ) throws NotYetConnectedException;
 
 	/**
 	 * Send Binary data (plain bytes) to the other end.
@@ -46,11 +57,11 @@ public interface WebSocket {
 	 * @throws IllegalArgumentException
 	 * @throws NotYetConnectedException
 	 */
-	public abstract void send(ByteBuffer bytes) throws IllegalArgumentException , NotYetConnectedException;
+	public abstract void send( ByteBuffer bytes ) throws IllegalArgumentException , NotYetConnectedException;
 
-	public abstract void send(byte[] bytes) throws IllegalArgumentException , NotYetConnectedException;
+	public abstract void send( byte[] bytes ) throws IllegalArgumentException , NotYetConnectedException;
 
-	public abstract void sendFrame(Framedata framedata);
+	public abstract void sendFrame( Framedata framedata );
 
 	/**
 	 * Allows to send continuous/fragmented frames conveniently. <br>
@@ -65,17 +76,17 @@ public interface WebSocket {
 	 * @param fin
 	 *            true means the current frame is the last in the sequence.
 	 **/
-	public abstract void sendFragmentedFrame(Opcode op, ByteBuffer buffer, boolean fin);
+	public abstract void sendFragmentedFrame( Opcode op, ByteBuffer buffer, boolean fin );
 
 	public abstract boolean hasBufferedData();
 
 	/**
-	 * @returns never returns null
+	 * @return never returns null
 	 */
 	public abstract InetSocketAddress getRemoteSocketAddress();
 
 	/**
-	 * @returns never returns null
+	 * @return never returns null
 	 */
 	public abstract InetSocketAddress getLocalSocketAddress();
 

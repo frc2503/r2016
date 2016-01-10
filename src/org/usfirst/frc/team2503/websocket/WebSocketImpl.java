@@ -14,12 +14,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.usfirst.frc.team2503.websocket.drafts.Draft;
+import org.usfirst.frc.team2503.websocket.drafts.Draft.CloseHandshakeType;
+import org.usfirst.frc.team2503.websocket.drafts.Draft.HandshakeState;
 import org.usfirst.frc.team2503.websocket.drafts.Draft_10;
 import org.usfirst.frc.team2503.websocket.drafts.Draft_17;
 import org.usfirst.frc.team2503.websocket.drafts.Draft_75;
 import org.usfirst.frc.team2503.websocket.drafts.Draft_76;
-import org.usfirst.frc.team2503.websocket.drafts.Draft.CloseHandshakeType;
-import org.usfirst.frc.team2503.websocket.drafts.Draft.HandshakeState;
 import org.usfirst.frc.team2503.websocket.exceptions.IncompleteHandshakeException;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.websocket.exceptions.InvalidHandshakeException;

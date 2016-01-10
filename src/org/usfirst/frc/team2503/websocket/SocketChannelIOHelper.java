@@ -3,7 +3,6 @@ package org.usfirst.frc.team2503.websocket;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ByteChannel;
-import java.nio.channels.spi.AbstractSelectableChannel;
 
 import org.usfirst.frc.team2503.websocket.WebSocket.Role;
 

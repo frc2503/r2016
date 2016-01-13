@@ -10,6 +10,8 @@ dist/
 # Crash error files.
 hs_err_pid*
 
+# Hide the settings.
+.settings/
 
 # Eclipse-related project files.
 .metadata

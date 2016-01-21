@@ -10,6 +10,8 @@ dist/
 # Crash error files.
 hs_err_pid*
 
+# Ignore coding system-related system property file.
+sysProps.xml
 
 # Eclipse-related project files.
 .metadata

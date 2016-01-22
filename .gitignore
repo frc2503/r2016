@@ -13,6 +13,9 @@ hs_err_pid*
 # Hide the settings.
 .settings/
 
+# Ignore coding system-related system property file.
+sysProps.xml
+
 # Eclipse-related project files.
 .metadata
 .gradle

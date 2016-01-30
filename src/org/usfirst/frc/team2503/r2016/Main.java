@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2503.r2016;
 
-import org.usfirst.frc.team2503.r2016.web.WebConfiguration;
+import org.usfirst.frc.team2503.r2016.data.DataServer;
 
 /**
  * You can use this class for testing non-WPIlib code on your machine.
@@ -9,7 +9,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		WebConfiguration wc = new WebConfiguration();
+		DataServer wc = new DataServer();
 
 		Thread t = new Thread(wc.getServerInstance());
 

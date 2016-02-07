@@ -3,7 +3,6 @@ package org.usfirst.frc.team2503.r2016;
 import org.bytedeco.javacv.FrameGrabber.Exception;
 import org.usfirst.frc.team2503.r2016.data.DataServer;
 import org.usfirst.frc.team2503.r2016.input.vision.CameraMonitor;
-import org.usfirst.frc.team2503.websocket.WebSocket;
 
 public class CameraMonitorTest implements Runnable {
 

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2503.r2016;
 
 import org.usfirst.frc.team2503.r2016.data.DataServer;
-import org.usfirst.frc.team2503.r2016.input.vision.CameraMonitor;
 
 /**
  * You can use this class for testing non-WPIlib code on your machine.

@@ -43,55 +43,61 @@ public class CameraMonitor {
 	public static FrameGrabber grabber = new OpenCVFrameGrabber(1);
 	public static BufferedImage latestBufferedImage = null;
 	public static IplImage latestIplImage = null;
-	
+
 	public static OpenCVFrameConverter.ToIplImage grabberConverter = new OpenCVFrameConverter.ToIplImage();
 	public static Java2DFrameConverter paintConverter = new Java2DFrameConverter();
-	
-	public static void grabFrame() throws Exception {
+
+	public static void start() throws Exception {
 		grabber.start();
-		Frame frame = grabber.grabFrame();
+	}
+
+	public static void stop() throws Exception {
 		grabber.stop();
-		
+	}
+
+	public static void grabFrame() throws Exception {
+		Frame frame = grabber.grabFrame();
+
 		latestFrame = frame;
 	}
-	
+
 	public static void convertLatestFrameToBufferedImage() {
 		latestBufferedImage = paintConverter.getBufferedImage(latestFrame);
 	}
-	
+
 	public static void convertLatestFrameToIplImage() {
 		latestIplImage = grabberConverter.convert(latestFrame);
 	}
-	
+
 	public static String getImageDataURIFromDevice() {
 		try {
 			LocalTime t0 = LocalTime.now();
-			
+
 			grabFrame();
 
 			convertLatestFrameToBufferedImage();
 			// convertLatestFrameToIplImage();
 
 			BufferedImage newImage = new BufferedImage(128, 80, BufferedImage.TYPE_INT_RGB);
-			
+
 			Graphics g = newImage.createGraphics();
 			g.drawImage(latestBufferedImage, 0, 0, 128, 80, null);
 			g.dispose();
-			
+
 			File file = new File(Constants.HOME_DIRECTORY + "/capture.jpg");
 			File file2 = new File(Constants.HOME_DIRECTORY + "/capture2.jpg");
-			
+
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-						
+
 			ImageIO.write(latestBufferedImage, "jpg", file);
 			ImageIO.write(newImage, "jpg", baos);
 			ImageIO.write(newImage, "jpg", file2);
-			
+
 			LocalTime t1 = LocalTime.now();
-			
+
 			Duration duration = Duration.between(t0, t1);
 			System.out.println(duration.toMillis());
-			
+
 			return DatatypeConverter.printBase64Binary(baos.toByteArray());
 		} catch(IOException | Exception e) {
 			e.printStackTrace();
@@ -99,6 +105,6 @@ public class CameraMonitor {
 
 		return "";
 	}
-	
-	
+
+
 }

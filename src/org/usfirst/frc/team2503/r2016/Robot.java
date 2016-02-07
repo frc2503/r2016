@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2503.r2016;
 
 import org.usfirst.frc.team2503.r2016.data.DataServer;
+import org.usfirst.frc.team2503.r2016.input.vision.CameraMonitor;
+import org.usfirst.frc.team2503.r2016.subsystems.MainDriveBase;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -9,6 +11,8 @@ public class Robot extends IterativeRobot {
 	public DataServer configurationServer;
 	public DataServer imageServer;
 	public DataServer dataServer;
+
+	public MainDriveBase driveBase;
 
 	public Robot() {
 		configurationServer = new DataServer(5800);
@@ -31,6 +35,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
+
+		System.out.println(CameraMonitor.getImageDataURIFromDevice());
+
 	}
 
 	public void autonomousInit() {

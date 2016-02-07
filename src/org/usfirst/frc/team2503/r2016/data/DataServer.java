@@ -40,8 +40,6 @@ public class DataServer extends Data {
 			}
 
 			System.out.println("[DataServer] After merge: " + DataServer.this.toString());
-			
-			connection.send(DataServer.this.toString());
 		}
 
 		@Override
@@ -60,8 +58,18 @@ public class DataServer extends Data {
 		}
 
 	}
+	
+	public JSONObject put(String key, Object value) {
+		JSONObject returnValue = super.put(key, value);
+	
+		for(WebSocket ws : server.connections()) {
+			ws.send(this.toString());
+		}
+		
+		return returnValue;
+	}
 
-	public Server server = new Server(5800);
+	public Server server;
 
 	public Server getServerInstance() {
 		return this.server;

@@ -84,14 +84,9 @@ public class CameraMonitor {
 			g.drawImage(latestBufferedImage, 0, 0, 640, 400, null);
 			g.dispose();
 
-			File file = new File(Constants.HOME_DIRECTORY + "/capture.jpg");
-			File file2 = new File(Constants.HOME_DIRECTORY + "/capture2.jpg");
-
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-			ImageIO.write(latestBufferedImage, "jpg", file);
 			ImageIO.write(newImage, "jpg", baos);
-			ImageIO.write(newImage, "jpg", file2);
 
 			LocalTime t1 = LocalTime.now();
 

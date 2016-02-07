@@ -11,17 +11,10 @@ switch(window.DEVELOPMENT_MODE) {
 		break;
 }
 
-function setupSocket(key, uri, messageCallback) {
-	window[key] = new Socket(uri, (function() {
-		setupSocket(key, uri, messageCallback);
-	}), messageCallback);
-}
-
-function Socket(url, setupCallback, messageCallback) {
+function ImageSocket(url, setupCallback) {
 	this.url = url;
 	this.socket = new WebSocket(url);
 	this.setupCallback = setupCallback;
-	this.messageCallback = messageCallback;
 
 	/* TODO: Implement */
 	this.socket.onopen = function() {
@@ -29,11 +22,11 @@ function Socket(url, setupCallback, messageCallback) {
 	};
 
 	this.socket.onmessage = function(messageEvent) {
-		this.messageCallback(messageEvent);
+		var object = JSON.parse(messageEvent.data);
+		document.getElementsByClassName('image')[0].src = object['image'];
 	};
 
 	this.socket.onerror = function() {
-		console.debug(arguments);
 	};
 
 	this.socket.onclose = function() {
@@ -47,6 +40,8 @@ function Socket(url, setupCallback, messageCallback) {
 	}
 }
 
-setupSocket('configuration_socket', 'ws://' + window.SOCKET_URI + ':5800/', function(messageEvent) {
-	console.debug(messageEvent.data);
-});
+window.setup_image_socket = function() {
+	window.image_socket = new ImageSocket('ws://' + window.SOCKET_URI + ':5800/', window.setup_image_socket);
+};
+
+window.setup_image_socket();

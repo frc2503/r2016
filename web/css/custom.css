@@ -44,3 +44,16 @@
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
 }
+
+.switchpadding {
+    padding-top: 15px;
+}
+
+/* minor padding changes to make stuff look a bit better */
+.topsection {
+    padding-top: 10px;
+}
+
+.leftheading {
+    text-align: right;
+}

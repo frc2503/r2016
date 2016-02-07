@@ -78,10 +78,10 @@ public class CameraMonitor {
 			convertLatestFrameToBufferedImage();
 			// convertLatestFrameToIplImage();
 
-			BufferedImage newImage = new BufferedImage(128, 80, BufferedImage.TYPE_INT_RGB);
+			BufferedImage newImage = new BufferedImage(640, 400, BufferedImage.TYPE_INT_RGB);
 
 			Graphics g = newImage.createGraphics();
-			g.drawImage(latestBufferedImage, 0, 0, 128, 80, null);
+			g.drawImage(latestBufferedImage, 0, 0, 640, 400, null);
 			g.dispose();
 
 			File file = new File(Constants.HOME_DIRECTORY + "/capture.jpg");

@@ -5,8 +5,12 @@ import org.usfirst.frc.team2503.r2016.input.vision.CameraMonitor;
 import org.usfirst.frc.team2503.r2016.subsystems.MainDriveBase;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 
 public class Robot extends IterativeRobot {
+
+	public Joystick gamepad;
+	public DriveBase driveBase;
 
 	public DataServer configurationServer;
 	public DataServer imageServer;
@@ -15,6 +19,9 @@ public class Robot extends IterativeRobot {
 	public MainDriveBase driveBase;
 
 	public Robot() {
+		gamepad = new Joystick(0);
+		driveBase = new TestbotDriveBase();
+
 		configurationServer = new DataServer(5800);
 		imageServer = new DataServer(5801);
 		dataServer = new DataServer(5802);
@@ -50,6 +57,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
+		driveBase.drive(gamepad.getRawAxis(2), gamepad.getRawAxis(3));
 	}
 
 	public void testInit() {

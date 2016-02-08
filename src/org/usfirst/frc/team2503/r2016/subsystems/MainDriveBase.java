@@ -28,4 +28,9 @@ public class MainDriveBase implements DriveBase {
 		this.rightTrack = rightTrack;
 	}
 	
+	public MainDriveBase(int leftTrackTalonChannel, int leftEncoderAChannel, int leftEncoderBChannel, int rightTrackTalonChannel, int rightEncoderAChannel, int rightEncoderBChannel) {
+		Talon leftTalon = new Talon(leftTrackTalonChannel);
+		Talon rightTalon = new Talon(rightTrackTalonChannel);
+	}
+	
 }

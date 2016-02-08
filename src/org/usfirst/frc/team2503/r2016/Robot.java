@@ -2,6 +2,7 @@ package org.usfirst.frc.team2503.r2016;
 
 import org.usfirst.frc.team2503.r2016.data.DataServer;
 import org.usfirst.frc.team2503.r2016.input.vision.CameraMonitor;
+import org.usfirst.frc.team2503.r2016.subsystems.DriveBase;
 import org.usfirst.frc.team2503.r2016.subsystems.MainDriveBase;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -10,17 +11,16 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Robot extends IterativeRobot {
 
 	public Joystick gamepad;
-	public DriveBase driveBase;
 
 	public DataServer configurationServer;
 	public DataServer imageServer;
 	public DataServer dataServer;
 
-	public MainDriveBase driveBase;
+	public DriveBase driveBase;
 
 	public Robot() {
 		gamepad = new Joystick(0);
-		driveBase = new TestbotDriveBase();
+		driveBase = new MainDriveBase(0, 1);
 
 		configurationServer = new DataServer(5800);
 		imageServer = new DataServer(5801);

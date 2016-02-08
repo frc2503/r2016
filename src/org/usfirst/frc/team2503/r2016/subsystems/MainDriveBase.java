@@ -15,17 +15,14 @@ public class MainDriveBase implements DriveBase {
 		this.rightTrack.speedController.set(right);
 	}
 
-	public MainDriveBase(int leftTrackTalonChannel, Encoder leftEncoder, int rightTrackTalonChannel, Encoder rightEncoder) {
-		Talon leftTalon = new Talon(leftTrackTalonChannel);
-		Talon rightTalon = new Talon(rightTrackTalonChannel);
-		
-		this.leftTrack = new RhinoTrack(leftTalon, leftEncoder);
-		this.rightTrack = new RhinoTrack(rightTalon, rightEncoder);
-	}
-	
 	public MainDriveBase(RhinoTrack leftTrack, RhinoTrack rightTrack) {
 		this.leftTrack = leftTrack;
 		this.rightTrack = rightTrack;
+	}
+	
+	public MainDriveBase(Talon leftTalon, Encoder leftEncoder, Talon rightTalon, Encoder rightEncoder) {
+		this.leftTrack = new RhinoTrack(leftTalon, leftEncoder);
+		this.rightTrack = new RhinoTrack(rightTalon, rightEncoder);
 	}
 	
 	public MainDriveBase(int leftTalonChannel, int rightTalonChannel) {
@@ -36,6 +33,14 @@ public class MainDriveBase implements DriveBase {
 		this.rightTrack = new RhinoTrack(rightTalon, null);
 	}
 	
+	public MainDriveBase(int leftTrackTalonChannel, Encoder leftEncoder, int rightTrackTalonChannel, Encoder rightEncoder) {
+		Talon leftTalon = new Talon(leftTrackTalonChannel);
+		Talon rightTalon = new Talon(rightTrackTalonChannel);
+		
+		this.leftTrack = new RhinoTrack(leftTalon, leftEncoder);
+		this.rightTrack = new RhinoTrack(rightTalon, rightEncoder);
+	}
+	
 	public MainDriveBase(int leftTrackTalonChannel, int leftEncoderAChannel, int leftEncoderBChannel, int rightTrackTalonChannel, int rightEncoderAChannel, int rightEncoderBChannel) {
 		Talon leftTalon = new Talon(leftTrackTalonChannel);
 		Talon rightTalon = new Talon(rightTrackTalonChannel);
@@ -43,11 +48,6 @@ public class MainDriveBase implements DriveBase {
 		Encoder leftEncoder = new Encoder(leftEncoderAChannel, leftEncoderBChannel);
 		Encoder rightEncoder = new Encoder(rightEncoderAChannel, rightEncoderBChannel);
 		
-		this.leftTrack = new RhinoTrack(leftTalon, leftEncoder);
-		this.rightTrack = new RhinoTrack(rightTalon, rightEncoder);
-	}
-	
-	public MainDriveBase(Talon leftTalon, Encoder leftEncoder, Talon rightTalon, Encoder rightEncoder) {
 		this.leftTrack = new RhinoTrack(leftTalon, leftEncoder);
 		this.rightTrack = new RhinoTrack(rightTalon, rightEncoder);
 	}

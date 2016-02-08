@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2503.r2016;
 
 import org.usfirst.frc.team2503.r2016.data.DataServer;
+import org.usfirst.frc.team2503.r2016.input.gamepad.Gamepad;
+import org.usfirst.frc.team2503.r2016.input.gamepad.LogitechF310Gamepad;
 import org.usfirst.frc.team2503.r2016.input.vision.CameraMonitor;
 import org.usfirst.frc.team2503.r2016.subsystems.DriveBase;
 import org.usfirst.frc.team2503.r2016.subsystems.MainDriveBase;
@@ -10,7 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Robot extends IterativeRobot {
 
-	public Joystick gamepad;
+	public Gamepad gamepad;
 
 	public DataServer configurationServer;
 	public DataServer imageServer;
@@ -19,7 +21,7 @@ public class Robot extends IterativeRobot {
 	public DriveBase driveBase;
 
 	public Robot() {
-		gamepad = new Joystick(0);
+		gamepad = new LogitechF310Gamepad(0);
 		driveBase = new MainDriveBase(0, 1);
 
 		configurationServer = new DataServer(5800);
@@ -57,7 +59,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-		driveBase.drive(gamepad.getRawAxis(2), gamepad.getRawAxis(3));
+		
+		driveBase.drive(gamepad.leftY.get(), gamepad.rightY.get());
+		
 	}
 
 	public void testInit() {

@@ -40,7 +40,7 @@ public class CameraMonitor {
 	public static final boolean borked = true;
 
 	public static Frame latestFrame = null;
-	public static FrameGrabber grabber = new OpenCVFrameGrabber(1);
+	public static FrameGrabber grabber = new OpenCVFrameGrabber(0);
 	public static BufferedImage latestBufferedImage = null;
 	public static IplImage latestIplImage = null;
 

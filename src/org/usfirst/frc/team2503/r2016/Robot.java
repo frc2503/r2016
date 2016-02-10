@@ -11,7 +11,7 @@ import org.usfirst.frc.team2503.r2016.control.DriveBaseController;
 import org.usfirst.frc.team2503.r2016.data.DataServer;
 import org.usfirst.frc.team2503.r2016.input.gamepad.Gamepad;
 import org.usfirst.frc.team2503.r2016.input.gamepad.LogitechF310Gamepad;
-//import org.usfirst.frc.team2503.r2016.input.vision.CameraMonitor;
+import org.usfirst.frc.team2503.r2016.input.vision.CameraMonitor;
 import org.usfirst.frc.team2503.r2016.subsystems.DriveBase;
 import org.usfirst.frc.team2503.r2016.subsystems.MainDriveBase;
 
@@ -134,6 +134,8 @@ public class Robot extends IterativeRobot {
 		shooter.set((DATA.getDouble("leftTrigger") + DATA.getDouble("rightTrigger")) / 2.0);
 		
 		System.out.println(DATA.toString());
+		
+		System.out.println(CameraMonitor.getImageDataURIFromDevice());
 		
 	}
 

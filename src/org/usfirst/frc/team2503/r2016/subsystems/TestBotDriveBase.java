@@ -5,6 +5,12 @@ public class TestBotDriveBase implements DriveBase {
 	public void drive(double left, double right) {
 	}
 	
+	public void drive() {
+	}
+
+	public void tick() {
+	}
+	
 	public TestBotDriveBase() {
 	}
 	

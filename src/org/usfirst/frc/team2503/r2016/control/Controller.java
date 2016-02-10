@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2503.r2016.control;
 
-public abstract class Controller {
-	
-	public abstract CommandStack getCommands();
+public interface Controller {
+
+	public abstract ControlMode getMode();
+	public abstract void setMode(ControlMode mode);
 	
 }

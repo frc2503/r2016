@@ -4,24 +4,24 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class LogitechF310Gamepad extends Gamepad {
 	
-	public Axis leftX = new Axis(AxisType.NEGATIVE_TO_POSITIVE, 0);
-	public Axis leftY = new Axis(AxisType.NEGATIVE_TO_POSITIVE, 1);
-	public Axis leftTrigger = new Axis(AxisType.ZERO_TO_POSITIVE, 2);
+	public Axis leftX;
+	public Axis leftY;
+	public Axis leftTrigger;
 	
-	public Axis rightTrigger = new Axis(AxisType.ZERO_TO_POSITIVE, 3);
-	public Axis rightX = new Axis(AxisType.NEGATIVE_TO_POSITIVE, 4);
-	public Axis rightY = new Axis(AxisType.NEGATIVE_TO_POSITIVE, 5);
+	public Axis rightTrigger;
+	public Axis rightX;
+	public Axis rightY;
 	
-	public JoystickButton A = new JoystickButton(this, 1);
-	public JoystickButton B = new JoystickButton(this, 2);
-	public JoystickButton X = new JoystickButton(this, 3);
-	public JoystickButton Y = new JoystickButton(this, 4);
-	public JoystickButton Back = new JoystickButton(this, 7);
-	public JoystickButton Start = new JoystickButton(this, 8);
-	public JoystickButton LeftBumper = new JoystickButton(this, 5);
-	public JoystickButton LeftStick = new JoystickButton(this, 9);
-	public JoystickButton RightBumper = new JoystickButton(this, 6);
-	public JoystickButton RightStick = new JoystickButton(this, 10);
+	public JoystickButton A;
+	public JoystickButton B;
+	public JoystickButton X;
+	public JoystickButton Y;
+	public JoystickButton Back;
+	public JoystickButton Start;
+	public JoystickButton LeftBumper;
+	public JoystickButton LeftStick;
+	public JoystickButton RightBumper;
+	public JoystickButton RightStick;
 	
 	/**
 	 * Get the value of the POV switch on this Gamepad.
@@ -44,6 +44,25 @@ public class LogitechF310Gamepad extends Gamepad {
 	
 	public LogitechF310Gamepad(int port) {
 		super(port);
+		
+		leftX = new Axis(AxisType.NEGATIVE_TO_POSITIVE, 0);
+		leftY = new Axis(AxisType.NEGATIVE_TO_POSITIVE, 1);
+		leftTrigger = new Axis(AxisType.ZERO_TO_POSITIVE, 2);
+		
+		rightX = new Axis(AxisType.NEGATIVE_TO_POSITIVE, 3);
+		rightY = new Axis(AxisType.NEGATIVE_TO_POSITIVE, 4);
+		rightTrigger = new Axis(AxisType.ZERO_TO_POSITIVE, 5);
+		
+		A = new JoystickButton(this, 1);
+		B = new JoystickButton(this, 2);
+		X = new JoystickButton(this, 3);
+		Y = new JoystickButton(this, 4);
+		Back = new JoystickButton(this, 7);
+		Start = new JoystickButton(this, 8);
+		LeftBumper = new JoystickButton(this, 5);
+		LeftStick = new JoystickButton(this, 9);
+		RightBumper = new JoystickButton(this, 6);
+		RightStick = new JoystickButton(this, 10);
 	}
 	
 }

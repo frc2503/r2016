@@ -1,22 +1,40 @@
 package org.usfirst.frc.team2503.r2016;
 
+import org.usfirst.frc.team2503.r2016.component.RhinoTrack;
+import org.usfirst.frc.team2503.r2016.input.gamepad.Gamepad;
+import org.usfirst.frc.team2503.r2016.input.gamepad.LogitechDualActionGamepad;
 import org.usfirst.frc.team2503.r2016.input.gamepad.LogitechF310Gamepad;
 import org.usfirst.frc.team2503.r2016.input.joystick.MadCatzV1Joystick;
+import org.usfirst.frc.team2503.r2016.subsystem.DriveBase;
+import org.usfirst.frc.team2503.r2016.subsystem.MainDriveBase;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Talon;
 
 public class Robot extends IterativeRobot {
 	
 	public MadCatzV1Joystick leftJoystick;
 	public MadCatzV1Joystick rightJoystick;
 	
-	public LogitechF310Gamepad gamepad;
+	public RhinoTrack leftTrack;
+	public RhinoTrack rightTrack;
+	
+	public DriveBase driveBase;
+	
+	public Gamepad gamepad;
 	
 	public Robot() {
+		System.setProperty("java.awt.headless", "true");
+		
 		leftJoystick = new MadCatzV1Joystick(0);
 		rightJoystick = new MadCatzV1Joystick(1);
 		
-		gamepad = new LogitechF310Gamepad(2);
+		gamepad = new LogitechDualActionGamepad(2);
+		
+		leftTrack = new RhinoTrack(new Talon(0));
+		rightTrack = new RhinoTrack(new Talon(1));
+		
+		driveBase = new MainDriveBase(leftTrack, rightTrack);
 	}
 
 	public void robotInit() {
@@ -38,7 +56,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-		System.out.println(leftJoystick.getButtonDebugString() + " " + rightJoystick.getButtonDebugString() + " - " + gamepad.getButtonDebugString());
 	}
 
 	public void testInit() {

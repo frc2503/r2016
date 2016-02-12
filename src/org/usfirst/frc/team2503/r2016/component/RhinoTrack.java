@@ -10,12 +10,12 @@ public class RhinoTrack implements SpeedController, Component {
 		this.controller = controller;
 	}
 	
-	public void pidWrite(double output) { this.controller.pidWrite(output); }
+	public void disable() { this.controller.disable(); }
 	public double get() { return this.controller.get(); }
+	public boolean getInverted() { return this.controller.getInverted(); }
+	public void pidWrite(double output) { this.controller.pidWrite(output); }
 	public void set(double speed) { this.controller.set(speed); }
 	public void set(double speed, byte syncGroup) { this.controller.set(speed, syncGroup); }
 	public void setInverted(boolean isInverted) { this.controller.setInverted(isInverted); }
-	public boolean getInverted() { return this.controller.getInverted(); }
-	public void disable() { this.controller.disable(); }
 	
 }

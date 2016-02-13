@@ -14,39 +14,36 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Talon;
 
 public class Robot extends IterativeRobot {
-	
+
 	public MadCatzV1Joystick leftJoystick;
 	public MadCatzV1Joystick rightJoystick;
-	
+	public Gamepad gamepad;
+
 	public RhinoTrack leftTrack;
 	public RhinoTrack rightTrack;
-	
+
 	public Encoder leftTrackEncoder;
 	public Encoder rightTrackEncoder;
-	
+
 	public Winch winch;
-	
 	public DriveBase driveBase;
-	
-	public Gamepad gamepad;
-	
+
 	public Robot() {
 		System.setProperty("java.awt.headless", "true");
 
-		leftTrackEncoder = new Encoder(Constants.leftTrackEncoderAChannel, Constants.leftTrackEncoderBChannel);
-		rightTrackEncoder = new Encoder(Constants.rightTrackEncoderAChannel, Constants.rightTrackEncoderBChannel);
-		
 		leftJoystick = new MadCatzV1Joystick(0);
 		rightJoystick = new MadCatzV1Joystick(1);
-		
+
 		gamepad = new LogitechDualActionGamepad(2);
-		
+
 		leftTrack = new RhinoTrack(Constants.leftTrackSpeedController);
 		rightTrack = new RhinoTrack(Constants.rightTrackSpeedController);
 
-		driveBase = new MainDriveBase(leftTrack, rightTrack);
-		
+		leftTrackEncoder = new Encoder(Constants.leftTrackEncoderAChannel, Constants.leftTrackEncoderBChannel);
+		rightTrackEncoder = new Encoder(Constants.rightTrackEncoderAChannel, Constants.rightTrackEncoderBChannel);
+
 		winch = new Winch(Constants.winchSpeedController);
+		driveBase = new MainDriveBase(leftTrack, rightTrack);
 	}
 
 	public void robotInit() {
@@ -68,11 +65,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-		double leftY = leftJoystick.y.get();
-		
-		System.out.println(leftY);
-		
-		winch.set(leftY);
 	}
 
 	public void testInit() {

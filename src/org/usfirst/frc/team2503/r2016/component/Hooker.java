@@ -2,10 +2,10 @@ package org.usfirst.frc.team2503.r2016.component;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
-public class Winch extends SpeedControllerComponent {
+public class Hooker extends SpeedControllerComponent {
 
-	public Winch(SpeedController controller) {
+	public Hooker(SpeedController controller) {
 		super(controller);
 	}
-
+	
 }

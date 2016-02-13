@@ -2,11 +2,11 @@ package org.usfirst.frc.team2503.r2016.component;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
-public class RhinoTrack implements SpeedController, Component {
+public class Winch {
 
 	public SpeedController controller;
 
-	public RhinoTrack(SpeedController controller) {
+	public Winch(SpeedController controller) {
 		this.controller = controller;
 	}
 

@@ -29,3 +29,5 @@ tmp/
 
 # Locally stored "Eclipse launch configurations"
 *.launch
+
+*.zip

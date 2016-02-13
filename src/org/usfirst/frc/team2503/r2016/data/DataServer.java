@@ -2,81 +2,80 @@ package org.usfirst.frc.team2503.r2016.data;
 
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 
-import org.json.*;
+import org.json.JSONObject;
+import org.usfirst.frc.team2503.r2016.Constants;
+import org.usfirst.frc.team2503.r2016.debug.Logger;
 import org.usfirst.frc.team2503.websocket.WebSocket;
 import org.usfirst.frc.team2503.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.websocket.server.WebSocketServer;
 
-public class DataServer extends Data {
+public class DataServer {
+
+	public JSONObject data = new JSONObject();
 	
 	public class Server extends WebSocketServer {
 
-		public Server() throws UnknownHostException {
-			super();
-		}
-
-		public Server(int port) {
-			super(new InetSocketAddress(port));
-		}
-
-		public Server(InetSocketAddress inetSocketAddress) {
-			super(inetSocketAddress);
+		public Server(InetSocketAddress address) {
+			super(address);
 		}
 
 		@Override
-		public void onMessage(WebSocket connection, String data) {
-			System.out.println("[DataServer] Received data of length " + data.length() + "... converting to JSONObject.");
+		public void onOpen(WebSocket conn, ClientHandshake handshake) {
+		}
 
-			JSONObject object = new JSONObject(data);
+		@Override
+		public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+		}
 
-			System.out.println("[DataServer] JSONObject has " + object.keySet().size() + " keys.");
-
-			System.out.println("[DataServer] Before merge: " + DataServer.this.toString());
-
-			for(String key : object.keySet()) {
-				DataServer.this.put(key, object.get(key));
-			}
-
-			System.out.println("[DataServer] After merge: " + DataServer.this.toString());
+		@Override
+		public void onMessage(WebSocket conn, String message) {
+			JSONObject object = new JSONObject(message);
 			
-			connection.send(DataServer.this.toString());
+			for(String key : object.keySet()) {
+				DataServer.this.data.put(key, object.get(key));
+			}
 		}
 
 		@Override
-		public void onOpen(WebSocket connection, ClientHandshake handshake) {
-			System.out.println("[DataServer] Shook hands with a client! " + handshake.getResourceDescriptor());
+		public void onError(WebSocket conn, Exception ex) {
 		}
 
-		@Override
-		public void onClose(WebSocket connection, int code, String reason, boolean remote) {
-			System.out.println("[DataServer] Lost connection with a client. (code: " + code + ", reason: \"" + reason + "\", remote: " + (remote ? "true" : "false") + ")");
+		public void send(String text) {
+			for(WebSocket conn : this.connections()) {
+				conn.send(text);
+			}
 		}
-
-		@Override
-		public void onError(WebSocket connection, Exception exception) {
-			System.out.println("[DataServer] Error: " + exception.getMessage());
-		}
-
+		
 	}
-
-	public Server server = new Server(5800);
-
-	public Server getServerInstance() {
-		return this.server;
+	
+	public JSONObject put(String key, Object value) {
+		data.put(key, value);
+		
+		server.send(data.toString());
+		
+		return data;
 	}
-
-	public DataServer(InetSocketAddress inetSocketAddress) {
-		this.server = new Server(inetSocketAddress);
+	
+	public Object get(String key) {
+		return data.get(key);
 	}
-
-	public DataServer(final int port) {
-		this.server = new Server(port);
-	}
-
+	
+	public Server server;
+	
+	
 	public DataServer() {
-		this.server = new Server(5800);
+		server = new Server(new InetSocketAddress(5800));		
+		Logger.println(server.getAddress().toString());
+		
+		new Thread(server).start();
+	}
+
+	public DataServer(int port) {
+		server = new Server(new InetSocketAddress(port));
+		Logger.println(server.getAddress().toString());
+		
+		new Thread(server).start();
 	}
 
 }

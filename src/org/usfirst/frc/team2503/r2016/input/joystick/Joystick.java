@@ -1,54 +1,70 @@
 package org.usfirst.frc.team2503.r2016.input.joystick;
 
-public class Joystick extends edu.wpi.first.wpilibj.Joystick {
+public abstract class Joystick extends edu.wpi.first.wpilibj.Joystick {
 
-	public enum AxisType {
-		NEGATIVE_TO_POSITIVE(0),
-		ZERO_TO_POSITIVE(1);
+	public class ControllerButton {
 		
-		private final int value;
+		private final int channel;
 		
-		private AxisType(final int value) {
-			this.value = value;
+		public boolean get() {
+			return Joystick.this.getRawButton(channel);
 		}
 		
-		public final int getValue() {
-			return value;
+		
+		public ControllerButton(final int port) {
+			this.channel = port;
 		}
+		
 	}
 	
-	public class Axis {
-		private final int channel;
-		private final AxisType axisType;
-		private boolean inverted = false;
+	public class ControllerPOV {
 		
-		public double getRaw() {
+		public final int channel;
+		
+		public int get() {
+			return Joystick.this.getPOV(channel);
+		}
+		
+		public double getDegrees() {
+			return (double) this.get();
+		}
+		
+		public ControllerPOV(final int channel) {
+			this.channel = channel;
+		}
+		
+		public ControllerPOV() {
+			this.channel = 0;
+		}
+		
+	}
+	
+	public enum ControllerAxisType {
+		NEGATIVE_TO_POSITIVE, ZERO_TO_POSITIVE
+	}
+
+	public class ControllerAxis {
+
+		private final int channel;
+		private final ControllerAxisType type;
+		
+		public double get() {
 			return Joystick.this.getRawAxis(channel);
 		}
 		
-		public double get() {
-			switch(this.axisType) {
-			case ZERO_TO_POSITIVE:
-				return (this.inverted ? 1.0 - Math.abs(this.getRaw()) : Math.abs(this.getRaw()));
-			case NEGATIVE_TO_POSITIVE:
-			default:
-				return this.getRaw() * (this.inverted ? -1.0 : 1.0);
-			}
+		public ControllerAxisType getType() {
+			return type;
 		}
 		
-		public Axis(AxisType axisType, final int channel) {
-			this.axisType = axisType;
-			this.channel = channel;
+		public ControllerAxis(final int port, ControllerAxisType type) {
+			this.channel = port;
+			this.type = type;
 		}
 		
-		public Axis(final int channel) {
-			this.axisType = AxisType.NEGATIVE_TO_POSITIVE;
-			this.channel = channel;
-		}
 	}
 	
 	public Joystick(int port) {
 		super(port);
 	}
-
+	
 }

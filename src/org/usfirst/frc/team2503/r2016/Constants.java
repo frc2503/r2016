@@ -10,7 +10,7 @@ public class Constants {
 	public static final SpeedController leftTrackSpeedController = new Talon(0);
 	public static final SpeedController rightTrackSpeedController = new Talon(1);
 	public static final SpeedController shooterSpeedController = new Spark(2);
-	public static final SpeedController winchSpeedController = new Spark(3);
+	public static final SpeedController winchSpeedController = new Talon(3);
 	public static final SpeedController hookerSpeedController = new Talon(4);
 	
 	public static final DigitalInput leftTrackEncoderAChannel = new DigitalInput(0);

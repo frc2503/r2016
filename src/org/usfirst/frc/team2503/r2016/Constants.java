@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class Constants {
 	
+	public static final String defaultHostname = "0.0.0.0";
+	
 	public static final SpeedController leftTrackSpeedController = new Talon(0);
 	public static final SpeedController rightTrackSpeedController = new Talon(1);
 	public static final SpeedController shooterSpeedController = new Spark(2);

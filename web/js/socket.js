@@ -1,4 +1,39 @@
-window.DEVELOPMENT_MODE = 'local-debug';
+window.DEVELOPMENT_MODE = 'competition';
+
+window.dataDisplay = document.getElementById('data-display');
+
+function convertObjectToLi(object) {
+	var element = document.createElement('ul');
+
+	Object.keys(object).forEach(function(key) {
+		var e2 = document.createElement('li');
+		var value = object[key];
+
+		switch(typeof value) {
+			case 'object':
+				e2.innerHTML = '<b>' + key + '</b> &mdash;'
+				e2.appendChild(convertObjectToLi(value));
+				break;
+			default:
+				e2.innerHTML = '<b>' + key + '</b> &mdash; ' + value;
+				break;
+		}
+
+		element.appendChild(e2);
+	});
+
+	return element;
+}
+
+function updateDataDisplay(data) {
+	var data = convertObjectToLi(data);
+
+	while(window.dataDisplay.lastChild) {
+		window.dataDisplay.removeChild(window.dataDisplay.lastChild);
+	}
+
+	window.dataDisplay.appendChild(data);
+}
 
 switch(window.DEVELOPMENT_MODE) {
 	case 'local-debug':
@@ -7,7 +42,7 @@ switch(window.DEVELOPMENT_MODE) {
 
 	case 'competition':
 	default:
-		window.SOCKET_URI = "roboRIO-2503-frc.local";
+		window.SOCKET_URI = "roboRIO-2503-FRC.local";
 		break;
 }
 
@@ -23,7 +58,12 @@ function ImageSocket(url, setupCallback) {
 
 	this.socket.onmessage = function(messageEvent) {
 		var object = JSON.parse(messageEvent.data);
-		document.getElementsByClassName('image')[0].src = object['image'];
+		console.debug(object);
+
+		updateDataDisplay(object);
+
+		if(object['image'])
+			document.getElementsByClassName('image')[0].src = object['image'];
 	};
 
 	this.socket.onerror = function() {

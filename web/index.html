@@ -3,81 +3,82 @@
 
 	<head>
 
-    <!-- Meta Tabs -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Automatic Deployer to FRC 2503 Robot / Web Control Interface">
-    <meta name="author" content="Kris Rye and Thomas Juranek">
+		<!-- Meta Tabs -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Automatic Deployer to FRC 2503 Robot / Web Control Interface">
+		<meta name="author" content="Kris Rye and Thomas Juranek">
 
-    <!-- Title -->
-    <title>r2016 &mdash; wcp</title>
+		<!-- Title -->
+		<title>r2016 &mdash; wcp</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+		<!-- Bootstrap Core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="css/custom.css" rel="stylesheet">
+		<!-- Custom CSS -->
+		<link href="css/custom.css" rel="stylesheet">
 
 	</head>
 
 	<body>
 
-    <!-- Adding our Websockets -->
-    <script src="js/socket.js"></script>
+		<!-- Adding our Websockets -->
+		<script src="js/socket.js"></script>
 
-    <!-- Page Content -->
-    <div class="row">
-      <!-- Very Leftmost Seciton -->
-      <div class="col-lg-4 topsection">
-        <!-- RIO On - Off Row -->
-        <div class="row">
-          <div class="col-lg-6">
-            <h3 class="leftheading">RIO On - Off:</h3>
-          </div>
-          <div class="col-lg-6 switchpadding">
-            <div class="onoffswitch">
-              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-              <label class="onoffswitch-label" for="myonoffswitch">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <!-- Enabled Row -->
-        <div class="row">
-          <div class="col-lg-6">
-            <h3 class="leftheading">Enabled:</h3>
-          </div>
-          <div class="col-lg-6 switchpadding">
-            <div class="onoffswitch">
-              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-              <label class="onoffswitch-label" for="myonoffswitch">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Center Section -->
-      <div class="col-lg-6 topsection">
-        <img src="img/bobross.jpg"/>
-      </div>
-      <!-- Right Section -->
-      <div class="col-lg-2 topsection">
-        <textarea rows="25" cols="30">
-                At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
-        </textarea>
-      </div>
-    </div>
+		<!-- Page Content -->
+		<div class="row">
+			<!-- Very Leftmost Seciton -->
+			<div class="col-lg-4 topsection">
+				<!-- RIO On - Off Row -->
+				<div class="row">
+					<div class="col-lg-6">
+						<h3 class="leftheading">RIO On - Off:</h3>
+					</div>
+					<div class="col-lg-6 switchpadding">
+						<div class="onoffswitch">
+							<input type="checkbox" name="rio-on-off-switch" class="onoffswitch-checkbox" id="rio-on-off-switch" checked>
+							<label class="onoffswitch-label" for="rio-on-off-switch">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+				</div>
 
-    <!-- jQuery Version 1.11.1 -->
-    <script src="js/jquery.js"></script>
+				<!-- Enabled Row -->
+				<div class="row">
+					<div class="col-lg-6">
+						<h3 class="leftheading">Enabled:</h3>
+					</div>
+					<div class="col-lg-6 switchpadding">
+						<div class="onoffswitch">
+							<input type="checkbox" name="enabled-switch" class="onoffswitch-checkbox" id="enabled-switch" checked>
+							<label class="onoffswitch-label" for="enabled-switch">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+			<!-- Center Section -->
+			<div class="col-lg-6 topsection">
+				<img id="vision-image" src="img/bobross.jpg"/>
+			</div>
+
+			<!-- Right Section -->
+			<div class="col-lg-2 topsection">
+				<textarea id="console-output"></textarea>
+			</div>
+		</div>
+
+		<!-- jQuery Version 1.11.1 -->
+		<script src="js/jquery.js"></script>g
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
 
 	</body>
 

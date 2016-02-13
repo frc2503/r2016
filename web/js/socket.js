@@ -62,8 +62,8 @@ function ImageSocket(url, setupCallback) {
 
 		updateDataDisplay(object);
 
-		if(object['image'])
-			document.getElementsByClassName('image')[0].src = object['image'];
+		if(object['vision-image'])
+			document.getElementsByClassName('vision-image')[0].src = object['vision-image'];
 	};
 
 	this.socket.onerror = function() {

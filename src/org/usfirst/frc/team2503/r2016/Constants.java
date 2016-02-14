@@ -2,6 +2,7 @@ package org.usfirst.frc.team2503.r2016;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
@@ -15,6 +16,9 @@ public class Constants {
 	public static final SpeedController shooterSpeedController = new Spark(2);
 	public static final SpeedController winchSpeedController = new Talon(3);
 	public static final SpeedController hookerSpeedController = new Talon(4);
+	
+	public static final Servo cameraVerticalRotationServo = new Servo(5);
+	public static final Servo cameraHorizontalRotationServo = new Servo(6);
 	
 	public static final DigitalInput leftTrackEncoderAChannel = new DigitalInput(0);
 	public static final DigitalInput leftTrackEncoderBChannel = new DigitalInput(1);

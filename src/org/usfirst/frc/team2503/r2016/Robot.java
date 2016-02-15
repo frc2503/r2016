@@ -110,7 +110,6 @@ public class Robot extends IterativeRobot {
 		double hookerV = (gamepad.leftY.get() * 0.5);
 		
 		winch.set(winchV);
-		
 		hooker.set(hookerV);
 		
 		if(gamepad.a.get()) {
@@ -126,7 +125,6 @@ public class Robot extends IterativeRobot {
 			Constants.cameraVerticalRotationServo.set(vert);
 			Constants.cameraHorizontalRotationServo.set(horz);
 		}
-		
 	}
 
 	public void testInit() {

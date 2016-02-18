@@ -4,10 +4,6 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 public class Hooker extends SpeedControllerComponent {
 	
-	public enum HookerControlMode {
-		
-	}
-	
 	public Hooker(SpeedController controller) {
 		super(controller);
 	}

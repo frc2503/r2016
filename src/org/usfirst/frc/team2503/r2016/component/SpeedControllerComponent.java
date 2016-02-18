@@ -17,5 +17,6 @@ public abstract class SpeedControllerComponent extends Component implements Spee
 	public void set(double speed) { this.controller.set(speed); }
 	public void set(double speed, byte syncGroup) { this.controller.set(speed, syncGroup); }
 	public void setInverted(boolean isInverted) { this.controller.setInverted(isInverted); }
+	public void stopMotor() { this.controller.stopMotor(); }
 	
 }

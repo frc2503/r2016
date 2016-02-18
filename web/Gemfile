@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+
+gem 'rack'
+gem 'thin'
+gem 'sinatra'
+gem 'faye-websocket'
+gem 'sinatra-websocket'
+
+group :development do
+	gem 'guard'
+	gem 'rspec'
+	gem 'guard-rspec'
+end

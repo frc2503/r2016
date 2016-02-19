@@ -16,14 +16,19 @@ public class Constants {
 	public static final SpeedController shooterSpeedController = new Spark(2);
 	public static final SpeedController winchSpeedController = new Talon(3);
 	public static final SpeedController hookerSpeedController = new Talon(4);
+	public static final SpeedController intakeSpeedController = new Talon(6);
 	
 	public static final Servo cameraVerticalRotationServo = new Servo(5);
-	public static final Servo cameraHorizontalRotationServo = new Servo(6);
+	
+	public static final Servo cameraHorizontalRotationServo = new Servo(7);
+	
 	
 	public static final DigitalInput leftTrackEncoderAChannel = new DigitalInput(0);
 	public static final DigitalInput leftTrackEncoderBChannel = new DigitalInput(1);
 	public static final DigitalInput rightTrackEncoderAChannel = new DigitalInput(2);
 	public static final DigitalInput rightTrackEncoderBChannel = new DigitalInput(3);
-	public static final DigitalInput intakeDigitalInput = new DigitalInput(4);
+	public static final DigitalInput intakeEncoderAChannel = new DigitalInput(4);
+	public static final DigitalInput intakeEncoderBChannel = new DigitalInput(5);
+	public static final DigitalInput intakeLimitSwitch = new DigitalInput(6);
 	
 }

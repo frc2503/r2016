@@ -4,7 +4,9 @@ import java.net.InetSocketAddress;
 
 import org.json.JSONObject;
 import org.usfirst.frc.team2503.r2016.component.Hooker;
+import org.usfirst.frc.team2503.r2016.component.Intake;
 import org.usfirst.frc.team2503.r2016.component.RhinoTrack;
+import org.usfirst.frc.team2503.r2016.component.Shooter;
 import org.usfirst.frc.team2503.r2016.component.Winch;
 import org.usfirst.frc.team2503.r2016.debug.Logger;
 import org.usfirst.frc.team2503.r2016.debug.Logger.LoggerPrintStream;
@@ -40,11 +42,14 @@ public class Robot extends IterativeRobot {
 
 	public Encoder leftTrackEncoder;
 	public Encoder rightTrackEncoder;
+	public Encoder hookerEncoder;
 
 	public JSONObject modeObject;
 	
 	public Winch winch;
 	public Hooker hooker;
+	public Shooter shooter;
+	public Intake intake;
 	public DriveBase driveBase;
 	
 	public Robot() {
@@ -76,9 +81,12 @@ public class Robot extends IterativeRobot {
 
 		leftTrackEncoder = new Encoder(Constants.leftTrackEncoderAChannel, Constants.leftTrackEncoderBChannel);
 		rightTrackEncoder = new Encoder(Constants.rightTrackEncoderAChannel, Constants.rightTrackEncoderBChannel);
+		hookerEncoder = new Encoder(Constants.intakeEncoderAChannel, Constants.intakeEncoderBChannel);
 		
 		winch = new Winch(Constants.winchSpeedController);
 		hooker = new Hooker(Constants.hookerSpeedController);
+		shooter = new Shooter(Constants.shooterSpeedController);
+		intake = new Intake(Constants.intakeSpeedController);
 		driveBase = new MainDriveBase(leftTrack, rightTrack);
 		
 		modeObject = new JSONObject();
@@ -103,28 +111,49 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-		double vert = (gamepad.rightY.get() + 1.0) / 2.0;
-		double horz = (gamepad.rightX.get() + 1.0) / 2.0;
-		double winchV = leftJoystick.y.get();
+		double left = (leftJoystick.y.get());
+		double right = (rightJoystick.y.get());
 		
+		if(leftJoystick.button5.get()) {
+			left = -right;
+			right = -left;
+		}
+		
+		double winchV = gamepad.rightY.get();
 		double hookerV = (gamepad.leftY.get() * 0.5);
-		
+		double shooterV = (gamepad.rightTrigger.get());
+
+		if(gamepad.a.get() && !gamepad.b.get()) {
+			intake.set(1.0);
+		} else if(gamepad.b.get()  && !gamepad.a.get()) {
+			intake.set(-1.0);
+		} else {
+			intake.set(0.0);
+		}
+
 		winch.set(winchV);
 		hooker.set(hookerV);
+		shooter.set(shooterV);
 		
-		if(gamepad.a.get()) {
-			Constants.cameraHorizontalRotationServo.set(1.0);
-			Constants.cameraVerticalRotationServo.set(0.5);
-		} else if(gamepad.b.get()) {
-			Constants.cameraHorizontalRotationServo.set(1.0);
-			Constants.cameraVerticalRotationServo.set(0.6);
-		} else if(gamepad.y.get()) {
-			Constants.cameraHorizontalRotationServo.set(0.0);
-			Constants.cameraVerticalRotationServo.set(0.3);
-		} else if(gamepad.x.get()) {
-			Constants.cameraVerticalRotationServo.set(vert);
-			Constants.cameraHorizontalRotationServo.set(horz);
-		}
+//		if(gamepad.a.get()) {
+//			Constants.cameraHorizontalRotationServo.set(1.0);
+//			Constants.cameraVerticalRotationServo.set(0.5);
+//		} else if(gamepad.b.get()) {
+//			Constants.cameraHorizontalRotationServo.set(1.0);
+//			Constants.cameraVerticalRotationServo.set(0.6);
+//		} else if(gamepad.y.get()) {
+//			Constants.cameraHorizontalRotationServo.set(0.0);
+//			Constants.cameraVerticalRotationServo.set(0.3);
+//		} else if(gamepad.x.get()) {
+//			Constants.cameraVerticalRotationServo.set(vert);
+//			Constants.cameraHorizontalRotationServo.set(horz);
+//		}
+		
+		driveBase.drive(left, right);
+		
+		Constants.cameraHorizontalRotationServo.set(1.0);
+		Constants.cameraVerticalRotationServo.set(0.5);
+		
 	}
 
 	public void testInit() {

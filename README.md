@@ -6,12 +6,14 @@ This is the code for our 2016 robot.
 
  port number | y-splitter? | Motor Controller type | description
 |---|---|---|---|
-0|Yes|Talon|Left Side Rhino Track Talons |
-1|Yes|Talon|Right Side Rhino Track Talons
-2|No|Spark|Shooter
+0|Yes|Talon|Left Side Rhino Track
+1|Yes|Talon|Right Side Rhino Track
+2|No|Talon|Shooter
 3|No|Spark|Winch
-4|No|Talon|Hooker
-5|No|Servo|Camera Rotation Servo
+4|No|Talon|Hook
+5|No|Servo|Camera X Rotation Servo
+6|No|Servo|Camera Y Rotation Servo
+7|No|Talon|Pick up motor
 
 ## DIO
 port number | description
@@ -23,3 +25,10 @@ port number | description
 4|Hooker Encoder A
 5|Hooker Encoder B
 6|Intake Limit Switch
+7|Camera Light Relay (if used)
+
+## Pneumatics
+port number | description
+|---|---|
+0|Raise arm
+1|Lower arm

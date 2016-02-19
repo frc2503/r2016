@@ -27,6 +27,11 @@ port number | description
 6|Intake Limit Switch
 7|Camera Light Relay (if used)
 
+## Other
+port | description
+|---|---|
+SPI|Gyro/Accelerometer
+
 ## Pneumatics
 port number | description
 |---|---|

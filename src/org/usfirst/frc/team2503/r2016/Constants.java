@@ -1,7 +1,10 @@
 package org.usfirst.frc.team2503.r2016;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -18,10 +21,11 @@ public class Constants {
 	public static final SpeedController hookerSpeedController = new Talon(4);
 	public static final SpeedController intakeSpeedController = new Talon(6);
 	
-	public static final Servo cameraVerticalRotationServo = new Servo(5);
+	public static final Servo cameraVerticalRotationServo = new Servo(7);
+	public static final Servo cameraHorizontalRotationServo = new Servo(5);
 	
-	public static final Servo cameraHorizontalRotationServo = new Servo(7);
-	
+	public static final Compressor compressor = new Compressor(1);
+	public static final DoubleSolenoid lift = new DoubleSolenoid(1, 0, 1);
 	
 	public static final DigitalInput leftTrackEncoderAChannel = new DigitalInput(0);
 	public static final DigitalInput leftTrackEncoderBChannel = new DigitalInput(1);
@@ -30,5 +34,7 @@ public class Constants {
 	public static final DigitalInput intakeEncoderAChannel = new DigitalInput(4);
 	public static final DigitalInput intakeEncoderBChannel = new DigitalInput(5);
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(6);
+	
+	public static final Relay lightRelay = new Relay(0);
 	
 }

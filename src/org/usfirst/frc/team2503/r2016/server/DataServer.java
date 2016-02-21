@@ -24,6 +24,10 @@ public class DataServer extends WebSocketServer {
 		return this.clientData;
 	}
 	
+	public void send() {
+		this.send(this.serverData.toString());
+	}
+	
 	public DataServer() throws UnknownHostException {
 		super();
 	}

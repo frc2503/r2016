@@ -13,11 +13,8 @@ import org.usfirst.frc.team2503.r2016.component.Shooter;
 import org.usfirst.frc.team2503.r2016.component.Winch;
 import org.usfirst.frc.team2503.r2016.debug.Logger;
 import org.usfirst.frc.team2503.r2016.debug.Logger.LoggerPrintStream;
-import org.usfirst.frc.team2503.r2016.input.gamepad.Gamepad;
-import org.usfirst.frc.team2503.r2016.input.gamepad.LogitechDualActionGamepad;
 import org.usfirst.frc.team2503.r2016.input.gamepad.LogitechF310Gamepad;
 import org.usfirst.frc.team2503.r2016.input.joystick.MadCatzV1Joystick;
-//import org.usfirst.frc.team2503.r2016.input.vision.Camera;
 import org.usfirst.frc.team2503.r2016.server.DataServer;
 import org.usfirst.frc.team2503.r2016.server.MessageServer;
 import org.usfirst.frc.team2503.r2016.subsystem.DriveBase;
@@ -27,8 +24,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Direction;
-import edu.wpi.first.wpilibj.Talon;
 
 public class Robot extends IterativeRobot {
 

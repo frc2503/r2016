@@ -2,9 +2,6 @@ package org.usfirst.frc.team2503.r2016;
 
 import java.net.InetSocketAddress;
 
-import org.json.JSONObject;
-import org.usfirst.frc.team2503.r2016.debug.Logger;
-import org.usfirst.frc.team2503.r2016.debug.Logger.LoggerPrintStream;
 import org.usfirst.frc.team2503.r2016.server.DataServer;
 import org.usfirst.frc.team2503.r2016.server.MessageServer;
 

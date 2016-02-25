@@ -1,13 +1,8 @@
 package org.usfirst.frc.team2503.r2016.server;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Vector;
 
 import org.json.JSONObject;
 import org.usfirst.frc.team2503.websocket.WebSocket;

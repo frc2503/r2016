@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 public class Winch extends SpeedControllerComponent {
 
+	public void tick() {
+	}
+
 	public Winch(SpeedController controller) {
 		super(controller);
 	}

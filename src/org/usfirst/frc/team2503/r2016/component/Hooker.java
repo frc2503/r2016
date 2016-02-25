@@ -9,6 +9,9 @@ public class Hooker extends SpeedControllerComponent {
 	public DigitalInput limitSwitch;
 	public Encoder encoder;
 
+	public void tick() {
+	}
+
 	public Hooker(SpeedController controller) {
 		super(controller);
 	}

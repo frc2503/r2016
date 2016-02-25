@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 public class RhinoTrack extends SpeedControllerComponent {
 
+	public void tick() {
+	}
+
 	public RhinoTrack(SpeedController controller) {
 		super(controller);
 	}

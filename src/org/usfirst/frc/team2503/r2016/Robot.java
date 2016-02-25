@@ -255,24 +255,6 @@ public class Robot extends IterativeRobot {
 		
 		driveBase.drive(leftValue, rightValue);
 		
-//		if(gamepad.pov.get() >= 0) {
-//			double povAngle = 90.0d - (double) gamepad.pov.get();
-//			
-//			horz += (Math.cos((Math.PI / 180.0) * povAngle) * 0.01);
-//			vert += (Math.sin((Math.PI / 180.0) * povAngle) * 0.01);
-//			
-//			if(horz > 1.0) horz = 1.0;
-//			if(horz < 0.0) horz = 0.0;
-//			
-//			if(vert > 1.0) vert = 1.0;
-//			if(vert < 0.0) vert = 0.0;
-//		}
-//		
-//		if(gamepad.back.get()) {
-//			vert = 0.5;
-//			horz = 1.0;
-//		}
-		
 		double povAngle = (double) gamepad.pov.get();
 		
 		if(povAngle >= 0) {

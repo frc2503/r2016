@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2503.r2016;
 
+import org.usfirst.frc.team2503.r2016.component.CameraMount.CameraLights;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;

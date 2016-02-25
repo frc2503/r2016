@@ -1,11 +1,13 @@
 package org.usfirst.frc.team2503.r2016;
 
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 
 import org.json.JSONObject;
 import org.usfirst.frc.team2503.r2016.component.CameraMount;
 import org.usfirst.frc.team2503.r2016.component.Hooker;
 import org.usfirst.frc.team2503.r2016.component.Intake;
+import org.usfirst.frc.team2503.r2016.component.Intake.IntakeMode;
 import org.usfirst.frc.team2503.r2016.component.RhinoTrack;
 import org.usfirst.frc.team2503.r2016.component.Shooter;
 import org.usfirst.frc.team2503.r2016.component.Winch;
@@ -30,7 +32,63 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class Robot extends IterativeRobot {
 
-	public DataServer dataServer;
+	public class RobotDataServer extends DataServer {
+		
+		public void update() {
+			{
+				JSONObject encoders = new JSONObject();
+				
+				encoders.put("hooker", hooker.encoder.get());
+				encoders.put("left", leftTrackEncoder.get());
+				encoders.put("right", rightTrackEncoder.get());
+				
+				this.serverData.put("encoders", encoders);
+			}
+			
+			{
+				JSONObject switches = new JSONObject();
+				
+				switches.put("intake", intake.limitSwitch.get());
+				switches.put("hooker", hooker.limitSwitch.get());
+				
+				this.serverData.put("switches", switches);
+			}
+
+			{ 
+				JSONObject pneumatics = new JSONObject();
+				
+				pneumatics.put("charged", Constants.compressor.getPressureSwitchValue());
+				pneumatics.put("enabled", Constants.compressor.enabled());
+				pneumatics.put("closed", Constants.compressor.getClosedLoopControl());
+				
+				this.serverData.put("pneumatics", pneumatics);
+			}
+
+			{
+				JSONObject joystickInputs = new JSONObject();
+				
+				joystickInputs.put("left", leftValue);
+				joystickInputs.put("right", rightValue);
+				joystickInputs.put("winch", winchValue);
+				joystickInputs.put("hooker", hookerValue);
+				joystickInputs.put("shooter", shooterValue);
+				
+				this.serverData.put("joysticks", joystickInputs);
+			}
+		}
+		
+		public RobotDataServer() throws UnknownHostException {
+			super();
+		}
+
+		public RobotDataServer(InetSocketAddress address) {
+			super(address);
+		}
+		
+		
+	}
+	
+	public RobotDataServer robotDataServer;
 	public MessageServer messageServer;
 	
 	public Thread dataServerThread, messageServerThread;
@@ -59,15 +117,22 @@ public class Robot extends IterativeRobot {
 	public double horz;
 	public double vert;
 	
+	public double leftValue;
+	public double rightValue;
+	public double winchValue;
+	public double hookerValue;
+	public double shooterValue;
+ 
+	
 	public Robot() {
 		// Set the Java AWT to be happy with the fact that we're
 		// running in a decapitated state.
 		System.setProperty("java.awt.headless", "true");
 		
-		dataServer = new DataServer(new InetSocketAddress(5800));
+		robotDataServer = new RobotDataServer(new InetSocketAddress(5800));
 		messageServer = new MessageServer(new InetSocketAddress(5801));
 		
-		dataServerThread = new Thread(dataServer);
+		dataServerThread = new Thread(robotDataServer);
 		messageServerThread = new Thread(messageServer);
 		
 		System.out.println("[DataServer] Starting...");
@@ -94,7 +159,7 @@ public class Robot extends IterativeRobot {
 		hookerEncoder = new Encoder(Constants.intakeEncoderAChannel, Constants.intakeEncoderBChannel);
 		
 		winch = new Winch(Constants.winchSpeedController);
-		hooker = new Hooker(Constants.hookerSpeedController);
+		hooker = new Hooker(Constants.hookerSpeedController, hookerEncoder, Constants.hookerLimitSwitch);
 		shooter = new Shooter(Constants.shooterSpeedController);
 		intake = new Intake(Constants.intakeSpeedController, Constants.intakeLimitSwitch);
 		driveBase = new MainDriveBase(leftTrack, rightTrack);
@@ -110,10 +175,15 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void robotInit() {
-		Constants.compressor.setClosedLoopControl(true);
-		Constants.compressor.start();
+		if(true) {
+			Constants.compressor.setClosedLoopControl(true);
+			Constants.compressor.start();
+		} else {
+			Constants.compressor.stop();
+		}
 		
 		Constants.lightRelay.setDirection(Relay.Direction.kForward);
+		Constants.indicatorRelay.setDirection(Relay.Direction.kForward);
 		
 		leftTrackEncoder.reset();
 		rightTrackEncoder.reset();
@@ -128,9 +198,20 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+		hookerEncoder.reset();
 	}
 
 	public void autonomousPeriodic() {
+		int ticks = hooker.encoder.get();
+		
+		if(ticks < 175) {
+			hooker.set(-0.5);
+		} else if(ticks >= 175 && ticks < 185) {
+			hooker.set(0.0);
+		} else {
+			hooker.set(0.5);
+		}
+		
 		messageServer.sendMessage("info", "DANK MEMES CAN'T MELT JET FUEL");
 	}
 
@@ -140,43 +221,54 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-		double left = (leftJoystick.y.get());
-		double right = (rightJoystick.y.get());
+		leftValue = (leftJoystick.y.get());
+		rightValue = (rightJoystick.y.get());
+		winchValue = gamepad.rightY.get();
+		hookerValue = (gamepad.leftY.get() * 0.5);
+		shooterValue = (gamepad.rightTrigger.get());
 		
-		left *= leftJoystick.throttle.get();
-		right *= rightJoystick.throttle.get();
+		leftValue *= leftJoystick.throttle.get();
+		rightValue *= rightJoystick.throttle.get();
 		
 		if(leftJoystick.button5.get()) {
-			double oldLeft = left;
-			double oldRight = right;
+			double oldLeft = leftValue;
+			double oldRight = rightValue;
 			
-			left = -oldRight;
-			right = -oldLeft;
+			leftValue = -oldRight;
+			rightValue = -oldLeft;
 		}
 		
-		double winchV = gamepad.rightY.get();
-		double hookerV = (gamepad.leftY.get() * 0.5);
-		double shooterV = (gamepad.rightTrigger.get());
-		
-		if(!Constants.intakeLimitSwitch.get()) {
-			if((gamepad.a.get() && !gamepad.b.get()) || gamepad.rightBumper.get() || gamepad.leftBumper.get()) {
-				intake.set(1.0);
-			} else if(gamepad.b.get()  && !gamepad.a.get()) {
-				intake.set(-1.0);
-			} else {
-				intake.set(0.0);
-			}
+		if(gamepad.b.get()) {
+			intake.setMode(IntakeMode.OUTBOUND);
+		} else if(gamepad.a.get()) {
+			intake.setMode(IntakeMode.INBOUND);
+		} else if(gamepad.leftBumper.get())  {
+			intake.setMode(IntakeMode.FIRE);
 		} else {
-			if(gamepad.leftBumper.get() && gamepad.rightBumper.get()) {
-				intake.set(1.0);
-			} else {
-				intake.set(0.0);
-			}
+			intake.setMode(IntakeMode.STOPPED);
 		}
+		
+		intake.tick();
+		
+//		if(!Constants.intakeLimitSwitch.get()) {
+//			if((gamepad.a.get() && !gamepad.b.get()) || gamepad.rightBumper.get() || gamepad.leftBumper.get()) {
+//				intake.set(1.0);
+//			} else if(gamepad.b.get() && !gamepad.a.get()) {
+//				intake.set(-1.0);
+//			} else {
+//				intake.set(0.0);
+//			}
+//		} else {
+//			if(gamepad.leftBumper.get() && gamepad.rightBumper.get()) {
+//				intake.set(1.0);
+//			} else {
+//				intake.set(0.0);
+//			}
+//		}
 
-		winch.set(winchV);
-		hooker.set(hookerV);
-		shooter.set(shooterV);
+		winch.set(winchValue);
+		hooker.set(hookerValue);
+		shooter.set(shooterValue);
 		
 //		if(gamepad.a.get()) {
 //			Constants.cameraHorizontalRotationServo.set(1.0);
@@ -200,7 +292,7 @@ public class Robot extends IterativeRobot {
 			Constants.lift.set(DoubleSolenoid.Value.kOff);
 		}
 		
-		driveBase.drive(left, right);
+		driveBase.drive(leftValue, rightValue);
 		
 		if(gamepad.pov.get() >= 0) {
 			double povAngle = 90.0d - (double) gamepad.pov.get();
@@ -228,16 +320,16 @@ public class Robot extends IterativeRobot {
 			Constants.lightRelay.set(Relay.Value.kOff);
 		}
 		
-		dataServer.serverData.put("hooker", hookerEncoder.get());
-		dataServer.serverData.put("left", leftTrackEncoder.get());
-		dataServer.serverData.put("right", rightTrackEncoder.get());
-		dataServer.serverData.put("pressure-charged", Constants.compressor.getPressureSwitchValue());
-		dataServer.serverData.put("compressor-enabled", Constants.compressor.enabled());
-		dataServer.serverData.put("compressor-closed-loop", Constants.compressor.getClosedLoopControl());
+		if(intake.limitSwitch.get()) {
+			Constants.indicatorRelay.set(Relay.Value.kOn);
+		} else {
+			Constants.indicatorRelay.set(Relay.Value.kOff);
+		}
 		
 		// System.out.println(hookerEncoder.get() + ", " + leftTrackEncoder.get() + ", " + rightTrackEncoder.get());
 
-		dataServer.send();
+		robotDataServer.update();
+		robotDataServer.send();
 		
 		messageServer.sendMessage("info", "DANK MEMES CAN'T MELT JET FUEL");
 		

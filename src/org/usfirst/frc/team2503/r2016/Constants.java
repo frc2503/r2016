@@ -34,7 +34,9 @@ public class Constants {
 	public static final DigitalInput intakeEncoderAChannel = new DigitalInput(4);
 	public static final DigitalInput intakeEncoderBChannel = new DigitalInput(5);
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(6);
+	public static final DigitalInput hookerLimitSwitch = new DigitalInput(7);
 	
 	public static final Relay lightRelay = new Relay(0);
+	public static final Relay indicatorRelay = new Relay(1);
 	
 }

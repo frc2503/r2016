@@ -12,9 +12,10 @@ public class Intake extends SpeedControllerComponent {
 		OUTBOUND,
 		FIRE
 	}
-	
+
+	public DigitalInput limitSwitch;
+
 	private IntakeMode mode = IntakeMode.UNKNOWN;
-	private DigitalInput limitSwitch;
 	
 	public void setMode(IntakeMode mode) { this.mode = mode; }
 	public IntakeMode getMode() { return this.mode; }
@@ -26,10 +27,10 @@ public class Intake extends SpeedControllerComponent {
 			break;
 			
 		case INBOUND:
-			if(!limitSwitch.get()) {
-				this.controller.set(1.0);
-			} else {
+			if(limitSwitch.get()) {
 				this.controller.set(0.0);
+			} else {
+				this.controller.set(1.0);
 			}
 			
 			break;
@@ -39,12 +40,7 @@ public class Intake extends SpeedControllerComponent {
 			break;
 			
 		case FIRE:
-			if(limitSwitch.get()) {
-				this.controller.set(1.0);
-			} else {
-				this.controller.set(1.0);
-			}
-			
+			this.controller.set(1.0);
 			break;
 		
 		case UNKNOWN:

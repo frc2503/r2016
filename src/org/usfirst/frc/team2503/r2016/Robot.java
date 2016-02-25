@@ -4,7 +4,10 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import org.json.JSONObject;
+import org.usfirst.frc.team2503.lib.util.WarriorMath;
 import org.usfirst.frc.team2503.r2016.component.CameraMount;
+import org.usfirst.frc.team2503.r2016.component.CameraMount.CameraLights;
+import org.usfirst.frc.team2503.r2016.component.CameraMount.CameraMountMode;
 import org.usfirst.frc.team2503.r2016.component.Hooker;
 import org.usfirst.frc.team2503.r2016.component.Intake;
 import org.usfirst.frc.team2503.r2016.component.Intake.IntakeMode;
@@ -106,18 +109,13 @@ public class Robot extends IterativeRobot {
 	public Shooter shooter;
 	public Intake intake;
 	public DriveBase driveBase;
-	
 	public CameraMount cameraMount;
-	
-	public double horz;
-	public double vert;
 	
 	public double leftValue;
 	public double rightValue;
 	public double winchValue;
 	public double hookerValue;
 	public double shooterValue;
- 
 	
 	public Robot() {
 		// Set the Java AWT to be happy with the fact that we're
@@ -159,7 +157,7 @@ public class Robot extends IterativeRobot {
 		intake = new Intake(Constants.intakeSpeedController, Constants.intakeLimitSwitch);
 		driveBase = new MainDriveBase(leftTrack, rightTrack);
 		
-		cameraMount = new CameraMount(Constants.cameraHorizontalRotationServo, Constants.cameraVerticalRotationServo);
+		cameraMount = new CameraMount(Constants.cameraHorizontalRotationServo, Constants.cameraVerticalRotationServo, Constants.cameraLights);
 
 		winch.setInverted(true);
 		hooker.setInverted(true);
@@ -170,14 +168,10 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void robotInit() {
-		if(true) {
-			Constants.compressor.setClosedLoopControl(true);
-			Constants.compressor.start();
-		} else {
-			Constants.compressor.stop();
-		}
+		Constants.compressor.setClosedLoopControl(true);
+		Constants.compressor.start();
 		
-		Constants.lightRelay.setDirection(Relay.Direction.kForward);
+		Constants.cameraLights.setDirection(Relay.Direction.kForward);
 		Constants.indicatorRelay.setDirection(Relay.Direction.kForward);
 		
 		leftTrackEncoder.reset();
@@ -211,8 +205,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
-		horz = 1.0;
-		vert = 0.5;
 	}
 
 	public void teleopPeriodic() {
@@ -225,6 +217,7 @@ public class Robot extends IterativeRobot {
 		leftValue *= leftJoystick.throttle.get();
 		rightValue *= rightJoystick.throttle.get();
 		
+		// Inverted mode.  Flip values, and swap sides to do mirrored driving.
 		if(leftJoystick.button5.get()) {
 			double oldLeft = leftValue;
 			double oldRight = rightValue;
@@ -232,7 +225,7 @@ public class Robot extends IterativeRobot {
 			leftValue = -oldRight;
 			rightValue = -oldLeft;
 		}
-		
+
 		if(gamepad.b.get()) {
 			intake.setMode(IntakeMode.OUTBOUND);
 		} else if(gamepad.a.get()) {
@@ -242,42 +235,15 @@ public class Robot extends IterativeRobot {
 		} else {
 			intake.setMode(IntakeMode.STOPPED);
 		}
-		
-		intake.tick();
-		
-//		if(!Constants.intakeLimitSwitch.get()) {
-//			if((gamepad.a.get() && !gamepad.b.get()) || gamepad.rightBumper.get() || gamepad.leftBumper.get()) {
-//				intake.set(1.0);
-//			} else if(gamepad.b.get() && !gamepad.a.get()) {
-//				intake.set(-1.0);
-//			} else {
-//				intake.set(0.0);
-//			}
-//		} else {
-//			if(gamepad.leftBumper.get() && gamepad.rightBumper.get()) {
-//				intake.set(1.0);
-//			} else {
-//				intake.set(0.0);
-//			}
-//		}
-
+	
 		winch.set(winchValue);
 		hooker.set(hookerValue);
 		shooter.set(shooterValue);
 		
-//		if(gamepad.a.get()) {
-//			Constants.cameraHorizontalRotationServo.set(1.0);
-//			Constants.cameraVerticalRotationServo.set(0.5);
-//		} else if(gamepad.b.get()) {
-//			Constants.cameraHorizontalRotationServo.set(1.0);
-//			Constants.cameraVerticalRotationServo.set(0.6);
-//		} else if(gamepad.y.get()) {
-//			Constants.cameraHorizontalRotationServo.set(0.0);
-//			Constants.cameraVerticalRotationServo.set(0.3);
-//		} else if(gamepad.x.get()) {
-//			Constants.cameraVerticalRotationServo.set(vert);
-//			Constants.cameraHorizontalRotationServo.set(horz);
-//		}
+		intake.tick();
+		winch.tick();
+		hooker.tick();
+		shooter.tick();
 		
 		if(rightJoystick.button2.get() && !rightJoystick.trigger.get()) {
 			Constants.lift.set(DoubleSolenoid.Value.kForward);
@@ -289,31 +255,34 @@ public class Robot extends IterativeRobot {
 		
 		driveBase.drive(leftValue, rightValue);
 		
-		if(gamepad.pov.get() >= 0) {
-			double povAngle = 90.0d - (double) gamepad.pov.get();
-			
-			horz += (Math.cos((Math.PI / 180.0) * povAngle) * 0.01);
-			vert += (Math.sin((Math.PI / 180.0) * povAngle) * 0.01);
-			
-			if(horz > 1.0) horz = 1.0;
-			if(horz < 0.0) horz = 0.0;
-			
-			if(vert > 1.0) vert = 1.0;
-			if(vert < 0.0) vert = 0.0;
-		}
+//		if(gamepad.pov.get() >= 0) {
+//			double povAngle = 90.0d - (double) gamepad.pov.get();
+//			
+//			horz += (Math.cos((Math.PI / 180.0) * povAngle) * 0.01);
+//			vert += (Math.sin((Math.PI / 180.0) * povAngle) * 0.01);
+//			
+//			if(horz > 1.0) horz = 1.0;
+//			if(horz < 0.0) horz = 0.0;
+//			
+//			if(vert > 1.0) vert = 1.0;
+//			if(vert < 0.0) vert = 0.0;
+//		}
+//		
+//		if(gamepad.back.get()) {
+//			vert = 0.5;
+//			horz = 1.0;
+//		}
 		
-		if(gamepad.back.get()) {
-			vert = 0.5;
-			horz = 1.0;
-		}
+		double povAngle = (double) gamepad.pov.get();
 		
-		cameraMount.set(horz, vert);
-
-		if(rightJoystick.button3.get()) {
-			Constants.lightRelay.set(Relay.Value.kOn);
+		if(povAngle >= 0) {
+			cameraMount.setMode(CameraMountMode.LOOKING);
+			cameraMount.tweak(Math.cos(WarriorMath.degreesToRadians(90.0d - povAngle)), Math.sin(90.0d - povAngle));
 		} else {
-			Constants.lightRelay.set(Relay.Value.kOff);
+			cameraMount.setMode(CameraMountMode.TARGETING);
 		}
+		
+		cameraMount.tick();
 		
 		if(intake.limitSwitch.get()) {
 			Constants.indicatorRelay.set(Relay.Value.kOn);
@@ -321,8 +290,6 @@ public class Robot extends IterativeRobot {
 			Constants.indicatorRelay.set(Relay.Value.kOff);
 		}
 		
-		// System.out.println(hookerEncoder.get() + ", " + leftTrackEncoder.get() + ", " + rightTrackEncoder.get());
-
 		robotDataServer.update();
 		robotDataServer.send();
 		

@@ -21,13 +21,13 @@ public class Intake extends SpeedControllerComponent {
 	public IntakeMode getMode() { return this.mode; }
 	
 	public void tick() {
-		switch(mode) {
+		switch(this.mode) {
 		case STOPPED:
 			this.controller.set(0.0);
 			break;
 			
 		case INBOUND:
-			if(limitSwitch.get()) {
+			if(this.limitSwitch.get()) {
 				this.controller.set(0.0);
 			} else {
 				this.controller.set(1.0);

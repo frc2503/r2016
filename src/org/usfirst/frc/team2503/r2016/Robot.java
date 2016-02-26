@@ -6,7 +6,6 @@ import java.net.UnknownHostException;
 import org.json.JSONObject;
 import org.usfirst.frc.team2503.lib.util.WarriorMath;
 import org.usfirst.frc.team2503.r2016.component.CameraMount;
-import org.usfirst.frc.team2503.r2016.component.CameraMount.CameraLights;
 import org.usfirst.frc.team2503.r2016.component.CameraMount.CameraMountMode;
 import org.usfirst.frc.team2503.r2016.component.Hooker;
 import org.usfirst.frc.team2503.r2016.component.Intake;

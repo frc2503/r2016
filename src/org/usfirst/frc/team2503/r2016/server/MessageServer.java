@@ -5,8 +5,8 @@ import java.net.UnknownHostException;
 import java.util.HashSet;
 
 import org.json.JSONObject;
-import org.usfirst.frc.team2503.websocket.WebSocket;
-import org.usfirst.frc.team2503.websocket.handshake.ClientHandshake;
+import org.usfirst.frc.team2503.lib.websocket.WebSocket;
+import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 
 public class MessageServer extends WebSocketServer {
 		

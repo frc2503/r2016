@@ -4,8 +4,8 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import org.json.JSONObject;
-import org.usfirst.frc.team2503.websocket.WebSocket;
-import org.usfirst.frc.team2503.websocket.handshake.ClientHandshake;
+import org.usfirst.frc.team2503.lib.websocket.WebSocket;
+import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 
 public class DataServer extends WebSocketServer {
 

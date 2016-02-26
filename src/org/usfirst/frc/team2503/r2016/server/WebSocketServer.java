@@ -4,9 +4,9 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 
-import org.usfirst.frc.team2503.websocket.WebSocket;
+import org.usfirst.frc.team2503.lib.websocket.WebSocket;
 
-public abstract class WebSocketServer extends org.usfirst.frc.team2503.websocket.server.WebSocketServer {
+public abstract class WebSocketServer extends org.usfirst.frc.team2503.lib.websocket.server.WebSocketServer {
 
 	public void send(byte[] bytes) {
 		for(WebSocket connection : this.connections()) {

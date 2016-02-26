@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2503.r2016.component;
 
+import org.usfirst.frc.team2503.r2016.input.Data;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -20,7 +22,7 @@ public class Intake extends SpeedControllerComponent {
 	public void setMode(IntakeMode mode) { this.mode = mode; }
 	public IntakeMode getMode() { return this.mode; }
 
-	public void tick() {
+	public void tick(Data data) {
 		switch(this.mode) {
 		case STOPPED:
 			this.controller.set(0.0);

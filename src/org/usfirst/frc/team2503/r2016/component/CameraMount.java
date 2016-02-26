@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2503.r2016.component;
 
+import org.usfirst.frc.team2503.r2016.input.Data;
+
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
 
@@ -44,7 +46,7 @@ public class CameraMount extends Component {
 		this.y = Math.max(0.0, Math.min(1.0, this.y + (vertical * 0.01)));
 	}
 
-	public void tick() {
+	public void tick(Data data) {
 		switch(this.mode) {
 		case LOOKING:
 			/* this.x and this.y should already have been set by tweak(), so

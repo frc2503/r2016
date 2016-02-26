@@ -6,15 +6,18 @@ public abstract class DriveBase extends Subsystem {
 
 	public SpeedController left;
 	public SpeedController right;
-	
+
+	public double leftPower;
+	public double rightPower;
+
 	public void drive(double left, double right) {
 		this.left.set(left);
 		this.right.set(right);
 	}
-	
+
 	public DriveBase(SpeedController left, SpeedController right) {
 		this.left = left;
 		this.right = right;
 	}
-	
+
 }

@@ -239,10 +239,10 @@ public class Robot extends IterativeRobot {
 		hooker.set(hookerValue);
 		shooter.set(shooterValue);
 		
-		intake.tick();
-		winch.tick();
-		hooker.tick();
-		shooter.tick();
+		intake.tick(null);
+		winch.tick(null);
+		hooker.tick(null);
+		shooter.tick(null);
 		
 		if(rightJoystick.button2.get() && !rightJoystick.trigger.get()) {
 			Constants.lift.set(DoubleSolenoid.Value.kForward);
@@ -263,7 +263,7 @@ public class Robot extends IterativeRobot {
 			cameraMount.setMode(CameraMountMode.TARGETING);
 		}
 		
-		cameraMount.tick();
+		cameraMount.tick(null);
 		
 		if(intake.limitSwitch.get()) {
 			Constants.indicatorRelay.set(Relay.Value.kOn);

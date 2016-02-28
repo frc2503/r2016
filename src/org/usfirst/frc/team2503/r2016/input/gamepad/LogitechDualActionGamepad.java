@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2503.r2016.input.gamepad;
 
+import org.usfirst.frc.team2503.r2016.input.Data;
+
 public class LogitechDualActionGamepad extends Gamepad {
 	
 	public ControllerButton button1 = new ControllerButton(1);
@@ -20,17 +22,8 @@ public class LogitechDualActionGamepad extends Gamepad {
 	public ControllerAxis rightX = new ControllerAxis(2, ControllerAxisType.NEGATIVE_TO_POSITIVE);
 	public ControllerAxis rightY = new ControllerAxis(3, ControllerAxisType.NEGATIVE_TO_POSITIVE);
 	
-	public String getButtonDebugString() {
-		return (button1.get() ? "1" : " ") +
-				(button2.get() ? "2" : " ") +
-				(button3.get() ? "3" : " ") +
-				(button4.get() ? "4" : " ") +
-				(button5.get() ? "5" : " ") +
-				(button6.get() ? "6" : " ") +
-				(button7.get() ? "7" : " ") +
-				(button8.get() ? "8" : " ") +
-				(leftStick.get() ? "L" : " ") + 
-				(rightStick.get() ? "R" : " ");
+	public Data getData() {
+		return null;
 	}
 	
 	public LogitechDualActionGamepad(int port) {

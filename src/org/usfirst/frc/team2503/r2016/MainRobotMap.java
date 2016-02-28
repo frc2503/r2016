@@ -30,8 +30,8 @@ public class MainRobotMap {
 	public final DigitalInput leftTrackEncoderBChannel = new DigitalInput(1);
 	public final DigitalInput rightTrackEncoderAChannel = new DigitalInput(2);
 	public final DigitalInput rightTrackEncoderBChannel = new DigitalInput(3);
-	public final DigitalInput intakeEncoderAChannel = new DigitalInput(4);
-	public final DigitalInput intakeEncoderBChannel = new DigitalInput(5);
+	public final DigitalInput hookerEncoderAChannel = new DigitalInput(4);
+	public final DigitalInput hookerEncoderBChannel = new DigitalInput(5);
 	public final DigitalInput intakeLimitSwitch = new DigitalInput(6);
 	public final DigitalInput hookerLimitSwitch = new DigitalInput(7);
 	

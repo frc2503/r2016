@@ -1,8 +1,10 @@
 package org.usfirst.frc.team2503.r2016.subsystem;
 
+import org.usfirst.frc.team2503.r2016.input.DataSource;
+
 import edu.wpi.first.wpilibj.SpeedController;
 
-public abstract class DriveBase extends Subsystem {
+public abstract class DriveBase extends Subsystem implements DataSource {
 
 	public SpeedController left;
 	public SpeedController right;

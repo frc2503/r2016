@@ -14,22 +14,6 @@ public class Hooker extends SpeedControllerComponent {
 	public void tick(Data data) {
 	}
 
-	public Hooker(SpeedController controller) {
-		super(controller);
-	}
-
-	public Hooker(SpeedController controller, DigitalInput limitSwitch) {
-		super(controller);
-
-		this.limitSwitch = limitSwitch;
-	}
-
-	public Hooker(SpeedController controller, Encoder encoder) {
-		super(controller);
-
-		this.encoder = encoder;
-	}
-
 	public Hooker(SpeedController controller, Encoder encoder, DigitalInput limitSwitch) {
 		super(controller);
 

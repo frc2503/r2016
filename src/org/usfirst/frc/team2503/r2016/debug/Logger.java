@@ -5,9 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Vector;
 
 import org.json.JSONArray;
 import org.json.JSONException;

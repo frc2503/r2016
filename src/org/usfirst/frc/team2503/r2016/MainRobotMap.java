@@ -63,6 +63,15 @@ public class MainRobotMap {
 	public final DriveBase driveBase = new MainDriveBase(this.leftTrack, this.leftTrackEncoder, this.rightTrack, this.rightTrackEncoder);
 
 	public MainRobotMap() {
+		this.leftTrack.setInverted(true);
+		this.rightTrack.setInverted(false);
+		this.winch.setInverted(true);
+		this.hooker.setInverted(true);
+		this.shooter.setInverted(true);
+		this.intake.setInverted(true);
+
+		this.cameraLights.setDirection(Relay.Direction.kForward);
+		this.indicatorRelay.setDirection(Relay.Direction.kForward);
 	}
 
 }

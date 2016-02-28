@@ -119,10 +119,6 @@ public class Robot extends IterativeRobot {
 	public double shooterValue;
 	
 	public Robot() {
-		// Set the Java AWT to be happy with the fact that we're
-		// running in a decapitated state.
-		System.setProperty("java.awt.headless", "true");
-		
 		robotMap = new MainRobotMap();
 		
 		robotDataServer = new RobotDataServer(new InetSocketAddress(5800));

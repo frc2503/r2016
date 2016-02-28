@@ -5,9 +5,21 @@ import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Vector;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Logger {
+	
+	public static class LoggerChannelDoesNotExistException extends Exception {
+		
+		private static final long serialVersionUID = 1L;
+		
+	}
 	
 	public static class LoggerPrintStream extends PrintStream {
 		
@@ -41,27 +53,56 @@ public class Logger {
 		
 	}
 	
-	private static Vector<LoggerPrintStream> printStreams = new Vector<LoggerPrintStream>();
+	private static JSONObject printStreams = new JSONObject();
 	
-	public static void addPrintStream(LoggerPrintStream ps) {
-		printStreams.add(ps);
-	}
-	
-	public static void removePrintStream(LoggerPrintStream ps) {
-		printStreams.remove(ps);
-	}
-	
-	public static void print(Object x) { for(LoggerPrintStream ps : printStreams) { ps.print(x); } }
-	public static void println(Object x) {
-		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+	public static void addPrintStream(String channelName, LoggerPrintStream ps) {
+		JSONArray channel;
 		
-		StackTraceElement caller = stackTraceElements[2];
-		
-		for(LoggerPrintStream ps : printStreams) {
-			String prefix = "[(" + caller.getFileName() + ":" + caller.getLineNumber() + ") <" + caller.getMethodName() + ">] ";
-			
-			ps.println(prefix + x);
+		try {
+			channel = printStreams.getJSONArray(channelName);
+			channel.put(ps);
+		} catch(JSONException e) {
+			channel = new JSONArray();
+			channel.put(ps);
 		}
+		
+		printStreams.put(channelName, channel);
+	}
+	
+	public static void print(String channelName, Object x) {
+		JSONArray channel = printStreams.getJSONArray(channelName);
+		
+		LoggerPrintStream nextPrintStream = null;
+		Iterator<Object> iterator = channel.iterator();
+		while(iterator.hasNext()) {
+			nextPrintStream = (LoggerPrintStream) iterator.next();
+			nextPrintStream.print(x);
+		}
+	}
+	
+	protected static void _println(String channelName, Object x, boolean prefix) {
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+		StackTraceElement caller = stackTraceElements[3];
+
+		String prefixString = (prefix ? "[(" + caller.getFileName() + ":" + caller.getLineNumber() + ") <" + caller.getMethodName() + ">] " : "");
+		
+		
+		JSONArray channel = printStreams.getJSONArray(channelName);
+		
+		LoggerPrintStream nextPrintStream = null;
+		Iterator<Object> iterator = channel.iterator();
+		while(iterator.hasNext()) {
+			nextPrintStream = (LoggerPrintStream) iterator.next();
+			nextPrintStream.println(prefixString + x);
+		}
+	}
+	
+	public static void println(String channelName, Object x) {
+		_println(channelName, x, true);
+	}
+	
+	public static void println(String channelName, Object x, boolean prefix) {
+		_println(channelName, x, prefix);
 	}
 
 }

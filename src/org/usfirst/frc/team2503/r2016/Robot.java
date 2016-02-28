@@ -182,7 +182,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
-		messageServer.sendMessage("info", "DANK MEMES CAN'T MELT JET FUEL");
 	}
 
 	public void autonomousInit() {
@@ -199,8 +198,6 @@ public class Robot extends IterativeRobot {
 		} else {
 			hooker.set(0.5);
 		}
-		
-		messageServer.sendMessage("info", "DANK MEMES CAN'T MELT JET FUEL");
 	}
 
 	public void teleopInit() {
@@ -273,9 +270,6 @@ public class Robot extends IterativeRobot {
 		
 		robotDataServer.update();
 		robotDataServer.send();
-		
-		messageServer.sendMessage("info", "DANK MEMES CAN'T MELT JET FUEL");
-		
 	}
 	
 
@@ -283,7 +277,6 @@ public class Robot extends IterativeRobot {
 	}
  
 	public void testPeriodic() {
-		messageServer.sendMessage("info", "DANK MEMES CAN'T MELT JET FUEL");	
 	}
 
 }

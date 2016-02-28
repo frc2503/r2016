@@ -12,20 +12,20 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
 public class MainRobotMap {
-	
+
 	public final SpeedController leftTrackSpeedController = new Talon(0);
 	public final SpeedController rightTrackSpeedController = new Talon(1);
 	public final SpeedController shooterSpeedController = new Spark(2);
 	public final SpeedController winchSpeedController = new Talon(3);
 	public final SpeedController hookerSpeedController = new Talon(4);
 	public final SpeedController intakeSpeedController = new Talon(6);
-	
+
 	public final Servo cameraVerticalRotationServo = new Servo(7);
 	public final Servo cameraHorizontalRotationServo = new Servo(5);
-	
+
 	public final Compressor compressor = new Compressor(1);
 	public final DoubleSolenoid lift = new DoubleSolenoid(1, 0, 1);
-	
+
 	public final DigitalInput leftTrackEncoderAChannel = new DigitalInput(0);
 	public final DigitalInput leftTrackEncoderBChannel = new DigitalInput(1);
 	public final DigitalInput rightTrackEncoderAChannel = new DigitalInput(2);
@@ -34,11 +34,11 @@ public class MainRobotMap {
 	public final DigitalInput hookerEncoderBChannel = new DigitalInput(5);
 	public final DigitalInput intakeLimitSwitch = new DigitalInput(6);
 	public final DigitalInput hookerLimitSwitch = new DigitalInput(7);
-	
+
 	public final CameraLights cameraLights = new CameraLights(0);
 	public final Relay indicatorRelay = new Relay(1);
 
 	public MainRobotMap() {
 	}
-	
+
 }

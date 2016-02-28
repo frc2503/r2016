@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2503.r2016.input.gamepad;
 
 public class LogitechF310Gamepad extends Gamepad {
-	
+
 	public ControllerButton a = new ControllerButton(1);
 	public ControllerButton b = new ControllerButton(2);
 	public ControllerButton x = new ControllerButton(3);
@@ -12,9 +12,9 @@ public class LogitechF310Gamepad extends Gamepad {
 	public ControllerButton start = new ControllerButton(8);
 	public ControllerButton leftStick = new ControllerButton(9);
 	public ControllerButton rightStick = new ControllerButton(10);
-	
+
 	public ControllerPOV pov = new ControllerPOV();
-	
+
 	public ControllerAxis leftX = new ControllerAxis(0, ControllerAxisType.NEGATIVE_TO_POSITIVE);
 	public ControllerAxis leftY = new ControllerAxis(1, ControllerAxisType.NEGATIVE_TO_POSITIVE);
 	public ControllerAxis leftTrigger = new ControllerAxis(2, ControllerAxisType.ZERO_TO_POSITIVE);
@@ -34,7 +34,7 @@ public class LogitechF310Gamepad extends Gamepad {
 				(leftStick.get() ? "L" : " ") + 
 				(rightStick.get() ? "R" : " ");
 	}
-	
+
 	public LogitechF310Gamepad(int port) {
 		super(port);
 	}

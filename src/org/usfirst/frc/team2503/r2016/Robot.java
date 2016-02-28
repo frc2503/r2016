@@ -54,9 +54,9 @@ public class Robot extends IterativeRobot {
 			{ 
 				JSONObject pneumatics = new JSONObject();
 				
-				pneumatics.put("charged", Constants.compressor.getPressureSwitchValue());
-				pneumatics.put("enabled", Constants.compressor.enabled());
-				pneumatics.put("closed", Constants.compressor.getClosedLoopControl());
+				pneumatics.put("charged", robotMap.compressor.getPressureSwitchValue());
+				pneumatics.put("enabled", robotMap.compressor.enabled());
+				pneumatics.put("closed", robotMap.compressor.getClosedLoopControl());
 				
 				this.serverData.put("pneumatics", pneumatics);
 			}
@@ -110,6 +110,8 @@ public class Robot extends IterativeRobot {
 	public DriveBase driveBase;
 	public CameraMount cameraMount;
 	
+	public MainRobotMap robotMap;
+	
 	public double leftValue;
 	public double rightValue;
 	public double winchValue;
@@ -120,6 +122,8 @@ public class Robot extends IterativeRobot {
 		// Set the Java AWT to be happy with the fact that we're
 		// running in a decapitated state.
 		System.setProperty("java.awt.headless", "true");
+		
+		robotMap = new MainRobotMap();
 		
 		robotDataServer = new RobotDataServer(new InetSocketAddress(5800));
 		messageServer = new MessageServer(new InetSocketAddress(5801));
@@ -140,23 +144,23 @@ public class Robot extends IterativeRobot {
 
 		gamepad = new LogitechF310Gamepad(2);
 
-		leftTrack = new RhinoTrack(Constants.leftTrackSpeedController);
-		rightTrack = new RhinoTrack(Constants.rightTrackSpeedController);
+		leftTrack = new RhinoTrack(robotMap.leftTrackSpeedController);
+		rightTrack = new RhinoTrack(robotMap.rightTrackSpeedController);
 
 		leftTrack.setInverted(true);
 		rightTrack.setInverted(false);
 
-		leftTrackEncoder = new Encoder(Constants.leftTrackEncoderAChannel, Constants.leftTrackEncoderBChannel);
-		rightTrackEncoder = new Encoder(Constants.rightTrackEncoderAChannel, Constants.rightTrackEncoderBChannel);
-		hookerEncoder = new Encoder(Constants.intakeEncoderAChannel, Constants.intakeEncoderBChannel);
+		leftTrackEncoder = new Encoder(robotMap.leftTrackEncoderAChannel, robotMap.leftTrackEncoderBChannel);
+		rightTrackEncoder = new Encoder(robotMap.rightTrackEncoderAChannel, robotMap.rightTrackEncoderBChannel);
+		hookerEncoder = new Encoder(robotMap.intakeEncoderAChannel, robotMap.intakeEncoderBChannel);
 		
-		winch = new Winch(Constants.winchSpeedController);
-		hooker = new Hooker(Constants.hookerSpeedController, hookerEncoder, Constants.hookerLimitSwitch);
-		shooter = new Shooter(Constants.shooterSpeedController);
-		intake = new Intake(Constants.intakeSpeedController, Constants.intakeLimitSwitch);
+		winch = new Winch(robotMap.winchSpeedController);
+		hooker = new Hooker(robotMap.hookerSpeedController, hookerEncoder, robotMap.hookerLimitSwitch);
+		shooter = new Shooter(robotMap.shooterSpeedController);
+		intake = new Intake(robotMap.intakeSpeedController, robotMap.intakeLimitSwitch);
 		driveBase = new MainDriveBase(leftTrack, rightTrack);
 		
-		cameraMount = new CameraMount(Constants.cameraHorizontalRotationServo, Constants.cameraVerticalRotationServo, Constants.cameraLights);
+		cameraMount = new CameraMount(robotMap.cameraHorizontalRotationServo, robotMap.cameraVerticalRotationServo, robotMap.cameraLights);
 
 		winch.setInverted(true);
 		hooker.setInverted(true);
@@ -167,11 +171,11 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void robotInit() {
-		Constants.compressor.setClosedLoopControl(true);
-		Constants.compressor.start();
+		robotMap.compressor.setClosedLoopControl(true);
+		robotMap.compressor.start();
 		
-		Constants.cameraLights.setDirection(Relay.Direction.kForward);
-		Constants.indicatorRelay.setDirection(Relay.Direction.kForward);
+		robotMap.cameraLights.setDirection(Relay.Direction.kForward);
+		robotMap.indicatorRelay.setDirection(Relay.Direction.kForward);
 		
 		leftTrackEncoder.reset();
 		rightTrackEncoder.reset();
@@ -245,11 +249,11 @@ public class Robot extends IterativeRobot {
 		shooter.tick(null);
 		
 		if(rightJoystick.button2.get() && !rightJoystick.trigger.get()) {
-			Constants.lift.set(DoubleSolenoid.Value.kForward);
+			robotMap.lift.set(DoubleSolenoid.Value.kForward);
 		} else if(rightJoystick.trigger.get() && !rightJoystick.button2.get()) {
-			Constants.lift.set(DoubleSolenoid.Value.kReverse);
+			robotMap.lift.set(DoubleSolenoid.Value.kReverse);
 		} else {
-			Constants.lift.set(DoubleSolenoid.Value.kOff);
+			robotMap.lift.set(DoubleSolenoid.Value.kOff);
 		}
 		
 		driveBase.drive(leftValue, rightValue);
@@ -266,9 +270,9 @@ public class Robot extends IterativeRobot {
 		cameraMount.tick(null);
 		
 		if(intake.limitSwitch.get()) {
-			Constants.indicatorRelay.set(Relay.Value.kOn);
+			robotMap.indicatorRelay.set(Relay.Value.kOn);
 		} else {
-			Constants.indicatorRelay.set(Relay.Value.kOff);
+			robotMap.indicatorRelay.set(Relay.Value.kOff);
 		}
 		
 		robotDataServer.update();

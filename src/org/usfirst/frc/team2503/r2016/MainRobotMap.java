@@ -1,10 +1,19 @@
 package org.usfirst.frc.team2503.r2016;
 
 import org.usfirst.frc.team2503.r2016.component.CameraMount.CameraLights;
+import org.usfirst.frc.team2503.r2016.component.CameraMount;
+import org.usfirst.frc.team2503.r2016.component.Hooker;
+import org.usfirst.frc.team2503.r2016.component.Intake;
+import org.usfirst.frc.team2503.r2016.component.RhinoTrack;
+import org.usfirst.frc.team2503.r2016.component.Shooter;
+import org.usfirst.frc.team2503.r2016.component.Winch;
+import org.usfirst.frc.team2503.r2016.subsystem.DriveBase;
+import org.usfirst.frc.team2503.r2016.subsystem.MainDriveBase;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Spark;
@@ -37,6 +46,21 @@ public class MainRobotMap {
 
 	public final CameraLights cameraLights = new CameraLights(0);
 	public final Relay indicatorRelay = new Relay(1);
+
+	public final Encoder leftTrackEncoder = new Encoder(this.leftTrackEncoderAChannel, this.leftTrackEncoderBChannel);
+	public final Encoder rightTrackEncoder = new Encoder(this.rightTrackEncoderAChannel, this.rightTrackEncoderBChannel);
+	public final Encoder hookerEncoder = new Encoder(this.hookerEncoderAChannel, this.hookerEncoderBChannel);
+
+	public final Winch winch = new Winch(this.winchSpeedController);
+	public final Hooker hooker = new Hooker(this.hookerSpeedController, this.hookerEncoder, this.hookerLimitSwitch);
+	public final Shooter shooter = new Shooter(this.shooterSpeedController);
+	public final Intake intake = new Intake(this.intakeSpeedController, this.intakeLimitSwitch);
+	public final CameraMount cameraMount = new CameraMount(this.cameraHorizontalRotationServo, this.cameraVerticalRotationServo, this.cameraLights);
+
+	public final RhinoTrack leftTrack = new RhinoTrack(this.leftTrackSpeedController);
+	public final RhinoTrack rightTrack = new RhinoTrack(this.rightTrackSpeedController);
+
+	public final DriveBase driveBase = new MainDriveBase(this.leftTrack, this.leftTrackEncoder, this.rightTrack, this.rightTrackEncoder);
 
 	public MainRobotMap() {
 	}

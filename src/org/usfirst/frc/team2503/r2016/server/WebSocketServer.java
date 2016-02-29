@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2503.r2016.server;
 
+import java.io.ByteArrayOutputStream;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
@@ -8,6 +9,9 @@ import org.usfirst.frc.team2503.lib.websocket.WebSocket;
 
 public abstract class WebSocketServer extends org.usfirst.frc.team2503.lib.websocket.server.WebSocketServer {
 
+	public class WebSocketByteArrayOutputStream extends ByteArrayOutputStream {
+	}
+	
 	public void send(byte[] bytes) {
 		for(WebSocket connection : this.connections()) {
 			connection.send(bytes);

@@ -1,8 +1,5 @@
 package org.usfirst.frc.team2503.r2016;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 

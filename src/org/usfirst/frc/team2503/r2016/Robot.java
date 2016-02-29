@@ -46,9 +46,9 @@ public class Robot extends IterativeRobot {
 			{
 				JSONObject pneumatics = new JSONObject();
 
-				pneumatics.put("charged", robotMap.compressor.getPressureSwitchValue());
-				pneumatics.put("enabled", robotMap.compressor.enabled());
-				pneumatics.put("closed", robotMap.compressor.getClosedLoopControl());
+				pneumatics.put("charged", robotMap.pneumaticsSubsystem.compressor.getPressureSwitchValue());
+				pneumatics.put("enabled", robotMap.pneumaticsSubsystem.compressor.enabled());
+				pneumatics.put("closed", robotMap.pneumaticsSubsystem.compressor.getClosedLoopControl());
 
 				this.serverData.put("pneumatics", pneumatics);
 			}
@@ -147,7 +147,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		robotMap.hookerEncoder.reset();
+		robotMap.hooker.encoder.reset();
 	}
 
 	public void autonomousPeriodic() {
@@ -204,11 +204,11 @@ public class Robot extends IterativeRobot {
 		robotMap.shooter.tick(null);
 
 		if(rightJoystick.button2.get() && !rightJoystick.trigger.get()) {
-			robotMap.lift.set(DoubleSolenoid.Value.kForward);
+			robotMap.pneumaticsSubsystem.lift.set(DoubleSolenoid.Value.kForward);
 		} else if(rightJoystick.trigger.get() && !rightJoystick.button2.get()) {
-			robotMap.lift.set(DoubleSolenoid.Value.kReverse);
+			robotMap.pneumaticsSubsystem.lift.set(DoubleSolenoid.Value.kReverse);
 		} else {
-			robotMap.lift.set(DoubleSolenoid.Value.kOff);
+			robotMap.pneumaticsSubsystem.lift.set(DoubleSolenoid.Value.kOff);
 		}
 
 		robotMap.driveBase.drive(leftValue, rightValue);

@@ -9,6 +9,7 @@ import org.usfirst.frc.team2503.r2016.component.Shooter;
 import org.usfirst.frc.team2503.r2016.component.Winch;
 import org.usfirst.frc.team2503.r2016.subsystem.DriveBase;
 import org.usfirst.frc.team2503.r2016.subsystem.MainDriveBase;
+import org.usfirst.frc.team2503.r2016.subsystem.PneumaticsSubsystem;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -61,7 +62,8 @@ public class MainRobotMap {
 	public final RhinoTrack rightTrack = new RhinoTrack(this.rightTrackSpeedController);
 
 	public final DriveBase driveBase = new MainDriveBase(this.leftTrack, this.leftTrackEncoder, this.rightTrack, this.rightTrackEncoder);
-
+	public final PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem(this.compressor, this.lift);
+	
 	public MainRobotMap() {
 		this.leftTrack.setInverted(true);
 		this.rightTrack.setInverted(false);

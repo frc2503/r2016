@@ -102,18 +102,7 @@ public class Robot extends IterativeRobot {
 		Logger.addPrintStream("warning", new LoggerPrintStream(System.err));
 		Logger.addPrintStream("debug", new LoggerPrintStream(System.out));
 		Logger.addPrintStream("information", new LoggerPrintStream(System.out));
-
-		File csvDataFile = new File("data.csv");
-
-		try {
-			Logger.addPrintStream("data", new LoggerPrintStream(csvDataFile));
-		} catch(FileNotFoundException e) {
-			try {
-				csvDataFile.createNewFile();
-			} catch(IOException ioe) {
-				ioe.printStackTrace();
-			}
-		}
+		Logger.addPrintStream("data", new LoggerPrintStream(robotDataServer.new WebSocketByteArrayOutputStream()));
 
 		robotMap = new MainRobotMap();
 
@@ -131,7 +120,6 @@ public class Robot extends IterativeRobot {
 
 		leftJoystick = new MadCatzV1Joystick(0);
 		rightJoystick = new MadCatzV1Joystick(1);
-
 		gamepad = new LogitechF310Gamepad(2);
 
 		modeObject = new JSONObject();

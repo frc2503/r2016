@@ -23,34 +23,34 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class MainRobotMap {
 
-	public final SpeedController leftTrackSpeedController = new Talon(0);
-	public final SpeedController rightTrackSpeedController = new Talon(1);
-	public final SpeedController shooterSpeedController = new Spark(2);
-	public final SpeedController winchSpeedController = new Talon(3);
-	public final SpeedController hookerSpeedController = new Talon(4);
-	public final SpeedController intakeSpeedController = new Talon(6);
+	private final SpeedController leftTrackSpeedController = new Talon(0);
+	private final SpeedController rightTrackSpeedController = new Talon(1);
+	private final SpeedController shooterSpeedController = new Spark(2);
+	private final SpeedController winchSpeedController = new Talon(3);
+	private final SpeedController hookerSpeedController = new Talon(4);
+	private final SpeedController intakeSpeedController = new Talon(6);
 
-	public final Servo cameraVerticalRotationServo = new Servo(7);
-	public final Servo cameraHorizontalRotationServo = new Servo(5);
+	private final Servo cameraVerticalRotationServo = new Servo(7);
+	private final Servo cameraHorizontalRotationServo = new Servo(5);
 
-	public final Compressor compressor = new Compressor(1);
-	public final DoubleSolenoid lift = new DoubleSolenoid(1, 0, 1);
+	private final Compressor compressor = new Compressor(1);
+	private final DoubleSolenoid lift = new DoubleSolenoid(1, 0, 1);
 
-	public final DigitalInput leftTrackEncoderAChannel = new DigitalInput(0);
-	public final DigitalInput leftTrackEncoderBChannel = new DigitalInput(1);
-	public final DigitalInput rightTrackEncoderAChannel = new DigitalInput(2);
-	public final DigitalInput rightTrackEncoderBChannel = new DigitalInput(3);
-	public final DigitalInput hookerEncoderAChannel = new DigitalInput(4);
-	public final DigitalInput hookerEncoderBChannel = new DigitalInput(5);
-	public final DigitalInput intakeLimitSwitch = new DigitalInput(6);
-	public final DigitalInput hookerLimitSwitch = new DigitalInput(7);
+	private final DigitalInput leftTrackEncoderAChannel = new DigitalInput(0);
+	private final DigitalInput leftTrackEncoderBChannel = new DigitalInput(1);
+	private final DigitalInput rightTrackEncoderAChannel = new DigitalInput(2);
+	private final DigitalInput rightTrackEncoderBChannel = new DigitalInput(3);
+	private final DigitalInput hookerEncoderAChannel = new DigitalInput(4);
+	private final DigitalInput hookerEncoderBChannel = new DigitalInput(5);
+	private final DigitalInput intakeLimitSwitch = new DigitalInput(6);
+	private final DigitalInput hookerLimitSwitch = new DigitalInput(7);
 
-	public final CameraLights cameraLights = new CameraLights(0);
+	private final CameraLights cameraLights = new CameraLights(0);
 	public final Relay indicatorRelay = new Relay(1);
 
-	public final Encoder leftTrackEncoder = new Encoder(this.leftTrackEncoderAChannel, this.leftTrackEncoderBChannel);
-	public final Encoder rightTrackEncoder = new Encoder(this.rightTrackEncoderAChannel, this.rightTrackEncoderBChannel);
-	public final Encoder hookerEncoder = new Encoder(this.hookerEncoderAChannel, this.hookerEncoderBChannel);
+	private final Encoder leftTrackEncoder = new Encoder(this.leftTrackEncoderAChannel, this.leftTrackEncoderBChannel);
+	private final Encoder rightTrackEncoder = new Encoder(this.rightTrackEncoderAChannel, this.rightTrackEncoderBChannel);
+	private final Encoder hookerEncoder = new Encoder(this.hookerEncoderAChannel, this.hookerEncoderBChannel);
 
 	public final Winch winch = new Winch(this.winchSpeedController);
 	public final Hooker hooker = new Hooker(this.hookerSpeedController, this.hookerEncoder, this.hookerLimitSwitch);

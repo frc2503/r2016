@@ -72,6 +72,9 @@ public class MainRobotMap {
 
 		this.cameraLights.setDirection(Relay.Direction.kForward);
 		this.indicatorRelay.setDirection(Relay.Direction.kForward);
+
+		this.compressor.setClosedLoopControl(true);
+		this.compressor.start();
 	}
 
 }

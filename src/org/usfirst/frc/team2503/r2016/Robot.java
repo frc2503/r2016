@@ -138,8 +138,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void robotInit() {
-		robotMap.compressor.setClosedLoopControl(true);
-		robotMap.compressor.start();
 	}
 
 	public void disabledInit() {

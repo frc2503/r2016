@@ -17,7 +17,7 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.NotSendableException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrameBuilder;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameBuilder;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
-import org.usfirst.frc.team2503.lib.websocket.framing.FramedataImpl1;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImpl1;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
@@ -130,7 +130,7 @@ public class Draft_10 extends Draft {
 
 	@Override
 	public List<FrameData> createFrames( ByteBuffer binary, boolean mask ) {
-		FrameBuilder curframe = new FramedataImpl1();
+		FrameBuilder curframe = new FrameDataImpl1();
 		try {
 			curframe.setPayload( binary );
 		} catch ( InvalidDataException e ) {
@@ -144,7 +144,7 @@ public class Draft_10 extends Draft {
 
 	@Override
 	public List<FrameData> createFrames( String text, boolean mask ) {
-		FrameBuilder curframe = new FramedataImpl1();
+		FrameBuilder curframe = new FrameDataImpl1();
 		try {
 			curframe.setPayload( ByteBuffer.wrap( Charsetfunctions.utf8Bytes( text ) ) );
 		} catch ( InvalidDataException e ) {
@@ -371,7 +371,7 @@ public class Draft_10 extends Draft {
 		if( optcode == Opcode.CLOSING ) {
 			frame = new CloseFrameBuilder();
 		} else {
-			frame = new FramedataImpl1();
+			frame = new FrameDataImpl1();
 			frame.setFin( FIN );
 			frame.setOptcode( optcode );
 		}

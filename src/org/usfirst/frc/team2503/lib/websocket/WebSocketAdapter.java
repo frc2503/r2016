@@ -6,7 +6,7 @@ import org.usfirst.frc.team2503.lib.websocket.drafts.Draft;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidHandshakeException;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
-import org.usfirst.frc.team2503.lib.websocket.framing.FramedataImpl1;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImpl1;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeImplServer;
@@ -58,7 +58,7 @@ public abstract class WebSocketAdapter implements WebSocketListener {
 	 */
 	@Override
 	public void onWebsocketPing( WebSocket conn, FrameData f ) {
-		FramedataImpl1 resp = new FramedataImpl1( f );
+		FrameDataImpl1 resp = new FrameDataImpl1( f );
 		resp.setOptcode( Opcode.PONG );
 		conn.sendFrame( resp );
 	}

@@ -14,7 +14,7 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.NotSendableException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameBuilder;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
-import org.usfirst.frc.team2503.lib.websocket.framing.FramedataImpl1;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImpl1;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
@@ -74,7 +74,7 @@ public class Draft_75 extends Draft {
 
 	@Override
 	public List<FrameData> createFrames(String text, boolean mask) {
-		FrameBuilder frame = new FramedataImpl1();
+		FrameBuilder frame = new FrameDataImpl1();
 		try {
 			frame.setPayload(ByteBuffer.wrap(Charsetfunctions.utf8Bytes(text)));
 		} catch (InvalidDataException e) {
@@ -122,7 +122,7 @@ public class Draft_75 extends Draft {
 					throw new InvalidFrameException("unexpected END_OF_FRAME");
 				if(this.currentFrame != null) {
 					currentFrame.flip();
-					FramedataImpl1 curframe = new FramedataImpl1();
+					FrameDataImpl1 curframe = new FrameDataImpl1();
 					curframe.setPayload(currentFrame);
 					curframe.setFin(true);
 					curframe.setOptcode(Opcode.TEXT);

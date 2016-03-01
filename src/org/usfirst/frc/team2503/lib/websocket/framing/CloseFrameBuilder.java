@@ -6,7 +6,7 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidFrameException;
 import org.usfirst.frc.team2503.lib.websocket.util.Charsetfunctions;
 
-public class CloseFrameBuilder extends FrameDataImpl1 implements CloseFrame {
+public class CloseFrameBuilder extends FrameDataImpl implements CloseFrame {
 
 	static final ByteBuffer emptybytebuffer = ByteBuffer.allocate( 0 );
 

@@ -7,17 +7,17 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidFrameException;
 import org.usfirst.frc.team2503.lib.websocket.util.Charsetfunctions;
 
-public class FrameDataImpl1 implements FrameBuilder {
+public class FrameDataImpl implements FrameBuilder {
 	protected static byte[] emptyarray = {};
 	protected boolean fin;
 	protected Opcode optcode;
 	private ByteBuffer unmaskedpayload;
 	protected boolean transferemasked;
 
-	public FrameDataImpl1() {
+	public FrameDataImpl() {
 	}
 
-	public FrameDataImpl1( Opcode op ) {
+	public FrameDataImpl( Opcode op ) {
 		this.optcode = op;
 		unmaskedpayload = ByteBuffer.wrap( emptyarray );
 	}
@@ -26,7 +26,7 @@ public class FrameDataImpl1 implements FrameBuilder {
 	 * Helper constructor which helps to create "echo" frames.
 	 * The new object will use the same underlying payload data.
 	 **/
-	public FrameDataImpl1( FrameData f ) {
+	public FrameDataImpl( FrameData f ) {
 		fin = f.isFin();
 		optcode = f.getOpcode();
 		unmaskedpayload = f.getPayloadData();

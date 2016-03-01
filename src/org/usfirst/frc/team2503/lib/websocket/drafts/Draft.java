@@ -14,7 +14,7 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.LimitExceededException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameBuilder;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
-import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImpl1;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImpl;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
@@ -139,7 +139,7 @@ public abstract class Draft {
 			continuousFrameType = op;
 		}
 
-		FrameBuilder bui = new FrameDataImpl1( continuousFrameType );
+		FrameBuilder bui = new FrameDataImpl( continuousFrameType );
 		try {
 			bui.setPayload( buffer );
 		} catch ( InvalidDataException e ) {

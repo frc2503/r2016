@@ -2,9 +2,6 @@ package org.usfirst.frc.team2503.lib.websocket.exceptions;
 
 public class NotSendableException extends RuntimeException {
 
-	/**
-	 * Serializable
-	 */
 	private static final long serialVersionUID = -6468967874576651628L;
 
 	public NotSendableException() {

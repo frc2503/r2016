@@ -4,9 +4,6 @@ import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 
 public class LimitExceededException extends InvalidDataException {
 
-	/**
-	 * Serializable
-	 */
 	private static final long serialVersionUID = 6908339749836826785L;
 
 	public LimitExceededException() {

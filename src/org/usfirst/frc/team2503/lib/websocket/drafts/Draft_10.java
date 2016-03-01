@@ -16,9 +16,9 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.LimitExceededException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.NotSendableException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrameBuilder;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameBuilder;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
 import org.usfirst.frc.team2503.lib.websocket.framing.FramedataImpl1;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata.Opcode;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeBuilder;
@@ -61,7 +61,7 @@ public class Draft_10 extends Draft {
 	}
 
 	private ByteBuffer incompleteframe;
-	private Framedata fragmentedframe = null;
+	private FrameData fragmentedframe = null;
 
 	private final Random reuseableRandom = new Random();
 
@@ -89,7 +89,7 @@ public class Draft_10 extends Draft {
 	}
 
 	@Override
-	public ByteBuffer createBinaryFrame( Framedata framedata ) {
+	public ByteBuffer createBinaryFrame( FrameData framedata ) {
 		ByteBuffer mes = framedata.getPayloadData();
 		boolean mask = role == Role.CLIENT; // framedata.getTransfereMasked();
 		int sizebytes = mes.remaining() <= 125 ? 1 : mes.remaining() <= 65535 ? 2 : 8;
@@ -129,7 +129,7 @@ public class Draft_10 extends Draft {
 	}
 
 	@Override
-	public List<Framedata> createFrames( ByteBuffer binary, boolean mask ) {
+	public List<FrameData> createFrames( ByteBuffer binary, boolean mask ) {
 		FrameBuilder curframe = new FramedataImpl1();
 		try {
 			curframe.setPayload( binary );
@@ -139,11 +139,11 @@ public class Draft_10 extends Draft {
 		curframe.setFin( true );
 		curframe.setOptcode( Opcode.BINARY );
 		curframe.setTransferemasked( mask );
-		return Collections.singletonList( (Framedata) curframe );
+		return Collections.singletonList( (FrameData) curframe );
 	}
 
 	@Override
-	public List<Framedata> createFrames( String text, boolean mask ) {
+	public List<FrameData> createFrames( String text, boolean mask ) {
 		FrameBuilder curframe = new FramedataImpl1();
 		try {
 			curframe.setPayload( ByteBuffer.wrap( Charsetfunctions.utf8Bytes( text ) ) );
@@ -153,7 +153,7 @@ public class Draft_10 extends Draft {
 		curframe.setFin( true );
 		curframe.setOptcode( Opcode.TEXT );
 		curframe.setTransferemasked( mask );
-		return Collections.singletonList( (Framedata) curframe );
+		return Collections.singletonList( (FrameData) curframe );
 	}
 
 	private byte fromOpcode( Opcode opcode ) {
@@ -240,9 +240,9 @@ public class Draft_10 extends Draft {
 	}
 
 	@Override
-	public List<Framedata> translateFrame( ByteBuffer buffer ) throws LimitExceededException , InvalidDataException {
-		List<Framedata> frames = new LinkedList<Framedata>();
-		Framedata cur;
+	public List<FrameData> translateFrame( ByteBuffer buffer ) throws LimitExceededException , InvalidDataException {
+		List<FrameData> frames = new LinkedList<FrameData>();
+		FrameData cur;
 
 		if( incompleteframe != null ) {
 			// complete an incomplete frame
@@ -296,7 +296,7 @@ public class Draft_10 extends Draft {
 		return frames;
 	}
 
-	public Framedata translateSingleFrame( ByteBuffer buffer ) throws IncompleteException , InvalidDataException {
+	public FrameData translateSingleFrame( ByteBuffer buffer ) throws IncompleteException , InvalidDataException {
 		int maxpacketsize = buffer.remaining();
 		int realpacketsize = 2;
 		if( maxpacketsize < realpacketsize )

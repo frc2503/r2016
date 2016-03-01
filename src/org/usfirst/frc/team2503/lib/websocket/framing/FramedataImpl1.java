@@ -26,7 +26,7 @@ public class FramedataImpl1 implements FrameBuilder {
 	 * Helper constructor which helps to create "echo" frames.
 	 * The new object will use the same underlying payload data.
 	 **/
-	public FramedataImpl1( Framedata f ) {
+	public FramedataImpl1( FrameData f ) {
 		fin = f.isFin();
 		optcode = f.getOpcode();
 		unmaskedpayload = f.getPayloadData();
@@ -74,7 +74,7 @@ public class FramedataImpl1 implements FrameBuilder {
 	}
 
 	@Override
-	public void append( Framedata nextframe ) throws InvalidFrameException {
+	public void append( FrameData nextframe ) throws InvalidFrameException {
 		ByteBuffer b = nextframe.getPayloadData();
 		if( unmaskedpayload == null ) {
 			unmaskedpayload = ByteBuffer.allocate( b.remaining() );

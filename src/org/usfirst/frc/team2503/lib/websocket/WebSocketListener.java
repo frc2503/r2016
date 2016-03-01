@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 
 import org.usfirst.frc.team2503.lib.websocket.drafts.Draft;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshake;
@@ -85,7 +85,7 @@ public interface WebSocketListener {
 	 */
 	public void onWebsocketMessage( WebSocket conn, ByteBuffer blob );
 
-	public void onWebsocketMessageFragment( WebSocket conn, Framedata frame );
+	public void onWebsocketMessageFragment( WebSocket conn, FrameData frame );
 
 	/**
 	 * Called after <var>onHandshakeReceived</var> returns <var>true</var>.
@@ -129,12 +129,12 @@ public interface WebSocketListener {
 	 * @param f
 	 *            The ping frame. Control frames may contain payload.
 	 */
-	public void onWebsocketPing( WebSocket conn, Framedata f );
+	public void onWebsocketPing( WebSocket conn, FrameData f );
 
 	/**
 	 * Called when a pong frame is received.
 	 **/
-	public void onWebsocketPong( WebSocket conn, Framedata f );
+	public void onWebsocketPong( WebSocket conn, FrameData f );
 
 	/**
 	 * Gets the XML string that should be returned if a client requests a Flash

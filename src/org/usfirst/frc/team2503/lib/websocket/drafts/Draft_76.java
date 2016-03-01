@@ -16,8 +16,8 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidFrameException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidHandshakeException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrameBuilder;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata.Opcode;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeBuilder;
@@ -190,9 +190,9 @@ public class Draft_76 extends Draft_75 {
 	}
 
 	@Override
-	public List<Framedata> translateFrame( ByteBuffer buffer ) throws InvalidDataException {
+	public List<FrameData> translateFrame( ByteBuffer buffer ) throws InvalidDataException {
 		buffer.mark();
-		List<Framedata> frames = super.translateRegularFrame( buffer );
+		List<FrameData> frames = super.translateRegularFrame( buffer );
 		if( frames == null ) {
 			buffer.reset();
 			frames = readyframes;
@@ -216,7 +216,7 @@ public class Draft_76 extends Draft_75 {
 					throw new InvalidFrameException();
 				}
 			} else {
-				readyframes = new LinkedList<Framedata>();
+				readyframes = new LinkedList<FrameData>();
 				return frames;
 			}
 		} else {
@@ -224,7 +224,7 @@ public class Draft_76 extends Draft_75 {
 		}
 	}
 	@Override
-	public ByteBuffer createBinaryFrame( Framedata framedata ) {
+	public ByteBuffer createBinaryFrame( FrameData framedata ) {
 		if( framedata.getOpcode() == Opcode.CLOSING )
 			return ByteBuffer.wrap( closehandshake );
 		return super.createBinaryFrame( framedata );

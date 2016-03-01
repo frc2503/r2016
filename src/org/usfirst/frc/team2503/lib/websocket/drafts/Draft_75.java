@@ -13,9 +13,9 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.LimitExceededException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.NotSendableException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameBuilder;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
 import org.usfirst.frc.team2503.lib.websocket.framing.FramedataImpl1;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata.Opcode;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeBuilder;
@@ -32,7 +32,7 @@ public class Draft_75 extends Draft {
 
 	protected boolean readingState = false;
 
-	protected List<Framedata> readyframes = new LinkedList<Framedata>();
+	protected List<FrameData> readyframes = new LinkedList<FrameData>();
 	protected ByteBuffer currentFrame;
 
 	private final Random reuseableRandom = new Random();
@@ -51,7 +51,7 @@ public class Draft_75 extends Draft {
 	}
 
 	@Override
-	public ByteBuffer createBinaryFrame(Framedata framedata) {
+	public ByteBuffer createBinaryFrame(FrameData framedata) {
 		if(framedata.getOpcode() != Opcode.TEXT) {
 			throw new RuntimeException("only text frames supported");
 		}
@@ -68,12 +68,12 @@ public class Draft_75 extends Draft {
 	}
 
 	@Override
-	public List<Framedata> createFrames(ByteBuffer binary, boolean mask) {
+	public List<FrameData> createFrames(ByteBuffer binary, boolean mask) {
 		throw new RuntimeException("not yet implemented");
 	}
 
 	@Override
-	public List<Framedata> createFrames(String text, boolean mask) {
+	public List<FrameData> createFrames(String text, boolean mask) {
 		FrameBuilder frame = new FramedataImpl1();
 		try {
 			frame.setPayload(ByteBuffer.wrap(Charsetfunctions.utf8Bytes(text)));
@@ -83,7 +83,7 @@ public class Draft_75 extends Draft {
 		frame.setFin(true);
 		frame.setOptcode(Opcode.TEXT);
 		frame.setTransferemasked(mask);
-		return Collections.singletonList((Framedata) frame);
+		return Collections.singletonList((FrameData) frame);
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class Draft_75 extends Draft {
 		return response;
 	}
 
-	protected List<Framedata> translateRegularFrame(ByteBuffer buffer) throws InvalidDataException {
+	protected List<FrameData> translateRegularFrame(ByteBuffer buffer) throws InvalidDataException {
 
 		while (buffer.hasRemaining()) {
 			byte newestByte = buffer.get();
@@ -143,14 +143,14 @@ public class Draft_75 extends Draft {
 			}
 		}
 
-		List<Framedata> frames = readyframes;
-		readyframes = new LinkedList<Framedata>();
+		List<FrameData> frames = readyframes;
+		readyframes = new LinkedList<FrameData>();
 		return frames;
 	}
 
 	@Override
-	public List<Framedata> translateFrame(ByteBuffer buffer) throws InvalidDataException {
-		List<Framedata> frames = translateRegularFrame(buffer);
+	public List<FrameData> translateFrame(ByteBuffer buffer) throws InvalidDataException {
+		List<FrameData> frames = translateRegularFrame(buffer);
 		if(frames == null) {
 			throw new InvalidDataException(CloseFrame.PROTOCOL_ERROR);
 		}

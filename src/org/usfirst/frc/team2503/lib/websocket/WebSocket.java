@@ -5,8 +5,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.NotYetConnectedException;
 
 import org.usfirst.frc.team2503.lib.websocket.drafts.Draft;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata.Opcode;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 
 public interface WebSocket {
 	public enum Role {
@@ -32,7 +32,7 @@ public interface WebSocket {
 
 	public abstract void send(byte[] bytes) throws IllegalArgumentException, NotYetConnectedException;
 
-	public abstract void sendFrame(Framedata framedata);
+	public abstract void sendFrame(FrameData framedata);
 
 	public abstract void sendFragmentedFrame(Opcode op, ByteBuffer buffer, boolean fin);
 

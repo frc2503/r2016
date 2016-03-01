@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 
-public interface FrameBuilder extends Framedata {
+public interface FrameBuilder extends FrameData {
 
 	public abstract void setFin( boolean fin );
 

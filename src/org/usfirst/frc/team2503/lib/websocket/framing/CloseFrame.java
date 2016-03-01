@@ -3,7 +3,7 @@ package org.usfirst.frc.team2503.lib.websocket.framing;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidFrameException;
 
-public interface CloseFrame extends Framedata {
+public interface CloseFrame extends FrameData {
 	/**
 	 * indicates a normal closure, meaning whatever purpose the
 	 * connection was established for has been fulfilled.

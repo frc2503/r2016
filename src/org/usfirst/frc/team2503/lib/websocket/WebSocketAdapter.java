@@ -5,9 +5,9 @@ import java.net.InetSocketAddress;
 import org.usfirst.frc.team2503.lib.websocket.drafts.Draft;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidHandshakeException;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
 import org.usfirst.frc.team2503.lib.websocket.framing.FramedataImpl1;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata.Opcode;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeImplServer;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshake;
@@ -44,20 +44,20 @@ public abstract class WebSocketAdapter implements WebSocketListener {
 	/**
 	 * This default implementation does not do anything. Go ahead and overwrite it
 	 * 
-	 * @see org.usfirst.frc.team2503.lib.websocket.WebSocketListener#onWebsocketMessageFragment(WebSocket, Framedata)
+	 * @see org.usfirst.frc.team2503.lib.websocket.WebSocketListener#onWebsocketMessageFragment(WebSocket, FrameData)
 	 */
 	@Override
-	public void onWebsocketMessageFragment( WebSocket conn, Framedata frame ) {
+	public void onWebsocketMessageFragment( WebSocket conn, FrameData frame ) {
 	}
 
 	/**
 	 * This default implementation will send a pong in response to the received ping.
 	 * The pong frame will have the same payload as the ping frame.
 	 * 
-	 * @see org.usfirst.frc.team2503.lib.websocket.WebSocketListener#onWebsocketPing(WebSocket, Framedata)
+	 * @see org.usfirst.frc.team2503.lib.websocket.WebSocketListener#onWebsocketPing(WebSocket, FrameData)
 	 */
 	@Override
-	public void onWebsocketPing( WebSocket conn, Framedata f ) {
+	public void onWebsocketPing( WebSocket conn, FrameData f ) {
 		FramedataImpl1 resp = new FramedataImpl1( f );
 		resp.setOptcode( Opcode.PONG );
 		conn.sendFrame( resp );
@@ -66,10 +66,10 @@ public abstract class WebSocketAdapter implements WebSocketListener {
 	/**
 	 * This default implementation does not do anything. Go ahead and overwrite it.
 	 * 
-	 * @see org.usfirst.frc.team2503.lib.websocket.WebSocketListener#onWebsocketPong(WebSocket, Framedata)
+	 * @see org.usfirst.frc.team2503.lib.websocket.WebSocketListener#onWebsocketPong(WebSocket, FrameData)
 	 */
 	@Override
-	public void onWebsocketPong( WebSocket conn, Framedata f ) {
+	public void onWebsocketPong( WebSocket conn, FrameData f ) {
 	}
 
 	/**

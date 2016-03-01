@@ -37,7 +37,7 @@ import org.usfirst.frc.team2503.lib.websocket.WrappedByteChannel;
 import org.usfirst.frc.team2503.lib.websocket.drafts.Draft;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshakeBuilder;
@@ -376,7 +376,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 
 	@Override
 	@Deprecated
-	public/*final*/void onWebsocketMessageFragment(WebSocket conn, Framedata frame) {// onFragment should be overloaded instead
+	public/*final*/void onWebsocketMessageFragment(WebSocket conn, FrameData frame) {// onFragment should be overloaded instead
 		onFragment(conn, frame);
 	}
 
@@ -510,7 +510,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 	public void onMessage(WebSocket conn, ByteBuffer message) {
 	}
 
-	public void onFragment(WebSocket conn, Framedata fragment) {
+	public void onFragment(WebSocket conn, FrameData fragment) {
 	}
 
 	public class WebSocketWorker extends Thread {

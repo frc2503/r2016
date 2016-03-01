@@ -26,8 +26,8 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidHandshakeExcepti
 import org.usfirst.frc.team2503.lib.websocket.exceptions.WebsocketNotConnectedException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrameBuilder;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata.Opcode;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeData;
@@ -316,10 +316,10 @@ public class WebSocketImpl implements WebSocket {
 
 	private void decodeFrames( ByteBuffer socketBuffer ) {
 
-		List<Framedata> frames;
+		List<FrameData> frames;
 		try {
 			frames = draft.translateFrame( socketBuffer );
-			for( Framedata f : frames ) {
+			for( FrameData f : frames ) {
 				if( DEBUG )
 					System.out.println( "matched frame: " + f );
 				Opcode curop = f.getOpcode();
@@ -568,10 +568,10 @@ public class WebSocketImpl implements WebSocket {
 		send( ByteBuffer.wrap( bytes ) );
 	}
 
-	private void send( Collection<Framedata> frames ) {
+	private void send( Collection<FrameData> frames ) {
 		if( !isOpen() )
 			throw new WebsocketNotConnectedException();
-		for( Framedata f : frames ) {
+		for( FrameData f : frames ) {
 			sendFrame( f );
 		}
 	}
@@ -582,7 +582,7 @@ public class WebSocketImpl implements WebSocket {
 	}
 
 	@Override
-	public void sendFrame( Framedata framedata ) {
+	public void sendFrame( FrameData framedata ) {
 		if( DEBUG )
 			System.out.println( "send frame: " + framedata );
 		write( draft.createBinaryFrame( framedata ) );

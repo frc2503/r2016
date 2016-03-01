@@ -19,8 +19,8 @@ import org.usfirst.frc.team2503.lib.websocket.drafts.Draft;
 import org.usfirst.frc.team2503.lib.websocket.drafts.Draft_17;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidHandshakeException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata.Opcode;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeImplClient;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshake;
@@ -195,7 +195,7 @@ public abstract class WebSocketClient extends WebSocketAdapter implements Runnab
 	}
 
 	@Override
-	public void onWebsocketMessageFragment(WebSocket conn, Framedata frame) {
+	public void onWebsocketMessageFragment(WebSocket conn, FrameData frame) {
 		onFragment(frame);
 	}
 
@@ -271,7 +271,7 @@ public abstract class WebSocketClient extends WebSocketAdapter implements Runnab
 	public void onMessage(ByteBuffer bytes) {
 	}
 	
-	public void onFragment(Framedata frame) {
+	public void onFragment(FrameData frame) {
 	}
 
 	private class WebsocketWriteThread implements Runnable {
@@ -361,7 +361,7 @@ public abstract class WebSocketClient extends WebSocketAdapter implements Runnab
 	}
 	
 	@Override
-	public void sendFrame(Framedata framedata) {
+	public void sendFrame(FrameData framedata) {
 		engine.sendFrame(framedata);
 	}
 

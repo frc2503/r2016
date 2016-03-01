@@ -13,9 +13,9 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidHandshakeExcepti
 import org.usfirst.frc.team2503.lib.websocket.exceptions.LimitExceededException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameBuilder;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
 import org.usfirst.frc.team2503.lib.websocket.framing.FramedataImpl1;
-import org.usfirst.frc.team2503.lib.websocket.framing.Framedata.Opcode;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeBuilder;
@@ -122,13 +122,13 @@ public abstract class Draft {
 		return handshakeData.getFieldValue( "Upgrade" ).equalsIgnoreCase( "websocket" ) && handshakeData.getFieldValue( "Connection" ).toLowerCase( Locale.ENGLISH ).contains( "upgrade" );
 	}
 
-	public abstract ByteBuffer createBinaryFrame( Framedata framedata ); // TODO Allow to send data on the base of an Iterator or InputStream
+	public abstract ByteBuffer createBinaryFrame( FrameData framedata ); // TODO Allow to send data on the base of an Iterator or InputStream
 
-	public abstract List<Framedata> createFrames( ByteBuffer binary, boolean mask );
+	public abstract List<FrameData> createFrames( ByteBuffer binary, boolean mask );
 
-	public abstract List<Framedata> createFrames( String text, boolean mask );
+	public abstract List<FrameData> createFrames( String text, boolean mask );
 
-	public List<Framedata> continuousFrame( Opcode op, ByteBuffer buffer, boolean fin ) {
+	public List<FrameData> continuousFrame( Opcode op, ByteBuffer buffer, boolean fin ) {
 		if( op != Opcode.BINARY && op != Opcode.TEXT && op != Opcode.TEXT ) {
 			throw new IllegalArgumentException( "Only Opcode.BINARY or  Opcode.TEXT are allowed" );
 		}
@@ -151,7 +151,7 @@ public abstract class Draft {
 		} else {
 			continuousFrameType = op;
 		}
-		return Collections.singletonList( (Framedata) bui );
+		return Collections.singletonList( (FrameData) bui );
 	}
 
 	public abstract void reset();
@@ -197,7 +197,7 @@ public abstract class Draft {
 
 	public abstract HandshakeBuilder postProcessHandshakeResponseAsServer( ClientHandshake request, ServerHandshakeBuilder response ) throws InvalidHandshakeException;
 
-	public abstract List<Framedata> translateFrame( ByteBuffer buffer ) throws InvalidDataException;
+	public abstract List<FrameData> translateFrame( ByteBuffer buffer ) throws InvalidDataException;
 
 	public abstract CloseHandshakeType getCloseHandshakeType();
 

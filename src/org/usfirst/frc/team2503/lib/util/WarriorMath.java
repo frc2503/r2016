@@ -2,8 +2,8 @@ package org.usfirst.frc.team2503.lib.util;
 
 public class WarriorMath {
 
-	static final double sq2p1 = 2.414213562373095048802e0d;
-	static final double sq2m1 = .414213562373095048802e0d;
+	static final double squareRootOf2Plus1 = 2.414213562373095048802e0d;
+	static final double squareRootOf2Minus1 = .414213562373095048802e0d;
 	static final double p4 = .161536412982230228262e2d;
 	static final double p3 = .26842548195503973794141e3d;
 	static final double p2 = .11530293515404850115428136e4d;
@@ -14,8 +14,8 @@ public class WarriorMath {
 	static final double q2 = .16667838148816337184521798e4d;
 	static final double q1 = .207933497444540981287275926e4d;
 	static final double q0 = .89678597403663861962481162e3d;
-	static final double PIO2 = 1.5707963267948966135e0d;
-	static final double nan = (0.0 / 0.0);
+	static final double PiOver2 = 1.5707963267948966135e0d;
+	static final double nan	 = (0.0 / 0.0);
 
 	private static double mxatan(double arg) {
 		double argsq, value;
@@ -27,15 +27,15 @@ public class WarriorMath {
 	}
 
 	private static double msatan(double arg) {
-		if (arg < sq2m1) {
+		if (arg < squareRootOf2Minus1) {
 			return mxatan(arg);
 		}
 
-		if (arg > sq2p1) {
-			return PIO2 - mxatan(1 / arg);
+		if (arg > squareRootOf2Plus1) {
+			return PiOver2 - mxatan(1 / arg);
 		}
 
-		return PIO2 / 2 + mxatan((arg - 1) / (arg + 1));
+		return PiOver2 / 2 + mxatan((arg - 1) / (arg + 1));
 	}
 
 	public static double atan(double arg) {
@@ -49,10 +49,10 @@ public class WarriorMath {
 	public static double atan2(double arg1, double arg2) {
 		if (arg1 + arg2 == arg1) {
 			if (arg1 >= 0) {
-				return PIO2;
+				return PiOver2;
 			}
 
-			return -PIO2;
+			return -PiOver2;
 		}
 
 		arg1 = atan(arg1 / arg2);
@@ -86,7 +86,7 @@ public class WarriorMath {
 		temp = Math.sqrt(1 - arg * arg);
 
 		if (arg > 0.7) {
-			temp = PIO2 - atan(temp / arg);
+			temp = PiOver2 - atan(temp / arg);
 		} else {
 			temp = atan(arg / temp);
 		}
@@ -103,7 +103,7 @@ public class WarriorMath {
 			return nan;
 		}
 
-		return PIO2 - asin(arg);
+		return PiOver2 - asin(arg);
 	}
 
 	public static double getDifferenceInAngleRadians(double from, double to) {

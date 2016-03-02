@@ -2,19 +2,19 @@ package org.usfirst.frc.team2503.lib.util;
 
 public class WarriorMath {
 
-	static final double sq2p1 = 2.414213562373095048802e0;
-	static final double sq2m1 = .414213562373095048802e0;
-	static final double p4 = .161536412982230228262e2;
-	static final double p3 = .26842548195503973794141e3;
-	static final double p2 = .11530293515404850115428136e4;
-	static final double p1 = .178040631643319697105464587e4;
-	static final double p0 = .89678597403663861959987488e3;
-	static final double q4 = .5895697050844462222791e2;
-	static final double q3 = .536265374031215315104235e3;
-	static final double q2 = .16667838148816337184521798e4;
-	static final double q1 = .207933497444540981287275926e4;
-	static final double q0 = .89678597403663861962481162e3;
-	static final double PIO2 = 1.5707963267948966135E0;
+	static final double sq2p1 = 2.414213562373095048802e0d;
+	static final double sq2m1 = .414213562373095048802e0d;
+	static final double p4 = .161536412982230228262e2d;
+	static final double p3 = .26842548195503973794141e3d;
+	static final double p2 = .11530293515404850115428136e4d;
+	static final double p1 = .178040631643319697105464587e4d;
+	static final double p0 = .89678597403663861959987488e3d;
+	static final double q4 = .5895697050844462222791e2d;
+	static final double q3 = .536265374031215315104235e3d;
+	static final double q2 = .16667838148816337184521798e4d;
+	static final double q1 = .207933497444540981287275926e4d;
+	static final double q0 = .89678597403663861962481162e3d;
+	static final double PIO2 = 1.5707963267948966135e0d;
 	static final double nan = (0.0 / 0.0);
 
 	private static double mxatan(double arg) {

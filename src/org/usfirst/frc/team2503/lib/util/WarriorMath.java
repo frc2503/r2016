@@ -171,6 +171,10 @@ public class WarriorMath {
 		return (Math.PI / 180.0d) * degrees;
 	}
 
+	public static double gate(double min, double value, double max) {
+		return Math.max(min, Math.min(max, value));
+	}
+
 	public WarriorMath() {
 	}
 }

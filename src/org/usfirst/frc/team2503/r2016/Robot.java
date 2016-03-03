@@ -98,6 +98,11 @@ public class Robot extends IterativeRobot {
 	public double shooterValue;
 
 	public Robot() {
+		robotDataServer = new RobotDataServer(new InetSocketAddress(5800));
+		messageServer = new MessageServer(new InetSocketAddress(5801));
+		
+		Logger.println("main", "[Robot] Starting... Version '" + Constants.VERSION + "'");
+		
 		Logger.addPrintStream("main", new LoggerPrintStream(System.out));
 		Logger.addPrintStream("error", new LoggerPrintStream(System.err));
 		Logger.addPrintStream("warning", new LoggerPrintStream(System.err));
@@ -105,12 +110,7 @@ public class Robot extends IterativeRobot {
 		Logger.addPrintStream("information", new LoggerPrintStream(System.out));
 		Logger.addPrintStream("data", new LoggerPrintStream(robotDataServer.new WebSocketByteArrayOutputStream()));
 
-		Logger.println("main", "[Robot] Starting... Version '" + Constants.VERSION + "'");
-
 		R = new MainRobotMap();
-
-		robotDataServer = new RobotDataServer(new InetSocketAddress(5800));
-		messageServer = new MessageServer(new InetSocketAddress(5801));
 
 		dataServerThread = new Thread(robotDataServer);
 		messageServerThread = new Thread(messageServer);
@@ -135,6 +135,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
+		
 	}
 
 	public void autonomousInit() {

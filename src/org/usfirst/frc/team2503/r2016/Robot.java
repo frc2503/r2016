@@ -10,6 +10,8 @@ import org.usfirst.frc.team2503.r2016.component.Intake.IntakeMode;
 import org.usfirst.frc.team2503.r2016.debug.Logger;
 import org.usfirst.frc.team2503.r2016.debug.Logger.LoggerPrintStream;
 import org.usfirst.frc.team2503.r2016.input.Data;
+import org.usfirst.frc.team2503.r2016.input.JoystickJoystickGamepadControlLayout;
+import org.usfirst.frc.team2503.r2016.input.MadCatzV1JoystickMadCatzV1JoystickLogitechF310GamepadControlLayout;
 import org.usfirst.frc.team2503.r2016.input.gamepad.LogitechF310Gamepad;
 import org.usfirst.frc.team2503.r2016.input.joystick.MadCatzV1Joystick;
 import org.usfirst.frc.team2503.r2016.server.DataServer;
@@ -83,6 +85,8 @@ public class Robot extends IterativeRobot {
 	public MadCatzV1Joystick rightJoystick;
 	public LogitechF310Gamepad gamepad;
 
+	public JoystickJoystickGamepadControlLayout L = new MadCatzV1JoystickMadCatzV1JoystickLogitechF310GamepadControlLayout(leftJoystick, rightJoystick, gamepad);
+	
 	public JSONObject modeObject;
 
 	public final MainRobotMap R;

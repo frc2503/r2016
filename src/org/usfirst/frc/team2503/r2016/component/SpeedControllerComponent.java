@@ -1,8 +1,10 @@
 package org.usfirst.frc.team2503.r2016.component;
 
+import org.usfirst.frc.team2503.r2016.Tickable;
+
 import edu.wpi.first.wpilibj.SpeedController;
 
-public abstract class SpeedControllerComponent extends Component implements SpeedController {
+public abstract class SpeedControllerComponent extends Component implements Tickable, SpeedController {
 	
 	protected SpeedController controller;
 	

@@ -25,58 +25,59 @@ public class LogitechF310Gamepad extends Gamepad implements DataSource {
 	public ControllerAxis rightX = new ControllerAxis(4, ControllerAxisType.NEGATIVE_TO_POSITIVE);
 	public ControllerAxis rightY = new ControllerAxis(5, ControllerAxisType.NEGATIVE_TO_POSITIVE);
 
+	public class DataReporter {
+		private Data data = new Data();
+		private Data buttons = new Data();
+		private Data axes = new Data();
+		private Data leftAxes = new Data();
+		private Data rightAxes = new Data();
+
+		public void update() {
+			this.buttons.put("a", a.get());
+			this.buttons.put("b", b.get());
+			this.buttons.put("x", x.get());
+			this.buttons.put("y", y.get());
+
+			this.buttons.put("leftBumper", leftBumper.get());
+			this.buttons.put("rightBumper", rightBumper.get());
+			this.buttons.put("back", back.get());
+			this.buttons.put("start", start.get());
+			this.buttons.put("leftStick", leftStick.get());
+			this.buttons.put("rightStick", rightStick.get());
+
+			this.leftAxes.put("x", leftX.get());
+			this.leftAxes.put("y", leftY.get());
+			this.leftAxes.put("t", leftTrigger.get());
+
+			this.rightAxes.put("x", rightX.get());
+			this.rightAxes.put("y", rightY.get());
+			this.rightAxes.put("t", rightTrigger.get());
+		}
+
+		public Data report() {
+			return this.data;
+		}
+
+		public void compile() {
+			this.data.put("buttons", this.buttons);
+			this.axes.put("left", this.leftAxes);
+			this.axes.put("right", this.rightAxes);
+			this.data.put("axes", this.axes);
+		}
+	}
+
+	private DataReporter DataReporter;
+
 	public Data getData() {
-		Data data = new Data();
-
-		{
-			Data buttons = new Data();
-
-			buttons.put("a", a.get());
-			buttons.put("b", b.get());
-			buttons.put("x", x.get());
-			buttons.put("y", y.get());
-
-			buttons.put("leftBumper", leftBumper.get());
-			buttons.put("rightBumper", rightBumper.get());
-			buttons.put("back", back.get());
-			buttons.put("start", start.get());
-			buttons.put("leftStick", leftStick.get());
-			buttons.put("rightStick", rightStick.get());
-
-			data.put("buttons", buttons);
-		}
-
-		{
-			Data axes = new Data();
-
-			{
-				Data leftAxes = new Data();
-
-				leftAxes.put("x", leftX.get());
-				leftAxes.put("y", leftY.get());
-				leftAxes.put("t", leftTrigger.get());
-
-				axes.put("left", leftAxes);
-			}
-
-			{
-				Data rightAxes = new Data();
-
-				rightAxes.put("x", rightX.get());
-				rightAxes.put("y", rightY.get());
-				rightAxes.put("t", rightTrigger.get());
-
-				axes.put("right", rightAxes);
-			}
-
-			data.put("axes", axes);
-		}
-
-		return data;
+		DataReporter.update();
+		DataReporter.compile();
+		return DataReporter.report();
 	}
 
 	public LogitechF310Gamepad(int port) {
 		super(port);
+
+		this.DataReporter = new DataReporter();
 	}
 
 }

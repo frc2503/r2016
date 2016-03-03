@@ -9,6 +9,7 @@ import org.usfirst.frc.team2503.r2016.component.CameraMount.CameraMountMode;
 import org.usfirst.frc.team2503.r2016.component.Intake.IntakeMode;
 import org.usfirst.frc.team2503.r2016.debug.Logger;
 import org.usfirst.frc.team2503.r2016.debug.Logger.LoggerPrintStream;
+import org.usfirst.frc.team2503.r2016.input.Data;
 import org.usfirst.frc.team2503.r2016.input.gamepad.LogitechF310Gamepad;
 import org.usfirst.frc.team2503.r2016.input.joystick.MadCatzV1Joystick;
 import org.usfirst.frc.team2503.r2016.server.DataServer;
@@ -20,13 +21,13 @@ import edu.wpi.first.wpilibj.Relay;
 
 public class Robot extends IterativeRobot {
 
-	public class RobotDataServer extends DataServer {
+	public class RobotDataServer extends DataServer implements Tickable {
 
-		public void update() {
+		public void tick(Data data) {
 			{
 				JSONObject encoders = new JSONObject();
 
-				encoders.put("hooker", robotMap.hooker.encoder.get());
+				encoders.put("hooker", R.hooker.encoder.get());
 
 				this.serverData.put("encoders", encoders);
 			}
@@ -34,8 +35,8 @@ public class Robot extends IterativeRobot {
 			{
 				JSONObject switches = new JSONObject();
 
-				switches.put("intake", robotMap.intake.limitSwitch.get());
-				switches.put("hooker", robotMap.hooker.limitSwitch.get());
+				switches.put("intake", R.intake.limitSwitch.get());
+				switches.put("hooker", R.hooker.limitSwitch.get());
 
 				this.serverData.put("switches", switches);
 			}
@@ -43,9 +44,9 @@ public class Robot extends IterativeRobot {
 			{
 				JSONObject pneumatics = new JSONObject();
 
-				pneumatics.put("charged", robotMap.pneumaticsSubsystem.compressor.getPressureSwitchValue());
-				pneumatics.put("enabled", robotMap.pneumaticsSubsystem.compressor.enabled());
-				pneumatics.put("closed", robotMap.pneumaticsSubsystem.compressor.getClosedLoopControl());
+				pneumatics.put("charged", R.pneumaticsSubsystem.compressor.getPressureSwitchValue());
+				pneumatics.put("enabled", R.pneumaticsSubsystem.compressor.enabled());
+				pneumatics.put("closed", R.pneumaticsSubsystem.compressor.getClosedLoopControl());
 
 				this.serverData.put("pneumatics", pneumatics);
 			}
@@ -71,7 +72,6 @@ public class Robot extends IterativeRobot {
 			super(address);
 		}
 
-
 	}
 
 	public RobotDataServer robotDataServer;
@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
 
 	public JSONObject modeObject;
 
-	public MainRobotMap robotMap;
+	public final MainRobotMap R;
 
 	public double leftValue;
 	public double rightValue;
@@ -101,7 +101,9 @@ public class Robot extends IterativeRobot {
 		Logger.addPrintStream("information", new LoggerPrintStream(System.out));
 		Logger.addPrintStream("data", new LoggerPrintStream(robotDataServer.new WebSocketByteArrayOutputStream()));
 
-		robotMap = new MainRobotMap();
+		Logger.println("main", "[Robot] Starting... Version '" + Constants.VERSION + "'");
+
+		R = new MainRobotMap();
 
 		robotDataServer = new RobotDataServer(new InetSocketAddress(5800));
 		messageServer = new MessageServer(new InetSocketAddress(5801));
@@ -132,18 +134,17 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		robotMap.hooker.encoder.reset();
 	}
 
 	public void autonomousPeriodic() {
-		int ticks = robotMap.hooker.encoder.get();
+		int ticks = R.hooker.encoder.get();
 
 		if(ticks < 175) {
-			robotMap.hooker.set(-0.5);
+			R.hooker.set(-0.5);
 		} else if(ticks >= 175 && ticks < 185) {
-			robotMap.hooker.set(0.0);
+			R.hooker.set(0.0);
 		} else {
-			robotMap.hooker.set(0.5);
+			R.hooker.set(0.5);
 		}
 	}
 
@@ -151,12 +152,14 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
+		// TODO: Move All of this into ControlLayouts
 		leftValue = (leftJoystick.y.get());
 		rightValue = (rightJoystick.y.get());
 		winchValue = gamepad.rightY.get();
 		hookerValue = (gamepad.leftY.get() * 0.5);
 		shooterValue = (gamepad.rightTrigger.get());
 
+		// TODO: Move all of this into
 		leftValue *= leftJoystick.throttle.get();
 		rightValue *= rightJoystick.throttle.get();
 
@@ -170,52 +173,52 @@ public class Robot extends IterativeRobot {
 		}
 
 		if(gamepad.b.get()) {
-			robotMap.intake.setMode(IntakeMode.OUTBOUND);
+			R.intake.setMode(IntakeMode.OUTBOUND);
 		} else if(gamepad.a.get()) {
-			robotMap.intake.setMode(IntakeMode.INBOUND);
+			R.intake.setMode(IntakeMode.INBOUND);
 		} else if(gamepad.leftBumper.get())  {
-			robotMap.intake.setMode(IntakeMode.FIRE);
+			R.intake.setMode(IntakeMode.FIRE);
 		} else {
-			robotMap.intake.setMode(IntakeMode.STOPPED);
+			R.intake.setMode(IntakeMode.STOPPED);
 		}
 
-		robotMap.winch.set(winchValue);
-		robotMap.hooker.set(hookerValue);
-		robotMap.shooter.set(shooterValue);
+		R.winch.set(winchValue);
+		R.hooker.set(hookerValue);
+		R.shooter.set(shooterValue);
 
-		robotMap.intake.tick(null);
-		robotMap.winch.tick(null);
-		robotMap.hooker.tick(null);
-		robotMap.shooter.tick(null);
+		R.intake.tick(null);
+		R.winch.tick(null);
+		R.hooker.tick(null);
+		R.shooter.tick(null);
 
 		if(rightJoystick.button2.get() && !rightJoystick.trigger.get()) {
-			robotMap.pneumaticsSubsystem.lift.set(DoubleSolenoid.Value.kForward);
+			R.pneumaticsSubsystem.lift.set(DoubleSolenoid.Value.kForward);
 		} else if(rightJoystick.trigger.get() && !rightJoystick.button2.get()) {
-			robotMap.pneumaticsSubsystem.lift.set(DoubleSolenoid.Value.kReverse);
+			R.pneumaticsSubsystem.lift.set(DoubleSolenoid.Value.kReverse);
 		} else {
-			robotMap.pneumaticsSubsystem.lift.set(DoubleSolenoid.Value.kOff);
+			R.pneumaticsSubsystem.lift.set(DoubleSolenoid.Value.kOff);
 		}
 
-		robotMap.driveBase.drive(leftValue, rightValue);
+		R.driveBase.drive(leftValue, rightValue);
 
 		double povAngle = (double) gamepad.pov.get();
 
 		if(povAngle >= 0) {
-			robotMap.cameraMount.setMode(CameraMountMode.LOOKING);
-			robotMap.cameraMount.tweak(Math.cos(WarriorMath.degreesToRadians(90.0d - povAngle)), Math.sin(90.0d - povAngle));
+			R.cameraMount.setMode(CameraMountMode.LOOKING);
+			R.cameraMount.tweak(Math.cos(WarriorMath.degreesToRadians(90.0d - povAngle)), Math.sin(90.0d - povAngle));
 		} else {
-			robotMap.cameraMount.setMode(CameraMountMode.TARGETING);
+			R.cameraMount.setMode(CameraMountMode.TARGETING);
 		}
 
-		robotMap.cameraMount.tick(null);
+		R.cameraMount.tick(null);
 
-		if(robotMap.intake.limitSwitch.get()) {
-			robotMap.indicatorRelay.set(Relay.Value.kOn);
+		if(R.intake.limitSwitch.get()) {
+			R.indicatorRelay.set(Relay.Value.kOn);
 		} else {
-			robotMap.indicatorRelay.set(Relay.Value.kOff);
+			R.indicatorRelay.set(Relay.Value.kOff);
 		}
 
-		robotDataServer.update();
+		robotDataServer.tick(null);
 		robotDataServer.send();
 	}
 

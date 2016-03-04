@@ -2,7 +2,6 @@ package org.usfirst.frc.team2503.r2016.input;
 
 import org.usfirst.frc.team2503.r2016.input.gamepad.Gamepad;
 import org.usfirst.frc.team2503.r2016.input.joystick.Joystick;
-import org.usfirst.frc.team2503.r2016.input.joystick.MadCatzV1Joystick.DataReporter;
 
 public abstract class JoystickJoystickGamepadControlLayout implements ControlLayout {
 

@@ -17,6 +17,7 @@ import org.usfirst.frc.team2503.r2016.input.joystick.MadCatzV1Joystick;
 import org.usfirst.frc.team2503.r2016.server.DataServer;
 import org.usfirst.frc.team2503.r2016.server.MessageServer;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
@@ -96,13 +97,13 @@ public class Robot extends IterativeRobot {
 	public double winchValue;
 	public double hookerValue;
 	public double shooterValue;
+	
+	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
 	public Robot() {
 		robotDataServer = new RobotDataServer(new InetSocketAddress(5800));
 		messageServer = new MessageServer(new InetSocketAddress(5801));
-		
-		Logger.println("main", "[Robot] Starting... Version '" + Constants.VERSION + "'");
-		
+
 		Logger.addPrintStream("main", new LoggerPrintStream(System.out));
 		Logger.addPrintStream("error", new LoggerPrintStream(System.err));
 		Logger.addPrintStream("warning", new LoggerPrintStream(System.err));
@@ -110,6 +111,8 @@ public class Robot extends IterativeRobot {
 		Logger.addPrintStream("information", new LoggerPrintStream(System.out));
 		Logger.addPrintStream("data", new LoggerPrintStream(robotDataServer.new WebSocketByteArrayOutputStream()));
 
+		Logger.println("main", "[Robot] Starting... Version '" + Constants.VERSION + "'");
+		
 		R = new MainRobotMap();
 
 		dataServerThread = new Thread(robotDataServer);
@@ -135,22 +138,37 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
-		
 	}
 
 	public void autonomousInit() {
+		gyro.reset();
+		R.driveBase.leftEncoder.reset();
+		R.driveBase.rightEncoder.reset();
 	}
 
 	public void autonomousPeriodic() {
-		int ticks = R.hooker.encoder.get();
+		System.out.println("[" + R.driveBase.leftEncoder.get() + "] [" + R.driveBase.rightEncoder.get() + "] " + gyro.getAngle());
+		
+		double angle = gyro.getAngle();
+		int leftTicks = R.driveBase.leftEncoder.get();
+		int rightTicks = R.driveBase.rightEncoder.get();
+		
+		int averageTicks = (leftTicks + rightTicks) / 2;
 
-		if(ticks < 175) {
-			R.hooker.set(-0.5);
-		} else if(ticks >= 175 && ticks < 185) {
-			R.hooker.set(0.0);
+		double left = -0.5 + 0.5 * Math.sin(WarriorMath.degreesToRadians(angle));
+		double right = -0.5 - 0.5 * Math.sin(WarriorMath.degreesToRadians(angle));
+
+		System.out.println(left + " " + right + " " + (left > right ? "L" : "R"));
+				
+		if(averageTicks <= 1450 * 5) {
+			R.driveBase.drive(left,  right);
+		} else if(averageTicks >= 1550 * 5) {
+			R.driveBase.drive(-left, -right);
 		} else {
-			R.hooker.set(0.5);
+			R.driveBase.drive(0.0, 0.0);
 		}
+		
+		// R.driveBase.drive(left,  right);
 	}
 
 	public void teleopInit() {
@@ -210,7 +228,7 @@ public class Robot extends IterativeRobot {
 
 		if(povAngle >= 0) {
 			R.cameraMount.setMode(CameraMountMode.LOOKING);
-			R.cameraMount.tweak(Math.cos(WarriorMath.degreesToRadians(90.0d - povAngle)), Math.sin(90.0d - povAngle));
+			R.cameraMount.tweak(Math.cos(WarriorMath.degreesToRadians(90.0d - povAngle)), Math.sin(WarriorMath.degreesToRadians(90.0d - povAngle)));
 		} else {
 			R.cameraMount.setMode(CameraMountMode.TARGETING);
 		}

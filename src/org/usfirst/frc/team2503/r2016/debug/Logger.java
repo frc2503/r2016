@@ -84,7 +84,6 @@ public class Logger {
 
 		String prefixString = (prefix ? "[(" + caller.getFileName() + ":" + caller.getLineNumber() + ") <" + caller.getMethodName() + ">] " : "");
 		
-		
 		JSONArray channel = printStreams.getJSONArray(channelName);
 		
 		LoggerPrintStream nextPrintStream = null;

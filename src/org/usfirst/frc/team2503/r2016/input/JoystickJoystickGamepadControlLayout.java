@@ -2,9 +2,35 @@ package org.usfirst.frc.team2503.r2016.input;
 
 import org.usfirst.frc.team2503.r2016.input.gamepad.Gamepad;
 import org.usfirst.frc.team2503.r2016.input.joystick.Joystick;
+import org.usfirst.frc.team2503.r2016.input.joystick.MadCatzV1Joystick.DataReporter;
 
 public abstract class JoystickJoystickGamepadControlLayout implements ControlLayout {
 
+	public class DataReporter {
+		private Data data = new Data();
+		private Data leftJoystickData = null;
+		private Data rightJoystickData = null;
+		private Data gamepadData = null;
+
+		public void update() {
+			this.leftJoystickData = left.getData();
+			this.rightJoystickData = right.getData();
+			this.gamepadData = gamepad.getData();
+		}
+
+		public Data report() {
+			return this.data;
+		}
+
+		public void compile() {
+			this.data.put("leftJoystick", this.leftJoystickData);
+			this.data.put("rightJoystick", this.rightJoystickData);
+			this.data.put("gamepad", this.gamepadData);
+		}
+	}
+	
+	private DataReporter DataReporter;
+	
 	private Joystick left;
 	private Joystick right;
 	private Gamepad gamepad;
@@ -13,26 +39,14 @@ public abstract class JoystickJoystickGamepadControlLayout implements ControlLay
 		this.left = left;
 		this.right = right;
 		this.gamepad = gamepad;
+		
+		this.DataReporter = new DataReporter();
 	}
 
 	public Data getData() {
-		Data leftData = this.left.getData();
-		Data rightData = this.right.getData();
-		Data gamepadData = this.gamepad.getData();
-
-		Data data = new Data();
-
-		{
-			Data joystickData = new Data();
-
-			joystickData.put("left", leftData);
-			joystickData.put("right", rightData);
-			joystickData.put("gamepad", gamepadData);
-
-			data.put("joysticks", joystickData);
-		}
-
-		return data;
+		DataReporter.update();
+		DataReporter.compile(); 
+		return DataReporter.report();
 	}
 
 }

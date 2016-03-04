@@ -7,8 +7,6 @@ import edu.wpi.first.wpilibj.Encoder;
 
 public class MainDriveBase extends DriveBase {
 
-	public Encoder leftEncoder;
-	public Encoder rightEncoder;
 
 	public void tick(Data data) {
 	}

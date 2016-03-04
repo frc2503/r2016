@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2503.r2016.component;
 
+import org.usfirst.frc.team2503.lib.util.WarriorMath;
 import org.usfirst.frc.team2503.r2016.input.Data;
 
 import edu.wpi.first.wpilibj.Relay;
@@ -42,8 +43,10 @@ public class CameraMount extends Component {
 	public CameraMountMode getMode() { return this.mode; }
 
 	public void tweak(double horizontal, double vertical) {
-		this.x = Math.max(0.0, Math.min(1.0, this.x + (horizontal * 0.01)));
-		this.y = Math.max(0.0, Math.min(1.0, this.y + (vertical * 0.01)));
+		this.x = WarriorMath.gate(0.0, (this.x + (horizontal * 0.01)), 1.0);
+		this.y = WarriorMath.gate(0.0, (this.y + (vertical * 0.01)), 1.0);
+//		this.x = Math.max(0.0, Math.min(1.0, this.x + (horizontal * 0.01)));
+//		this.y = Math.max(0.0, Math.min(1.0, this.y + (vertical * 0.01)));
 	}
 
 	public void tick(Data data) {
@@ -58,13 +61,13 @@ public class CameraMount extends Component {
 		case INTAKE:
 			this.lights.set(Relay.Value.kOn);
 			this.x = 1.0;
-			this.y = 0.35;
+			this.y = 0.3;
 			break;
 
 		case BACKUP:
 			this.lights.set(Relay.Value.kOn);
 			this.x = 0.0;
-			this.y = 0.5;
+			this.y = 0.4;
 			break;
 
 		case HOOKING:
@@ -76,14 +79,14 @@ public class CameraMount extends Component {
 		case TARGETING:
 			this.lights.set(Relay.Value.kOn);
 			this.x = 1.0;
-			this.y = 0.5;
+			this.y = 0.4;
 			break;
 
 		case UNKNOWN:
 		default:
 			this.lights.set(Relay.Value.kOff);
 			this.x = 1.0;
-			this.y = 0.5;
+			this.y = 0.4;
 			break;
 		}
 

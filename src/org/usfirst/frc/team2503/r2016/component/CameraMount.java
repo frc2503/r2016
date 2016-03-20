@@ -26,7 +26,7 @@ public class CameraMount extends Component {
 		TARGETING,
 		INTAKE,
 		BACKUP,
-		HOOKING
+		STRAIGHT_FORWARD
 	}
 
 	public CameraLights lights;
@@ -45,8 +45,8 @@ public class CameraMount extends Component {
 	public void tweak(double horizontal, double vertical) {
 		this.x = WarriorMath.gate(0.0, (this.x + (horizontal * 0.01)), 1.0);
 		this.y = WarriorMath.gate(0.0, (this.y + (vertical * 0.01)), 1.0);
-//		this.x = Math.max(0.0, Math.min(1.0, this.x + (horizontal * 0.01)));
-//		this.y = Math.max(0.0, Math.min(1.0, this.y + (vertical * 0.01)));
+		//		this.x = Math.max(0.0, Math.min(1.0, this.x + (horizontal * 0.01)));
+		//		this.y = Math.max(0.0, Math.min(1.0, this.y + (vertical * 0.01)));
 	}
 
 	public void tick(Data data) {
@@ -61,25 +61,25 @@ public class CameraMount extends Component {
 		case INTAKE:
 			this.lights.set(Relay.Value.kOn);
 			this.x = 1.0;
-			this.y = 0.3;
+			this.y = 0.2;
 			break;
 
 		case BACKUP:
 			this.lights.set(Relay.Value.kOn);
 			this.x = 0.0;
-			this.y = 0.4;
+			this.y = 0.75;
 			break;
 
-		case HOOKING:
+		case STRAIGHT_FORWARD:
 			this.lights.set(Relay.Value.kOn);
-			this.x = 0.0;
-			this.y = 0.6;
+			this.x = 1.0;
+			this.y = 0.4;
 			break;
 
 		case TARGETING:
 			this.lights.set(Relay.Value.kOn);
 			this.x = 1.0;
-			this.y = 0.4;
+			this.y = 0.55;
 			break;
 
 		case UNKNOWN:
@@ -91,7 +91,7 @@ public class CameraMount extends Component {
 		}
 
 		this.horizontal.set(this.x);
-		this.vertical.set(this.y);
+		this.vertical.set(this.y - 0.05d);
 	}
 
 	public CameraMount(Servo horizontal, Servo vertical, CameraLights lights) {

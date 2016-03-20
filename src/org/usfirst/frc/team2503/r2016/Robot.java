@@ -156,8 +156,8 @@ public class Robot extends IterativeRobot {
 
 		int averageTicks = (leftTicks + rightTicks) / 2;
 
-		double left = -0.5 + 0.5 * Math.sin(WarriorMath.degreesToRadians(angle));
-		double right = -0.5 - 0.5 * Math.sin(WarriorMath.degreesToRadians(angle));
+		double left = 0.5 - 0.5 * Math.sin(WarriorMath.degreesToRadians(angle));
+		double right = 0.5 + 0.5 * Math.sin(WarriorMath.degreesToRadians(angle));
 
 		System.out.println(left + " " + right + " " + (left > right ? "L" : "R"));
 

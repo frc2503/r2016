@@ -179,10 +179,12 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Data controlLayoutData = L.getData();
 
-		leftValue = controlLayoutData.getJSONObject("leftJoystick").getJSONObject("axes").getDouble("y");
-		rightValue = controlLayoutData.getJSONObject("rightJoystick").getJSONObject("axes").getDouble("y");
+		leftValue = -controlLayoutData.getJSONObject("leftJoystick").getJSONObject("axes").getDouble("y");
+		rightValue = -controlLayoutData.getJSONObject("rightJoystick").getJSONObject("axes").getDouble("y");
 
 		// TODO: Move all of this into ControlLayouts
+		// leftValue = leftJoystick.y.get();
+		// rightValue = rightJoystick.y.get();
 		winchValue = gamepad.rightY.get();
 		hookerValue = (gamepad.leftY.get() * 0.5);
 		shooterValue = (gamepad.rightTrigger.get());

@@ -65,8 +65,8 @@ public class MainRobotMap {
 	public final PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem(this.compressor, this.lift);
 	
 	public MainRobotMap() {
-		this.leftTrack.setInverted(true);
-		this.rightTrack.setInverted(false);
+		this.leftTrack.setInverted(false);
+		this.rightTrack.setInverted(true);
 		this.winch.setInverted(true);
 		this.hooker.setInverted(true);
 		this.shooter.setInverted(true);

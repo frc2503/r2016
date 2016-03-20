@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 
 import org.json.JSONObject;
 import org.usfirst.frc.team2503.lib.util.WarriorMath;
+import org.usfirst.frc.team2503.r2016.component.CameraMount;
 import org.usfirst.frc.team2503.r2016.component.CameraMount.CameraMountMode;
 import org.usfirst.frc.team2503.r2016.component.Intake.IntakeMode;
 import org.usfirst.frc.team2503.r2016.debug.Logger;
@@ -87,7 +88,7 @@ public class Robot extends IterativeRobot {
 	public LogitechF310Gamepad gamepad;
 
 	public JoystickJoystickGamepadControlLayout L = new MadCatzV1JoystickMadCatzV1JoystickLogitechF310GamepadControlLayout(leftJoystick, rightJoystick, gamepad);
-	
+
 	public JSONObject modeObject;
 
 	public final MainRobotMap R;
@@ -97,7 +98,7 @@ public class Robot extends IterativeRobot {
 	public double winchValue;
 	public double hookerValue;
 	public double shooterValue;
-	
+
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
 	public Robot() {
@@ -112,7 +113,7 @@ public class Robot extends IterativeRobot {
 		Logger.addPrintStream("data", new LoggerPrintStream(robotDataServer.new WebSocketByteArrayOutputStream()));
 
 		Logger.println("main", "[Robot] Starting... Version '" + Constants.VERSION + "'");
-		
+
 		R = new MainRobotMap();
 
 		dataServerThread = new Thread(robotDataServer);
@@ -148,18 +149,18 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousPeriodic() {
 		System.out.println("[" + R.driveBase.leftEncoder.get() + "] [" + R.driveBase.rightEncoder.get() + "] " + gyro.getAngle());
-		
+
 		double angle = gyro.getAngle();
 		int leftTicks = R.driveBase.leftEncoder.get();
 		int rightTicks = R.driveBase.rightEncoder.get();
-		
+
 		int averageTicks = (leftTicks + rightTicks) / 2;
 
 		double left = -0.5 + 0.5 * Math.sin(WarriorMath.degreesToRadians(angle));
 		double right = -0.5 - 0.5 * Math.sin(WarriorMath.degreesToRadians(angle));
 
 		System.out.println(left + " " + right + " " + (left > right ? "L" : "R"));
-				
+
 		if(averageTicks <= 1450 * 5) {
 			R.driveBase.drive(left,  right);
 		} else if(averageTicks >= 1550 * 5) {
@@ -167,22 +168,26 @@ public class Robot extends IterativeRobot {
 		} else {
 			R.driveBase.drive(0.0, 0.0);
 		}
-		
+
 		// R.driveBase.drive(left,  right);
 	}
 
 	public void teleopInit() {
+		R.cameraMount.lights.set(Relay.Value.kOn);
 	}
 
 	public void teleopPeriodic() {
-		// TODO: Move All of this into ControlLayouts
-		leftValue = (leftJoystick.y.get());
-		rightValue = (rightJoystick.y.get());
+		Data controlLayoutData = L.getData();
+
+		leftValue = controlLayoutData.getJSONObject("leftJoystick").getJSONObject("axes").getDouble("y");
+		rightValue = controlLayoutData.getJSONObject("rightJoystick").getJSONObject("axes").getDouble("y");
+
+		// TODO: Move all of this into ControlLayouts
 		winchValue = gamepad.rightY.get();
 		hookerValue = (gamepad.leftY.get() * 0.5);
 		shooterValue = (gamepad.rightTrigger.get());
 
-		// TODO: Move all of this into
+		// TODO: Move all of this into the ControlLayouts
 		leftValue *= leftJoystick.throttle.get();
 		rightValue *= rightJoystick.throttle.get();
 
@@ -199,8 +204,10 @@ public class Robot extends IterativeRobot {
 			R.intake.setMode(IntakeMode.OUTBOUND);
 		} else if(gamepad.a.get()) {
 			R.intake.setMode(IntakeMode.INBOUND);
+			R.cameraMount.setMode(CameraMountMode.INTAKE);
 		} else if(gamepad.leftBumper.get())  {
 			R.intake.setMode(IntakeMode.FIRE);
+			R.cameraMount.setMode(CameraMountMode.TARGETING);
 		} else {
 			R.intake.setMode(IntakeMode.STOPPED);
 		}
@@ -224,14 +231,16 @@ public class Robot extends IterativeRobot {
 
 		R.driveBase.drive(leftValue, rightValue);
 
-		double povAngle = (double) gamepad.pov.get();
-
-		if(povAngle >= 0) {
-			R.cameraMount.setMode(CameraMountMode.LOOKING);
-			R.cameraMount.tweak(Math.cos(WarriorMath.degreesToRadians(90.0d - povAngle)), Math.sin(WarriorMath.degreesToRadians(90.0d - povAngle)));
-		} else {
+		if(gamepad.back.get()) {
+			R.cameraMount.setMode(CameraMountMode.BACKUP);
+		} else if(gamepad.y.get()) {
 			R.cameraMount.setMode(CameraMountMode.TARGETING);
+		} else if(gamepad.x.get()) {
+			R.cameraMount.setMode(CameraMountMode.STRAIGHT_FORWARD);
 		}
+
+		if(R.cameraMount.getMode() == CameraMountMode.UNKNOWN)
+			R.cameraMount.setMode(CameraMountMode.STRAIGHT_FORWARD);
 
 		R.cameraMount.tick(null);
 

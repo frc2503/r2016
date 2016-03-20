@@ -1,4 +1,6 @@
 package org.usfirst.frc.team2503.r2016.control;
 
-public interface Controller {
+import org.usfirst.frc.team2503.r2016.Tickable;
+
+public interface Controller extends Tickable {
 }

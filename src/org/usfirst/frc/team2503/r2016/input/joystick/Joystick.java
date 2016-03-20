@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2503.r2016.input.joystick;
 
-import org.usfirst.frc.team2503.r2016.input.DataSource;
+import org.usfirst.frc.team2503.r2016.data.DataSource;
 
-public abstract class Joystick extends edu.wpi.first.wpilibj.Joystick implements DataSource {
+public abstract class Joystick extends edu.wpi.first.wpilibj.Joystick {
 
 	public class ControllerButton {
 
@@ -41,7 +41,7 @@ public abstract class Joystick extends edu.wpi.first.wpilibj.Joystick implements
 	}
 
 	public enum ControllerAxisType {
-		NEGATIVE_TO_POSITIVE, ZERO_TO_POSITIVE
+		NEGATIVE_TO_POSITIVE, POSITIVE_TO_NEGATIVE, ZERO_TO_POSITIVE
 	}
 
 	public class ControllerAxis {

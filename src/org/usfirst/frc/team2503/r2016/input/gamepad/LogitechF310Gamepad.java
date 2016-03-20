@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2503.r2016.input.gamepad;
 
-import org.usfirst.frc.team2503.r2016.input.Data;
-import org.usfirst.frc.team2503.r2016.input.DataSource;
+import org.usfirst.frc.team2503.r2016.data.Data;
+import org.usfirst.frc.team2503.r2016.data.DataSource;
 
 public class LogitechF310Gamepad extends Gamepad implements DataSource {
 

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2503.r2016.input;
 
+import org.usfirst.frc.team2503.r2016.data.Data;
 import org.usfirst.frc.team2503.r2016.input.gamepad.Gamepad;
 import org.usfirst.frc.team2503.r2016.input.joystick.Joystick;
 

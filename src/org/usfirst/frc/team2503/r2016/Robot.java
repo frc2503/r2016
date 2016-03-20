@@ -8,9 +8,9 @@ import org.usfirst.frc.team2503.lib.util.WarriorMath;
 import org.usfirst.frc.team2503.r2016.component.CameraMount;
 import org.usfirst.frc.team2503.r2016.component.CameraMount.CameraMountMode;
 import org.usfirst.frc.team2503.r2016.component.Intake.IntakeMode;
+import org.usfirst.frc.team2503.r2016.data.Data;
 import org.usfirst.frc.team2503.r2016.debug.Logger;
 import org.usfirst.frc.team2503.r2016.debug.Logger.LoggerPrintStream;
-import org.usfirst.frc.team2503.r2016.input.Data;
 import org.usfirst.frc.team2503.r2016.input.JoystickJoystickGamepadControlLayout;
 import org.usfirst.frc.team2503.r2016.input.MadCatzV1JoystickMadCatzV1JoystickLogitechF310GamepadControlLayout;
 import org.usfirst.frc.team2503.r2016.input.gamepad.LogitechF310Gamepad;
@@ -178,9 +178,12 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {
 		Data controlLayoutData = L.getData();
+		
+		Data leftJoystickData = (Data) controlLayoutData.get("leftJoystick");
+		Data rightJoystickData = (Data) controlLayoutData.get("rightJoystick");
 
-		leftValue = -controlLayoutData.getJSONObject("leftJoystick").getJSONObject("axes").getDouble("y");
-		rightValue = -controlLayoutData.getJSONObject("rightJoystick").getJSONObject("axes").getDouble("y");
+		leftValue = -getJSONObject("axes").getDouble("y");
+		rightValue = -getJSONObject("axes").getDouble("y");
 
 		// TODO: Move all of this into ControlLayouts
 		// leftValue = leftJoystick.y.get();

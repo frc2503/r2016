@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2503.r2016.input.joystick;
 
-import org.usfirst.frc.team2503.r2016.input.Data;
+import org.usfirst.frc.team2503.r2016.data.Data;
 
 public class MadCatzV1Joystick extends Joystick {
 
@@ -19,9 +19,7 @@ public class MadCatzV1Joystick extends Joystick {
 	public ControllerAxis throttle = new ControllerAxis(2, ControllerAxisType.ZERO_TO_POSITIVE);
 	public ControllerAxis rotation = new ControllerAxis(3, ControllerAxisType.NEGATIVE_TO_POSITIVE);
 
-	public class DataReporter {
-		private Data data = new Data();
-		private Data buttons = new Data();
+	public class MadCatzV1JoystickDataSource extends JoystickDataSource {
 		private Data axes = new Data();
 
 		public void update() {
@@ -46,6 +44,11 @@ public class MadCatzV1Joystick extends Joystick {
 		public void compile() {
 			this.data.put("buttons", this.buttons);
 			this.data.put("axes", this.axes);
+		}
+
+		@Override
+		public Data getData() {
+			return null;
 		}
 	}
 

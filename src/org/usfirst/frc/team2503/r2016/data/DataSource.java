@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2503.r2016.input;
+package org.usfirst.frc.team2503.r2016.data;
 
 public interface DataSource {
 

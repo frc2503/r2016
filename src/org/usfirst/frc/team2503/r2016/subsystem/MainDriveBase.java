@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2503.r2016.subsystem;
 
 import org.usfirst.frc.team2503.r2016.component.RhinoTrack;
-import org.usfirst.frc.team2503.r2016.input.Data;
+import org.usfirst.frc.team2503.r2016.data.Data;
 
 import edu.wpi.first.wpilibj.Encoder;
 

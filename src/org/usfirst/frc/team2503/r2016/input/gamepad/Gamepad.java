@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2503.r2016.input.gamepad;
 
-import org.usfirst.frc.team2503.r2016.input.DataSource;
+import org.usfirst.frc.team2503.r2016.data.DataSource;
 import org.usfirst.frc.team2503.r2016.input.joystick.Joystick;
 
 public abstract class Gamepad extends Joystick implements DataSource {

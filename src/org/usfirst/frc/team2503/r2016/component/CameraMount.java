@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2503.r2016.component;
 
 import org.usfirst.frc.team2503.lib.util.WarriorMath;
-import org.usfirst.frc.team2503.r2016.input.Data;
+import org.usfirst.frc.team2503.r2016.data.Data;
 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
@@ -45,8 +45,6 @@ public class CameraMount extends Component {
 	public void tweak(double horizontal, double vertical) {
 		this.x = WarriorMath.gate(0.0, (this.x + (horizontal * 0.01)), 1.0);
 		this.y = WarriorMath.gate(0.0, (this.y + (vertical * 0.01)), 1.0);
-		//		this.x = Math.max(0.0, Math.min(1.0, this.x + (horizontal * 0.01)));
-		//		this.y = Math.max(0.0, Math.min(1.0, this.y + (vertical * 0.01)));
 	}
 
 	public void tick(Data data) {

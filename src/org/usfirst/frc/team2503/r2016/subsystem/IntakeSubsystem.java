@@ -18,34 +18,10 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 		FIRING
 	}
 	
-	private boolean canIntake() {
-		return (_limitSwitch.isTripped());
-	}
-	
-	public IntakeSubsystem(SpeedController _controller, LimitSwitch limitSwitch) {
-		super(_controller);
-		
-		this._limitSwitch = limitSwitch;
-	}
-	
-	public IntakeSubsystem(SpeedControllerSubsystemType type, final int speedControllerChannel, final int limitSwitchChannel) {
-		super(type, speedControllerChannel);
-		
-		this._limitSwitch = new LimitSwitch(limitSwitchChannel);
-	}
-
 	public void tick() {
 		IntakeSubsystemMode mode = (IntakeSubsystemMode) this.getMode();
 		
 		switch(mode) {
-		case DISABLED:
-			this._controller.stopMotor();
-			break;
-
-		case STOPPED:
-			this._controller.set(0.0d);
-			break;
-			
 		case INTAKING:
 			if(this.canIntake())
 				this._controller.set(1.0d);
@@ -60,10 +36,35 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 			this._controller.set(1.0d);
 			break;
 
+		case DISABLED:
+			this._controller.stopMotor();
+			break;
+
+		case STOPPED:
 		default:
+			this._controller.set(0.0d);
 			break;
 		}
 	}
 
+
+	
+	private boolean canIntake() {
+		return (_limitSwitch.isTripped());
+	}
+	
+
+	
+	public IntakeSubsystem(SpeedController _controller, LimitSwitch limitSwitch) {
+		super(_controller);
+		
+		this._limitSwitch = limitSwitch;
+	}
+	
+	public IntakeSubsystem(SpeedControllerSubsystemType type, final int speedControllerChannel, final int limitSwitchChannel) {
+		super(type, speedControllerChannel);
+		
+		this._limitSwitch = new LimitSwitch(limitSwitchChannel);
+	}
 
 }

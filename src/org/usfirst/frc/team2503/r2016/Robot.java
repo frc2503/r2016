@@ -19,6 +19,7 @@ import org.usfirst.frc.team2503.r2016.server.DataServer;
 import org.usfirst.frc.team2503.r2016.server.MessageServer;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
@@ -100,6 +101,7 @@ public class Robot extends IterativeRobot {
 	public double shooterValue;
 
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	public static BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
 
 	public Robot() {
 		robotDataServer = new RobotDataServer(new InetSocketAddress(5800));
@@ -278,8 +280,12 @@ public class Robot extends IterativeRobot {
 		double leftTrackDistance = 65.5000d * leftTrackLengths;
 		double rightTrackDistance = 65.5000d * rightTrackLengths;
 		
-		System.out.println("L: " + leftTrackLengths + "\tR: " + rightTrackLengths);
+		double xAcceleration = accelerometer.getX();
+		double yAcceleration = accelerometer.getY();
+		double zAcceleration = accelerometer.getZ();
 		
+		String format = String.format("L %4.4f R %4.4f (%4.4f %4.4f %4.4f)", leftTrackLengths, rightTrackLengths, xAcceleration, yAcceleration, zAcceleration);
+		System.out.println(format);
 	}
 
 }

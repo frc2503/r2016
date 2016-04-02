@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2503.r2016.subsystem;
 
+import org.usfirst.frc.team2503.r2016.subsystem.base.SpeedControllerSubsystem;
+
 import edu.wpi.first.wpilibj.SpeedController;
 
 public class WinchSubsystem extends SpeedControllerSubsystem {

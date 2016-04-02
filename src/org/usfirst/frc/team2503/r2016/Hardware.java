@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2503.r2016;
 
+import org.usfirst.frc.team2503.r2016.input.sensor.LimitSwitch;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -22,8 +24,19 @@ public class Hardware {
 	private static final Servo cameraHorizontalRotationServo = new Servo(5);
 	private static final Servo cameraVerticalRotationServo = new Servo(7);
 
-	private static final Compressor compressor = new Compressor(1);
-	private static final DoubleSolenoid lift = new DoubleSolenoid(1, 0, 1);
+	/**
+	 * The pneumatics control module is sometimes assigned a non-standard
+	 * CAN bus ID number.  This variable should be used to explicitly specify where
+	 * the PCM is to be found.
+	 * 
+	 * Additional pneumatics WPIlib objects should use this variable for
+	 * initialization.
+	 */
+	private static final int PCMCANChannel = 1;
+	
+	private static final Compressor compressor = new Compressor(PCMCANChannel);
+
+	private static final DoubleSolenoid lift = new DoubleSolenoid(PCMCANChannel, 0, 1);
 
 	private static final DigitalInput leftTrackEncoderAChannel = new DigitalInput(0);
 	private static final DigitalInput leftTrackEncoderBChannel = new DigitalInput(1);
@@ -31,19 +44,20 @@ public class Hardware {
 	private static final DigitalInput rightTrackEncoderBChannel = new DigitalInput(3);
 	private static final DigitalInput hookerEncoderAChannel = new DigitalInput(4);
 	private static final DigitalInput hookerEncoderBChannel = new DigitalInput(5);
-	private static final DigitalInput intakeLimitSwitch = new DigitalInput(6);
-	private static final DigitalInput hookerLimitSwitch = new DigitalInput(7);
 
-	public static final Relay cameraLights = new Relay(0);
-	public static final Relay indicatorRelay = new Relay(1);
+	private static final LimitSwitch intakeLimitSwitch = new LimitSwitch(6);
+	private static final LimitSwitch hookerLimitSwitch = new LimitSwitch(7);
+
+	private static final Relay cameraLightsRelay = new Relay(0);
+	private static final Relay intakeIndicatorRelay = new Relay(1);
 
 	private static final Encoder leftTrackEncoder = new Encoder(leftTrackEncoderAChannel, leftTrackEncoderBChannel);
 	private static final Encoder rightTrackEncoder = new Encoder(rightTrackEncoderAChannel, rightTrackEncoderBChannel);
 	private static final Encoder hookerEncoder = new Encoder(hookerEncoderAChannel, hookerEncoderBChannel);
 	
 	static {
-		cameraLights.setDirection(Relay.Direction.kForward);
-		indicatorRelay.setDirection(Relay.Direction.kForward);
+		cameraLightsRelay.setDirection(Relay.Direction.kForward);
+		intakeIndicatorRelay.setDirection(Relay.Direction.kForward);
 		
 		leftTrackSpeedController.setInverted(false);
 		rightTrackSpeedController.setInverted(true);

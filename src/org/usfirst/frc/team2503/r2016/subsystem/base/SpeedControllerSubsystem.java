@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2503.r2016.subsystem;
+package org.usfirst.frc.team2503.r2016.subsystem.base;
 
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -17,7 +17,7 @@ public abstract class SpeedControllerSubsystem implements Subsystem, SpeedContro
 		CAN_JAGUAR, CAN_TALON, JAGUAR, SD540, SPARK, TALON, TALON_SRX, VICTOR, VICTOR_SP
 	}
 	
-	private SpeedController _controller;
+	protected SpeedController _controller;
 	
 	public double get() { return _controller.get(); }
 	public void set(double speed, byte syncGroup) { _controller.set(speed, syncGroup); }

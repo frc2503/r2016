@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2503.r2016.subsystem;
+package org.usfirst.frc.team2503.r2016.subsystem.base;
 
 public interface ModalSubsystem {
 	

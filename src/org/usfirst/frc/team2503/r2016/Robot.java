@@ -160,7 +160,7 @@ public class Robot extends IterativeRobot {
 		double right = 0.5 + 0.5 * Math.sin(WarriorMath.degreesToRadians(angle));
 
 		System.out.println(left + " " + right + " " + (left > right ? "L" : "R"));
-
+		
 		if(averageTicks <= 1450 * 5) {
 			R.driveBase.drive(left,  right);
 		} else if(averageTicks >= 1550 * 5) {
@@ -258,9 +258,28 @@ public class Robot extends IterativeRobot {
 
 
 	public void testInit() {
+		R.driveBase.leftEncoder.reset();
+		R.driveBase.rightEncoder.reset();
 	}
 
 	public void testPeriodic() {
+		double leftTicks = R.driveBase.leftEncoder.get();
+		double rightTicks = R.driveBase.rightEncoder.get();
+		
+		double leftGearRatio = (1.0d / 5.9500d);
+		double rightGearRatio = (1.0d / 5.9500d);
+		
+		double leftEncoderRatio = (1.0d / 360.0000d);
+		double rightEncoderRatio = (1.0d / 360.000d);
+		
+		double leftTrackLengths = leftTicks * leftGearRatio * leftEncoderRatio;
+		double rightTrackLengths = rightTicks * rightGearRatio * rightEncoderRatio;
+		
+		double leftTrackDistance = 65.5000d * leftTrackLengths;
+		double rightTrackDistance = 65.5000d * rightTrackLengths;
+		
+		System.out.println("L: " + leftTrackLengths + "\tR: " + rightTrackLengths);
+		
 	}
 
 }

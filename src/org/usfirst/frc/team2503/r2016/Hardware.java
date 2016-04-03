@@ -28,12 +28,12 @@ public class Hardware {
 	 * The pneumatics control module is sometimes assigned a non-standard
 	 * CAN bus ID number.  This variable should be used to explicitly specify where
 	 * the PCM is to be found.
-	 * 
+	 *
 	 * Additional pneumatics WPIlib objects should use this variable for
 	 * initialization.
 	 */
 	private static final int PCMCANChannel = 1;
-	
+
 	private static final Compressor compressor = new Compressor(PCMCANChannel);
 
 	private static final DoubleSolenoid lift = new DoubleSolenoid(PCMCANChannel, 0, 1);
@@ -54,19 +54,19 @@ public class Hardware {
 	private static final Encoder leftTrackEncoder = new Encoder(leftTrackEncoderAChannel, leftTrackEncoderBChannel);
 	private static final Encoder rightTrackEncoder = new Encoder(rightTrackEncoderAChannel, rightTrackEncoderBChannel);
 	private static final Encoder hookerEncoder = new Encoder(hookerEncoderAChannel, hookerEncoderBChannel);
-	
+
 	static {
 		cameraLightsRelay.setDirection(Relay.Direction.kForward);
 		intakeIndicatorRelay.setDirection(Relay.Direction.kForward);
-		
+
 		leftTrackSpeedController.setInverted(false);
 		rightTrackSpeedController.setInverted(true);
-		
+
 		shooterSpeedController.setInverted(true);
 		winchSpeedController.setInverted(true);
 		hookerSpeedController.setInverted(true);
 		intakeSpeedController.setInverted(true);
-		
+
 		leftTrackEncoder.reset();
 		rightTrackEncoder.reset();
 		hookerEncoder.reset();

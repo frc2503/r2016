@@ -11,6 +11,8 @@ public class ShooterSubsystem extends DataSpeedControllerSubsystem {
 		POWER
 	}
 	
+	
+	
 	@Override
 	public void tick() {
 		double power = (double) this.getDataKey(ShooterSubsystemDataKey.POWER);
@@ -22,6 +24,8 @@ public class ShooterSubsystem extends DataSpeedControllerSubsystem {
 		this.setDataKey(ShooterSubsystemDataKey.POWER, power);
 	}
 	
+	
+	
 	public void setDataKey(ShooterSubsystemDataKey key, Object value) {
 		super.setDataKey(key, value);
 	}
@@ -29,6 +33,8 @@ public class ShooterSubsystem extends DataSpeedControllerSubsystem {
 	public Object getDataKey(ShooterSubsystemDataKey key) {
 		return this._data.get(key);
 	}
+	
+	
 	
 	public ShooterSubsystem(SpeedController _controller) {
 		super(_controller);

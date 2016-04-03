@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 
-	private LimitSwitch _limitSwitch;
-	
 	public enum IntakeSubsystemMode implements ModalSubsystem.SubsystemMode {
 		DISABLED,
 		STOPPED,
@@ -17,6 +15,12 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 		INTAKING,
 		FIRING
 	}
+
+	
+	
+	private LimitSwitch _limitSwitch;
+	
+	
 	
 	public void tick() {
 		IntakeSubsystemMode mode = (IntakeSubsystemMode) this.getMode();

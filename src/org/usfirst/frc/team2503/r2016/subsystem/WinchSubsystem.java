@@ -35,7 +35,7 @@ public class WinchSubsystem extends ModalSpeedControllerSubsystem {
 			break;
 			
 		case LOWERING:
-			this._controller.set(-0.7000d);
+			this._controller.set(-0.3000d);
 			break;
 
 		case DISABLED:

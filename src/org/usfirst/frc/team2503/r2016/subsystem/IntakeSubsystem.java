@@ -11,8 +11,10 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 	public enum IntakeSubsystemMode implements ModalSubsystem.SubsystemMode {
 		DISABLED,
 		STOPPED,
+		
 		OUTPUTTING,
 		INTAKING,
+		
 		FIRING
 	}
 
@@ -22,6 +24,7 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 	
 	
 	
+	@Override
 	public void tick() {
 		IntakeSubsystemMode mode = (IntakeSubsystemMode) this.getMode();
 		

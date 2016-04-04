@@ -12,34 +12,24 @@ import org.usfirst.frc.team2503.r2016.debug.Logger.LoggerPrintStream;
  */
 public class Main {
 	
+	public static double[] VALUE_RANGE = {0.0, 1.0};
+	public static double[] DEGREE_RANGE = {-91.0, 87.0};
+
+	public static double MAPPING_SLOPE = (DEGREE_RANGE[1] - DEGREE_RANGE[0]) / (VALUE_RANGE[1] - VALUE_RANGE[0]);
+	
+	public static double valueToDegrees(double value) {
+		return DEGREE_RANGE[0] + MAPPING_SLOPE * (value - VALUE_RANGE[0]);
+	}
+	
+	public static double degreesToValue(double degrees) {
+		return VALUE_RANGE[0] + (1.0 / MAPPING_SLOPE) * (degrees - DEGREE_RANGE[0]);
+	}
+	
 	public static void main(String[] args) {
-		
-
-		File csvDataFile = new File("data.csv");
-		
-		Logger.addPrintStream("ayy", new LoggerPrintStream(System.out));
-		Logger.addPrintStream("ayy", new LoggerPrintStream(System.err));
-		Logger.addPrintStream("lmao", new LoggerPrintStream(System.err));
-		Logger.addPrintStream("data", new LoggerPrintStream(System.out));
-
-		try {
-			Logger.addPrintStream("data-raw", new LoggerPrintStream(csvDataFile));
-		} catch(FileNotFoundException e) {
-			try {
-				csvDataFile.createNewFile();
-			} catch(IOException ioe) {
-				ioe.printStackTrace();
-			}
+		for(double d = 0.0; d <= 1.0; d += 0.125) {	
+			double degrees = valueToDegrees(d);
+			System.out.println(degrees + " - " + degreesToValue(degrees));
 		}
-		
-		Logger.println("ayy", "foo");
-		Logger.println("lmao", "test");
-		
-		{
-			Logger.println("data", 1.0 + 2.0);
-			Logger.println("data-raw", 1.0 + 2.0, false);
-		}
-		
 	}
 	
 }

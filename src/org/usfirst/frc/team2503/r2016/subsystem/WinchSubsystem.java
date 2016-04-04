@@ -31,7 +31,7 @@ public class WinchSubsystem extends ModalSpeedControllerSubsystem {
 		 * apply a bit of vertical lifting power.
 		 */
 		case BASIC_SUSPENSION_WINCHING:
-			this._controller.set(0.0500d);
+			this.set(0.0500d);
 			break;
 			
 		/**
@@ -39,7 +39,7 @@ public class WinchSubsystem extends ModalSpeedControllerSubsystem {
 		 * to get the hook off before winching at full power.
 		 */
 		case SLOW_WINCHING:
-			this._controller.set(0.2000d);
+			this.set(0.2000d);
 			break;
 			
 		/**
@@ -47,7 +47,7 @@ public class WinchSubsystem extends ModalSpeedControllerSubsystem {
 		 * to scale ASAP.
 		 */
 		case WINCHING:
-			this._controller.set(1.0000d);
+			this.set(1.0000d);
 			break;
 
 		/**
@@ -55,16 +55,16 @@ public class WinchSubsystem extends ModalSpeedControllerSubsystem {
 		 * ratchet not set)
 		 */
 		case LOWERING:
-			this._controller.set(-0.3000d);
+			this.set(-0.3000d);
 			break;
 
 		case DISABLED:
-			this._controller.stopMotor();
+			this.stopMotor();
 			break;
 
 		case STOPPED:
 		default:
-			this._controller.set(0.0000d);
+			this.set(0.0000d);
 			break;
 		}
 	}

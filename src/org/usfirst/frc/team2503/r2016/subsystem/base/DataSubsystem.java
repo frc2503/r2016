@@ -2,7 +2,7 @@ package org.usfirst.frc.team2503.r2016.subsystem.base;
 
 import java.util.HashMap;
 
-public interface DataSubsystem {
+public interface DataSubsystem extends Subsystem {
 
 	public interface SubsystemDataKey {}
 	

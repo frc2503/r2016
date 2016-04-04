@@ -1,12 +1,5 @@
 package org.usfirst.frc.team2503.r2016;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import org.usfirst.frc.team2503.r2016.debug.Logger;
-import org.usfirst.frc.team2503.r2016.debug.Logger.LoggerPrintStream;
-
 /**
  * You can use this class for testing non-WPIlib code on your machine.
  */

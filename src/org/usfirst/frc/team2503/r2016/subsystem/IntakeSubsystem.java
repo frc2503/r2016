@@ -31,25 +31,25 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 		switch(mode) {
 		case INTAKING:
 			if(this.canIntake())
-				this._controller.set(1.0d);
+				this.set(1.0d);
 			
 			break;
 			
 		case OUTPUTTING:
-			this._controller.set(1.0d);
+			this.set(1.0d);
 			break;
 			
 		case FIRING:
-			this._controller.set(1.0d);
+			this.set(1.0d);
 			break;
 
 		case DISABLED:
-			this._controller.stopMotor();
+			this.stopMotor();
 			break;
 
 		case STOPPED:
 		default:
-			this._controller.set(0.0d);
+			this.set(0.0d);
 			break;
 		}
 	}

@@ -14,16 +14,14 @@ public class WarriorMath {
 	static final double q2 = .16667838148816337184521798e4d;
 	static final double q1 = .207933497444540981287275926e4d;
 	static final double q0 = .89678597403663861962481162e3d;
-	static final double PiOver2 = 1.5707963267948966135e0d;
-	static final double nan	 = (0.0 / 0.0);
+	static final double PI_OVER_2 = 1.5707963267948966135e0d;
+	static final double NaN	 = (0.0 / 0.0);
 
-	private static double mxatan(double arg) {
-		double argsq, value;
+	private static double mxatan(double value) {
+		double valueSquared;
 
-		argsq = arg * arg;
-		value = ((((p4 * argsq + p3) * argsq + p2) * argsq + p1) * argsq + p0);
-		value = value / (((((argsq + q4) * argsq + q3) * argsq + q2) * argsq + q1) * argsq + q0);
-		return value * arg;
+		valueSquared = value * value;
+		return ((((p4 * valueSquared + p3) * valueSquared + p2) * valueSquared + p1) * valueSquared + p0) / (((((valueSquared + q4) * valueSquared + q3) * valueSquared + q2) * valueSquared + q1) * valueSquared + q0) * value;
 	}
 
 	private static double msatan(double arg) {
@@ -32,10 +30,10 @@ public class WarriorMath {
 		}
 
 		if (arg > squareRootOf2Plus1) {
-			return PiOver2 - mxatan(1 / arg);
+			return PI_OVER_2 - mxatan(1 / arg);
 		}
 
-		return PiOver2 / 2 + mxatan((arg - 1) / (arg + 1));
+		return PI_OVER_2 / 2 + mxatan((arg - 1) / (arg + 1));
 	}
 
 	public static double atan(double arg) {
@@ -49,10 +47,10 @@ public class WarriorMath {
 	public static double atan2(double arg1, double arg2) {
 		if (arg1 + arg2 == arg1) {
 			if (arg1 >= 0) {
-				return PiOver2;
+				return PI_OVER_2;
 			}
 
-			return -PiOver2;
+			return -PI_OVER_2;
 		}
 
 		arg1 = atan(arg1 / arg2);
@@ -80,13 +78,13 @@ public class WarriorMath {
 		}
 
 		if (arg > 1) {
-			return nan;
+			return NaN;
 		}
 
 		temp = Math.sqrt(1 - arg * arg);
 
 		if (arg > 0.7) {
-			temp = PiOver2 - atan(temp / arg);
+			temp = PI_OVER_2 - atan(temp / arg);
 		} else {
 			temp = atan(arg / temp);
 		}
@@ -100,19 +98,19 @@ public class WarriorMath {
 
 	public static double acos(double arg) {
 		if (arg > 1 || arg < -1) {
-			return nan;
+			return NaN;
 		}
 
-		return PiOver2 - asin(arg);
+		return PI_OVER_2 - asin(arg);
 	}
 
 	public static double getDifferenceInAngleRadians(double from, double to) {
-		return boundAngleNegPiToPiRadians(to - from);
+		return boundAngleNegativePiToPiRadians(to - from);
 	}
 
 
 	public static double getDifferenceInAngleDegrees(double from, double to) {
-		return boundAngleNeg180to180Degrees(to - from);
+		return boundAngleNegative180to180Degrees(to - from);
 	}
 
 	public static double boundAngle0to360Degrees(double angle) {
@@ -127,7 +125,7 @@ public class WarriorMath {
 		return angle;
 	}
 
-	public static double boundAngleNeg180to180Degrees(double angle) {
+	public static double boundAngleNegative180to180Degrees(double angle) {
 		while (angle >= 180.0) {
 			angle -= 360.0;
 		}
@@ -151,7 +149,7 @@ public class WarriorMath {
 		return angle;
 	}
 
-	public static double boundAngleNegPiToPiRadians(double angle) {
+	public static double boundAngleNegativePiToPiRadians(double angle) {
 		while (angle >= Math.PI) {
 			angle -= 2.0 * Math.PI;
 		}
@@ -171,10 +169,14 @@ public class WarriorMath {
 		return (Math.PI / 180.0d) * degrees;
 	}
 
-	public static double gate(double min, double value, double max) {
-		return Math.max(min, Math.min(max, value));
+	public static double gate(double minimum, double value, double maximum) {
+		return Math.max(minimum, Math.min(maximum, value));
 	}
 
+	public static double map(double inputMinimum, double inputMaximum, double input, double outputMinimum, double outputMaximum) {
+		return outputMinimum + ((outputMaximum - outputMinimum) / (inputMaximum - inputMinimum)) * (input - inputMinimum);
+	}
+	
 	public WarriorMath() {
 	}
 }

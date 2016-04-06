@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class Hardware {
 
-	private static final SpeedController leftTrackSpeedController = new Talon(0);
-	private static final SpeedController rightTrackSpeedController = new Talon(1);
-	private static final SpeedController shooterSpeedController = new Spark(2);
-	private static final SpeedController winchSpeedController = new Talon(3);
+	public static final SpeedController leftTrackSpeedController = new Talon(0);
+	public static final SpeedController rightTrackSpeedController = new Talon(1);
+	public static final SpeedController shooterSpeedController = new Spark(2);
+	public static final SpeedController winchSpeedController = new Talon(3);
 	private static final SpeedController hookerSpeedController = new Talon(4);
-	private static final SpeedController intakeSpeedController = new Talon(6);
+	public static final SpeedController intakeSpeedController = new Talon(6);
 
 	private static final Servo cameraHorizontalRotationServo = new Servo(5);
 	private static final Servo cameraVerticalRotationServo = new Servo(7);
@@ -45,7 +45,7 @@ public class Hardware {
 	private static final DigitalInput hookerEncoderAChannel = new DigitalInput(4);
 	private static final DigitalInput hookerEncoderBChannel = new DigitalInput(5);
 
-	private static final LimitSwitch intakeLimitSwitch = new LimitSwitch(6);
+	public static final LimitSwitch intakeLimitSwitch = new LimitSwitch(6);
 	private static final LimitSwitch hookerLimitSwitch = new LimitSwitch(7);
 
 	private static final Relay cameraLightsRelay = new Relay(0);

@@ -1,11 +1,12 @@
 package org.usfirst.frc.team2503.r2016;
 
-import org.usfirst.frc.team2503.r2016.input.sensor.LimitSwitch;
+import org.usfirst.frc.team2503.r2016.component.sensor.LimitSwitch;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Spark;
@@ -21,8 +22,8 @@ public class Hardware {
 	private static final SpeedController hookerSpeedController = new Talon(4);
 	public static final SpeedController intakeSpeedController = new Talon(6);
 
-	private static final Servo cameraHorizontalRotationServo = new Servo(5);
-	private static final Servo cameraVerticalRotationServo = new Servo(7);
+	public static final Servo cameraHorizontalRotationServo = new Servo(5);
+	public static final Servo cameraVerticalRotationServo = new Servo(7);
 
 	/**
 	 * The pneumatics control module is sometimes assigned a non-standard
@@ -55,6 +56,10 @@ public class Hardware {
 	private static final Encoder rightTrackEncoder = new Encoder(rightTrackEncoderAChannel, rightTrackEncoderBChannel);
 	private static final Encoder hookerEncoder = new Encoder(hookerEncoderAChannel, hookerEncoderBChannel);
 
+	public static Joystick leftStick = new Joystick(0);
+	public static Joystick rightStick = new Joystick(1);
+	public static Joystick operatorPad = new Joystick(2);
+	
 	static {
 		cameraLightsRelay.setDirection(Relay.Direction.kForward);
 		intakeIndicatorRelay.setDirection(Relay.Direction.kForward);

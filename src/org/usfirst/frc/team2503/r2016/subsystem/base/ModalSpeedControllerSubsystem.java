@@ -5,6 +5,14 @@ import edu.wpi.first.wpilibj.SpeedController;
 public abstract class ModalSpeedControllerSubsystem extends SpeedControllerSubsystem implements ModalSubsystem {
 
 	private SubsystemMode _mode;
+
+	public void setMode(SubsystemMode mode) {
+		this._mode = mode;
+	}
+
+	public SubsystemMode getMode() {
+		return this._mode;
+	}
 	
 	public ModalSpeedControllerSubsystem(SpeedController _controller) {
 		super(_controller);
@@ -14,12 +22,5 @@ public abstract class ModalSpeedControllerSubsystem extends SpeedControllerSubsy
 		super(type, channel);
 	}
 
-	public void setMode(SubsystemMode mode) {
-		this._mode = mode;
-	}
-
-	public SubsystemMode getMode() {
-		return this._mode;
-	}
 
 }

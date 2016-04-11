@@ -4,15 +4,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 public abstract class DataSpeedControllerSubsystem extends SpeedControllerSubsystem implements DataSubsystem {
 
-	protected SubsystemData _data;
-	
-	public DataSpeedControllerSubsystem(SpeedController _controller) {
-		super(_controller);
-	}
-
-	public DataSpeedControllerSubsystem(SpeedControllerSubsystemType type, final int channel) {
-		super(type, channel);
-	}
+	protected SubsystemData _data = new SubsystemData();
 	
 	public void setData(SubsystemData data) {
 		this._data = data;
@@ -28,6 +20,16 @@ public abstract class DataSpeedControllerSubsystem extends SpeedControllerSubsys
 	
 	public Object getDataKey(SubsystemDataKey key) {
 		return this._data.get(key);
+	}
+	
+	
+	
+	public DataSpeedControllerSubsystem(SpeedController _controller) {
+		super(_controller);
+	}
+
+	public DataSpeedControllerSubsystem(SpeedControllerSubsystemType type, final int channel) {
+		super(type, channel);
 	}
 
 }

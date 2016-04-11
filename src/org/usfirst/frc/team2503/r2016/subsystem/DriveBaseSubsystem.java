@@ -16,7 +16,7 @@ public class DriveBaseSubsystem implements DualMotorDrivable, DataSubsystem {
 	
 	
 	
-	protected SubsystemData _data;
+	protected SubsystemData _data = new SubsystemData();
 	
 	private RhinoTrackSubsystem _leftSubsystem;
 	private RhinoTrackSubsystem _rightSubsystem;
@@ -42,11 +42,9 @@ public class DriveBaseSubsystem implements DualMotorDrivable, DataSubsystem {
 	
 	public void setData(SubsystemData data) { this._data = data; }
 	public void setDataKey(SubsystemDataKey key, Object value) { this._data.put(key, value); }
-	public void setDataKey(DriveBaseSubsystemDataKey key, Object value) { this._data.put(key, value); }
 	
 	public SubsystemData getData() { return this._data; }
 	public Object getDataKey(SubsystemDataKey key) { return this._data.get(key); }
-	public Object getDataKey(DriveBaseSubsystemDataKey key) { return this._data.get(key); }
 	
 	
 	

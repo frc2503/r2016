@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2503.r2016.subsystem;
 
-import org.usfirst.frc.team2503.r2016.input.sensor.LimitSwitch;
+import org.usfirst.frc.team2503.r2016.component.sensor.LimitSwitch;
 import org.usfirst.frc.team2503.r2016.subsystem.base.ModalSpeedControllerSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.base.ModalSubsystem;
 

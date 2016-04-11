@@ -14,11 +14,11 @@ public interface DataSubsystem extends Subsystem {
 		private static final long serialVersionUID = 1L;
 
 	}
+
+	public void setData(SubsystemData data);
+	public void setDataKey(SubsystemDataKey key, Object value);
 	
-	public abstract void setData(SubsystemData data);
-	public abstract void setDataKey(SubsystemDataKey key, Object value);
-	
-	public abstract SubsystemData getData();
-	public abstract Object getDataKey(SubsystemDataKey key);
+	public SubsystemData getData();
+	public Object getDataKey(SubsystemDataKey key);
 	
 }

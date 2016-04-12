@@ -34,7 +34,7 @@ import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.server.WebSocketServer.WebSocketWorker;
-import org.usfirst.frc.team2503.lib.websocket.util.Charsetfunctions;
+import org.usfirst.frc.team2503.lib.websocket.util.CharsetHelper;
 
 /**
  * Represents one end (client or server) of a single WebSocketImpl connection.
@@ -42,7 +42,7 @@ import org.usfirst.frc.team2503.lib.websocket.util.Charsetfunctions;
  * text frames, and receiving frames through an event-based model.
  * 
  */
-public class WebSocketImpl implements WebSocket {
+public class WebSocketImplementation implements WebSocket {
 
 	public static int RCVBUF = 16384;
 
@@ -107,7 +107,7 @@ public class WebSocketImpl implements WebSocket {
 	/**
 	 * crates a websocket with server role
 	 */
-	public WebSocketImpl( WebSocketListener listener , List<Draft> drafts ) {
+	public WebSocketImplementation( WebSocketListener listener , List<Draft> drafts ) {
 		this( listener, (Draft) null );
 		this.role = Role.SERVER;
 		// draft.copyInstance will be called when the draft is first needed
@@ -124,7 +124,7 @@ public class WebSocketImpl implements WebSocket {
 	 * @param listener
 	 *            may be unbound
 	 */
-	public WebSocketImpl( WebSocketListener listener , Draft draft ) {
+	public WebSocketImplementation( WebSocketListener listener , Draft draft ) {
 		if( listener == null || ( draft == null && role == Role.SERVER ) )// socket can be null because we want do be able to create the object without already having a bound channel
 			throw new IllegalArgumentException( "parameters must not be null" );
 		this.outQueue = new LinkedBlockingQueue<ByteBuffer>();
@@ -136,12 +136,12 @@ public class WebSocketImpl implements WebSocket {
 	}
 
 	@Deprecated
-	public WebSocketImpl( WebSocketListener listener , Draft draft , Socket socket ) {
+	public WebSocketImplementation( WebSocketListener listener , Draft draft , Socket socket ) {
 		this( listener, draft );
 	}
 
 	@Deprecated
-	public WebSocketImpl( WebSocketListener listener , List<Draft> drafts , Socket socket ) {
+	public WebSocketImplementation( WebSocketListener listener , List<Draft> drafts , Socket socket ) {
 		this( listener, drafts );
 	}
 
@@ -195,7 +195,7 @@ public class WebSocketImpl implements WebSocket {
 				HandshakeState isflashedgecase = isFlashEdgeCase( socketBuffer );
 				if( isflashedgecase == HandshakeState.MATCHED ) {
 					try {
-						write( ByteBuffer.wrap( Charsetfunctions.utf8Bytes( wsl.getFlashPolicy( this ) ) ) );
+						write( ByteBuffer.wrap( CharsetHelper.utf8Bytes( wsl.getFlashPolicy( this ) ) ) );
 						close( CloseFrame.FLASHPOLICY, "" );
 					} catch ( InvalidDataException e ) {
 						close( CloseFrame.ABNORMAL_CLOSE, "remote peer closed connection before flashpolicy could be transmitted", true );
@@ -372,7 +372,7 @@ public class WebSocketImpl implements WebSocket {
 					throw new InvalidDataException( CloseFrame.PROTOCOL_ERROR, "Continuous frame sequence not completed." );
 				} else if( curop == Opcode.TEXT ) {
 					try {
-						wsl.onWebsocketMessage( this, Charsetfunctions.stringUtf8( f.getPayloadData() ) );
+						wsl.onWebsocketMessage( this, CharsetHelper.stringUtf8( f.getPayloadData() ) );
 					} catch ( RuntimeException e ) {
 						wsl.onWebsocketError( this, e );
 					}

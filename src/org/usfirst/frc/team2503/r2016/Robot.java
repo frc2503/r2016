@@ -23,9 +23,9 @@ public class Robot extends IterativeRobot {
 	private CameraSubsystem cameraSubsystem = new CameraSubsystem(Hardware.cameraHorizontalRotationServo, Hardware.cameraVerticalRotationServo);
 	private PortcullisLiftSubsystem portcullisLiftSubsystem = new PortcullisLiftSubsystem(Hardware.portcullisLift);
 	private HookerSubsystem hookerSubsystem = new HookerSubsystem(Hardware.hookerSpeedController, Hardware.hookerEncoder, Hardware.hookerLimitSwitch);
-	
+
 	private WarriorDriveHelper warriorDriveHelper = new WarriorDriveHelper(driveBaseSubsystem, intakeSubsystem, shooterSubsystem, winchSubsystem, cameraSubsystem, portcullisLiftSubsystem, hookerSubsystem);
-	
+
 	public Robot() {
 		Logger.addPrintStream("main", new LoggerPrintStream(System.out));
 		Logger.addPrintStream("error", new LoggerPrintStream(System.err));

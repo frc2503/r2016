@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2503.r2016.subsystem;
 
-import org.usfirst.frc.team2503.r2016.component.PortcullisLift;
+import org.usfirst.frc.team2503.r2016.component.pneumatics.PortcullisLift;
 import org.usfirst.frc.team2503.r2016.subsystem.base.ModalSubsystem;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;

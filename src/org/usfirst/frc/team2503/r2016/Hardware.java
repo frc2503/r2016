@@ -4,7 +4,6 @@ import org.usfirst.frc.team2503.r2016.component.sensor.LimitSwitch;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
@@ -37,7 +36,7 @@ public class Hardware {
 
 	private static final Compressor compressor = new Compressor(PCMCANChannel);
 
-	private static final DoubleSolenoid lift = new DoubleSolenoid(PCMCANChannel, 0, 1);
+	public static final PortcullisLift portcullisLift = new PortcullisLift(PCMCANChannel, 0, 1);
 
 	private static final DigitalInput leftTrackEncoderAChannel = new DigitalInput(0);
 	private static final DigitalInput leftTrackEncoderBChannel = new DigitalInput(1);

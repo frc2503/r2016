@@ -1,8 +1,9 @@
 package org.usfirst.frc.team2503.r2016.control;
 
-import edu.wpi.first.wpilibj.Joystick;
+import org.usfirst.frc.team2503.r2016.subsystem.base.Subsystem;
+import org.usfirst.frc.team2503.r2016.control.hid.Joystick;
 
-public abstract class DualMotorDriveHelper {
+public abstract class DriveHelper implements Tickable {
 	
 	public enum DriveHelperMode {
 		DISABLED,
@@ -13,9 +14,10 @@ public abstract class DualMotorDriveHelper {
 
 	private DriveHelperMode _mode;
 	
-	protected DualMotorDrivable _drive;
+	protected Subsystem[] _subsystems;
 	
 	public abstract void drive(Joystick left, Joystick right, Joystick gamepad);
+	public abstract void tick();
 	
 	public void setMode(DriveHelperMode _mode) {
 		this._mode = _mode;
@@ -25,8 +27,8 @@ public abstract class DualMotorDriveHelper {
 		return this._mode;
 	}
 	
-	public DualMotorDriveHelper(DualMotorDrivable _drive) {
-		this._drive = _drive;
+	public DriveHelper(Subsystem... _subsystems) {
+		this._subsystems = _subsystems;
 	}
 	
 }

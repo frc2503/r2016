@@ -6,30 +6,31 @@ import org.usfirst.frc.team2503.r2016.subsystem.base.ModalSubsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class PortcullisLiftSubsystem implements ModalSubsystem {
-	
+
 	public enum PortcullisLiftSubsystemMode implements ModalSubsystem.SubsystemMode {
 		DISABLED,
 		STOPPED,
-		
+
 		RAISING,
 		LOWERING
 	}
 
-	
-	
+
+
 	private PortcullisLift _lift;
 	private SubsystemMode _mode;
-	
-	
+
+
+
 	@Override
 	public void tick() {
 		PortcullisLiftSubsystemMode mode = (PortcullisLiftSubsystemMode) this.getMode();
-		
+
 		switch(mode) {
 		case RAISING:
 			this._lift.set(Value.kForward);
 			break;
-			
+
 		case LOWERING:
 			this._lift.set(Value.kReverse);
 			break;
@@ -41,7 +42,7 @@ public class PortcullisLiftSubsystem implements ModalSubsystem {
 			break;
 		}
 	}
-	
+
 
 
 	public void setMode(SubsystemMode mode) {

@@ -11,7 +11,7 @@ public class PortcullisLiftSubsystem implements ModalSubsystem {
 		DISABLED,
 		STOPPED,
 		
-		LIFTING,
+		RAISING,
 		LOWERING
 	}
 
@@ -26,13 +26,14 @@ public class PortcullisLiftSubsystem implements ModalSubsystem {
 		PortcullisLiftSubsystemMode mode = (PortcullisLiftSubsystemMode) this.getMode();
 		
 		switch(mode) {
-		case LIFTING:
+		case RAISING:
 			this._lift.set(Value.kForward);
 			break;
 			
 		case LOWERING:
 			this._lift.set(Value.kReverse);
-		
+			break;
+
 		case DISABLED:
 		case STOPPED:
 		default:

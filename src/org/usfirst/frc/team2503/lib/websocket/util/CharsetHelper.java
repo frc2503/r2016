@@ -10,7 +10,7 @@ import java.nio.charset.CodingErrorAction;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 
-public class Charsetfunctions {
+public class CharsetHelper {
 
 	public static CodingErrorAction codingErrorAction = CodingErrorAction.REPORT;
 

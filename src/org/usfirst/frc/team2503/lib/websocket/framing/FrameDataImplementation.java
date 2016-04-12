@@ -5,19 +5,19 @@ import java.util.Arrays;
 
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidFrameException;
-import org.usfirst.frc.team2503.lib.websocket.util.Charsetfunctions;
+import org.usfirst.frc.team2503.lib.websocket.util.CharsetHelper;
 
-public class FrameDataImpl implements FrameBuilder {
+public class FrameDataImplementation implements FrameBuilder {
 	protected static byte[] emptyarray = {};
 	protected boolean fin;
 	protected Opcode optcode;
 	private ByteBuffer unmaskedpayload;
 	protected boolean transferemasked;
 
-	public FrameDataImpl() {
+	public FrameDataImplementation() {
 	}
 
-	public FrameDataImpl( Opcode op ) {
+	public FrameDataImplementation( Opcode op ) {
 		this.optcode = op;
 		unmaskedpayload = ByteBuffer.wrap( emptyarray );
 	}
@@ -26,7 +26,7 @@ public class FrameDataImpl implements FrameBuilder {
 	 * Helper constructor which helps to create "echo" frames.
 	 * The new object will use the same underlying payload data.
 	 **/
-	public FrameDataImpl( FrameData f ) {
+	public FrameDataImplementation( FrameData f ) {
 		fin = f.isFin();
 		optcode = f.getOpcode();
 		unmaskedpayload = f.getPayloadData();
@@ -104,7 +104,7 @@ public class FrameDataImpl implements FrameBuilder {
 
 	@Override
 	public String toString() {
-		return "Framedata{ optcode:" + getOpcode() + ", fin:" + isFin() + ", payloadlength:[pos:" + unmaskedpayload.position() + ", len:" + unmaskedpayload.remaining() + "], payload:" + Arrays.toString( Charsetfunctions.utf8Bytes( new String( unmaskedpayload.array() ) ) ) + "}";
+		return "Framedata{ optcode:" + getOpcode() + ", fin:" + isFin() + ", payloadlength:[pos:" + unmaskedpayload.position() + ", len:" + unmaskedpayload.remaining() + "], payload:" + Arrays.toString( CharsetHelper.utf8Bytes( new String( unmaskedpayload.array() ) ) ) + "}";
 	}
 
 }

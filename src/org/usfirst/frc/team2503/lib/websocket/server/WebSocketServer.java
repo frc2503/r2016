@@ -29,9 +29,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.usfirst.frc.team2503.lib.websocket.SocketChannelIOHelper;
 import org.usfirst.frc.team2503.lib.websocket.WebSocket;
-import org.usfirst.frc.team2503.lib.websocket.WebSocketAdapter;
+import org.usfirst.frc.team2503.lib.websocket.WebSocketAdaptor;
 import org.usfirst.frc.team2503.lib.websocket.WebSocketFactory;
-import org.usfirst.frc.team2503.lib.websocket.WebSocketImpl;
+import org.usfirst.frc.team2503.lib.websocket.WebSocketImplementation;
 import org.usfirst.frc.team2503.lib.websocket.WrappedByteChannel;
 import org.usfirst.frc.team2503.lib.websocket.drafts.Draft;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
@@ -41,7 +41,7 @@ import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshakeBuilder;
 
-public abstract class WebSocketServer extends WebSocketAdapter implements Runnable {
+public abstract class WebSocketServer extends WebSocketAdaptor implements Runnable {
 
 	public static int DECODERS = Runtime.getRuntime().availableProcessors();
 
@@ -57,7 +57,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 
 	private List<WebSocketWorker> decoders;
 
-	private List<WebSocketImpl> iqueue;
+	private List<WebSocketImplementation> iqueue;
 	private BlockingQueue<ByteBuffer> buffers;
 	private int queueinvokes = 0;
 	private final AtomicInteger queuesize = new AtomicInteger(0);
@@ -97,7 +97,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 		this.address = address;
 		this.connections = connectionscontainer;
 
-		iqueue = new LinkedList<WebSocketImpl>();
+		iqueue = new LinkedList<WebSocketImplementation>();
 
 		decoders = new ArrayList<WebSocketWorker>(decodercount);
 		buffers = new LinkedBlockingQueue<ByteBuffer>();
@@ -176,7 +176,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 			server = ServerSocketChannel.open();
 			server.configureBlocking(false);
 			ServerSocket socket = server.socket();
-			socket.setReceiveBufferSize(WebSocketImpl.RCVBUF);
+			socket.setReceiveBufferSize(WebSocketImplementation.RCVBUF);
 			socket.bind(address);
 			selector = Selector.open();
 			server.register(selector, server.validOps());
@@ -187,7 +187,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 		try {
 			while (!selectorthread.isInterrupted()) {
 				SelectionKey key = null;
-				WebSocketImpl conn = null;
+				WebSocketImplementation conn = null;
 				try {
 					selector.select();
 					Set<SelectionKey> keys = selector.selectedKeys();
@@ -209,7 +209,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 
 							SocketChannel channel = server.accept();
 							channel.configureBlocking(false);
-							WebSocketImpl w = wsf.createWebSocket(this, drafts, channel.socket());
+							WebSocketImplementation w = wsf.createWebSocket(this, drafts, channel.socket());
 							w.key = channel.register(selector, SelectionKey.OP_READ, w);
 							w.channel = wsf.wrapChannel(channel, w.key);
 							i.remove();
@@ -218,7 +218,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 						}
 
 						if(key.isReadable()) {
-							conn = (WebSocketImpl) key.attachment();
+							conn = (WebSocketImplementation) key.attachment();
 							ByteBuffer buf = takeBuffer();
 							try {
 								if(SocketChannelIOHelper.read(buf, conn, conn.channel)) {
@@ -242,7 +242,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 							}
 						}
 						if(key.isWritable()) {
-							conn = (WebSocketImpl) key.attachment();
+							conn = (WebSocketImplementation) key.attachment();
 							if(SocketChannelIOHelper.batch(conn, conn.channel)) {
 								if(key.isValid())
 									key.interestOps(SelectionKey.OP_READ);
@@ -313,10 +313,10 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 	}
 
 	public ByteBuffer createBuffer() {
-		return ByteBuffer.allocate(WebSocketImpl.RCVBUF);
+		return ByteBuffer.allocate(WebSocketImplementation.RCVBUF);
 	}
 
-	private void queue(WebSocketImpl ws) throws InterruptedException {
+	private void queue(WebSocketImplementation ws) throws InterruptedException {
 		if(ws.workerThread == null) {
 			ws.workerThread = decoders.get(queueinvokes % decoders.size());
 			queueinvokes++;
@@ -346,7 +346,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 				} catch (IOException e) {
 					// there is nothing that must be done here
 				}
-				if(WebSocketImpl.DEBUG)
+				if(WebSocketImplementation.DEBUG)
 					System.out.println("Connection closed because of" + ex);
 			}
 		}
@@ -446,7 +446,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 
 	@Override
 	public final void onWriteDemand(WebSocket w) {
-		WebSocketImpl conn = (WebSocketImpl) w;
+		WebSocketImplementation conn = (WebSocketImplementation) w;
 		try {
 			conn.key.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 		} catch (CancelledKeyException e) {
@@ -487,7 +487,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 	}
 
 	private Socket getSocket(WebSocket conn) {
-		WebSocketImpl impl = (WebSocketImpl) conn;
+		WebSocketImplementation impl = (WebSocketImplementation) conn;
 		return ((SocketChannel) impl.key.channel()).socket();
 	}
 
@@ -514,10 +514,10 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 
 	public class WebSocketWorker extends Thread {
 
-		private BlockingQueue<WebSocketImpl> iqueue;
+		private BlockingQueue<WebSocketImplementation> iqueue;
 
 		public WebSocketWorker() {
-			iqueue = new LinkedBlockingQueue<WebSocketImpl>();
+			iqueue = new LinkedBlockingQueue<WebSocketImplementation>();
 			setName("WebSocketWorker-" + getId());
 			setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
 				@Override
@@ -527,13 +527,13 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 			});
 		}
 
-		public void put(WebSocketImpl ws) throws InterruptedException {
+		public void put(WebSocketImplementation ws) throws InterruptedException {
 			iqueue.put(ws);
 		}
 
 		@Override
 		public void run() {
-			WebSocketImpl ws = null;
+			WebSocketImplementation ws = null;
 			try {
 				while (true) {
 					ByteBuffer buf = null;
@@ -559,9 +559,9 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 
 	public interface WebSocketServerFactory extends WebSocketFactory {
 		@Override
-		public WebSocketImpl createWebSocket(WebSocketAdapter a, Draft d, Socket s);
+		public WebSocketImplementation createWebSocket(WebSocketAdaptor a, Draft d, Socket s);
 
-		public WebSocketImpl createWebSocket(WebSocketAdapter a, List<Draft> drafts, Socket s);
+		public WebSocketImplementation createWebSocket(WebSocketAdaptor a, List<Draft> drafts, Socket s);
 
 		public ByteChannel wrapChannel(SocketChannel channel, SelectionKey key) throws IOException;
 	}

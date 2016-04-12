@@ -14,14 +14,14 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.NotSendableException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameBuilder;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
-import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImpl;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImplementation;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshakeBuilder;
-import org.usfirst.frc.team2503.lib.websocket.util.Charsetfunctions;
+import org.usfirst.frc.team2503.lib.websocket.util.CharsetHelper;
 
 public class Draft_75 extends Draft {
 
@@ -74,9 +74,9 @@ public class Draft_75 extends Draft {
 
 	@Override
 	public List<FrameData> createFrames(String text, boolean mask) {
-		FrameBuilder frame = new FrameDataImpl();
+		FrameBuilder frame = new FrameDataImplementation();
 		try {
-			frame.setPayload(ByteBuffer.wrap(Charsetfunctions.utf8Bytes(text)));
+			frame.setPayload(ByteBuffer.wrap(CharsetHelper.utf8Bytes(text)));
 		} catch (InvalidDataException e) {
 			throw new NotSendableException(e);
 		}
@@ -122,7 +122,7 @@ public class Draft_75 extends Draft {
 					throw new InvalidFrameException("unexpected END_OF_FRAME");
 				if(this.currentFrame != null) {
 					currentFrame.flip();
-					FrameDataImpl curframe = new FrameDataImpl();
+					FrameDataImplementation curframe = new FrameDataImplementation();
 					curframe.setPayload(currentFrame);
 					curframe.setFin(true);
 					curframe.setOptcode(Opcode.TEXT);

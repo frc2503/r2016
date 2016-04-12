@@ -6,17 +6,17 @@ import org.usfirst.frc.team2503.lib.websocket.drafts.Draft;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidHandshakeException;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
-import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImpl;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImplementation;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
-import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeImplServer;
+import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshakeImplementation;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshakeBuilder;
 
 /**
  * This class default implements all methods of the WebSocketListener that can be overridden optionally when advances functionalities is needed.<br>
  **/
-public abstract class WebSocketAdapter implements WebSocketListener {
+public abstract class WebSocketAdaptor implements WebSocketListener {
 
 	/**
 	 * This default implementation does not do anything. Go ahead and overwrite it.
@@ -25,7 +25,7 @@ public abstract class WebSocketAdapter implements WebSocketListener {
 	 */
 	@Override
 	public ServerHandshakeBuilder onWebsocketHandshakeReceivedAsServer( WebSocket conn, Draft draft, ClientHandshake request ) throws InvalidDataException {
-		return new HandshakeImplServer();
+		return new ServerHandshakeImplementation();
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public abstract class WebSocketAdapter implements WebSocketListener {
 	 */
 	@Override
 	public void onWebsocketPing( WebSocket conn, FrameData f ) {
-		FrameDataImpl resp = new FrameDataImpl( f );
+		FrameDataImplementation resp = new FrameDataImplementation( f );
 		resp.setOptcode( Opcode.PONG );
 		conn.sendFrame( resp );
 	}

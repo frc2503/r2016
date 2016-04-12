@@ -12,8 +12,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 
 import org.usfirst.frc.team2503.lib.websocket.SSLSocketChannel;
-import org.usfirst.frc.team2503.lib.websocket.WebSocketAdapter;
-import org.usfirst.frc.team2503.lib.websocket.WebSocketImpl;
+import org.usfirst.frc.team2503.lib.websocket.WebSocketAdaptor;
+import org.usfirst.frc.team2503.lib.websocket.WebSocketImplementation;
 import org.usfirst.frc.team2503.lib.websocket.drafts.Draft;
 
 
@@ -40,12 +40,12 @@ public class DefaultSSLWebSocketServerFactory implements WebSocketServer.WebSock
 	}
 
 	@Override
-	public WebSocketImpl createWebSocket(WebSocketAdapter a, Draft d, Socket c) {
-		return new WebSocketImpl(a, d);
+	public WebSocketImplementation createWebSocket(WebSocketAdaptor a, Draft d, Socket c) {
+		return new WebSocketImplementation(a, d);
 	}
 
 	@Override
-	public WebSocketImpl createWebSocket(WebSocketAdapter a, List<Draft> d, Socket s) {
-		return new WebSocketImpl(a, d);
+	public WebSocketImplementation createWebSocket(WebSocketAdaptor a, List<Draft> d, Socket s) {
+		return new WebSocketImplementation(a, d);
 	}
 }

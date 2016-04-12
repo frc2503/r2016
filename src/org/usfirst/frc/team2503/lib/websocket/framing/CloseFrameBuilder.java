@@ -4,9 +4,9 @@ import java.nio.ByteBuffer;
 
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidDataException;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidFrameException;
-import org.usfirst.frc.team2503.lib.websocket.util.Charsetfunctions;
+import org.usfirst.frc.team2503.lib.websocket.util.CharsetHelper;
 
-public class CloseFrameBuilder extends FrameDataImpl implements CloseFrame {
+public class CloseFrameBuilder extends FrameDataImplementation implements CloseFrame {
 
 	static final ByteBuffer emptybytebuffer = ByteBuffer.allocate( 0 );
 
@@ -46,7 +46,7 @@ public class CloseFrameBuilder extends FrameDataImpl implements CloseFrame {
 			return;// empty payload
 		}
 
-		byte[] by = Charsetfunctions.utf8Bytes( m );
+		byte[] by = CharsetHelper.utf8Bytes( m );
 		ByteBuffer buf = ByteBuffer.allocate( 4 );
 		buf.putInt( code );
 		buf.position( 2 );
@@ -82,13 +82,13 @@ public class CloseFrameBuilder extends FrameDataImpl implements CloseFrame {
 
 	private void initMessage() throws InvalidDataException {
 		if( code == CloseFrame.NOCODE ) {
-			reason = Charsetfunctions.stringUtf8( super.getPayloadData() );
+			reason = CharsetHelper.stringUtf8( super.getPayloadData() );
 		} else {
 			ByteBuffer b = super.getPayloadData();
 			int mark = b.position();// because stringUtf8 also creates a mark
 			try {
 				b.position( b.position() + 2 );
-				reason = Charsetfunctions.stringUtf8( b );
+				reason = CharsetHelper.stringUtf8( b );
 			} catch ( IllegalArgumentException e ) {
 				throw new InvalidFrameException( e );
 			} finally {

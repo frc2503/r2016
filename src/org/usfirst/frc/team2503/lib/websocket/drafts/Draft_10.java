@@ -17,7 +17,7 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.NotSendableException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrameBuilder;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameBuilder;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
-import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImpl;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImplementation;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
@@ -26,7 +26,7 @@ import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeData;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.util.Base64;
-import org.usfirst.frc.team2503.lib.websocket.util.Charsetfunctions;
+import org.usfirst.frc.team2503.lib.websocket.util.CharsetHelper;
 
 public class Draft_10 extends Draft {
 
@@ -129,7 +129,7 @@ public class Draft_10 extends Draft {
 
 	@Override
 	public List<FrameData> createFrames( ByteBuffer binary, boolean mask ) {
-		FrameBuilder curframe = new FrameDataImpl();
+		FrameBuilder curframe = new FrameDataImplementation();
 		try {
 			curframe.setPayload( binary );
 		} catch ( InvalidDataException e ) {
@@ -143,9 +143,9 @@ public class Draft_10 extends Draft {
 
 	@Override
 	public List<FrameData> createFrames( String text, boolean mask ) {
-		FrameBuilder curframe = new FrameDataImpl();
+		FrameBuilder curframe = new FrameDataImplementation();
 		try {
-			curframe.setPayload( ByteBuffer.wrap( Charsetfunctions.utf8Bytes( text ) ) );
+			curframe.setPayload( ByteBuffer.wrap( CharsetHelper.utf8Bytes( text ) ) );
 		} catch ( InvalidDataException e ) {
 			throw new NotSendableException( e );
 		}
@@ -369,7 +369,7 @@ public class Draft_10 extends Draft {
 		if( optcode == Opcode.CLOSING ) {
 			frame = new CloseFrameBuilder();
 		} else {
-			frame = new FrameDataImpl();
+			frame = new FrameDataImplementation();
 			frame.setFin( FIN );
 			frame.setOptcode( optcode );
 		}

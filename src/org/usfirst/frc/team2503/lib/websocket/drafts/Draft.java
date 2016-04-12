@@ -14,17 +14,17 @@ import org.usfirst.frc.team2503.lib.websocket.exceptions.LimitExceededException;
 import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameBuilder;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
-import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImpl;
+import org.usfirst.frc.team2503.lib.websocket.framing.FrameDataImplementation;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeBuilder;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeData;
-import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeImplClient;
-import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeImplServer;
+import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeImplementation;
+import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshakeImplementation;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshake;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshakeBuilder;
-import org.usfirst.frc.team2503.lib.websocket.util.Charsetfunctions;
+import org.usfirst.frc.team2503.lib.websocket.util.CharsetHelper;
 
 /**
  * Base class for everything of a websocket specification which is not common such as the way the handshake is read or frames are transfered.
@@ -44,7 +44,7 @@ public abstract class Draft {
 	public static int MAX_FAME_SIZE = 1000 * 1;
 	public static int INITIAL_FAMESIZE = 64;
 
-	public static final byte[] FLASH_POLICY_REQUEST = Charsetfunctions.utf8Bytes( "<policy-file-request/>\0" );
+	public static final byte[] FLASH_POLICY_REQUEST = CharsetHelper.utf8Bytes( "<policy-file-request/>\0" );
 
 	/** In some cases the handshake will be parsed different depending on whether */
 	protected Role role = null;
@@ -73,7 +73,7 @@ public abstract class Draft {
 
 	public static String readStringLine( ByteBuffer buf ) {
 		ByteBuffer b = readLine( buf );
-		return b == null ? null : Charsetfunctions.stringAscii( b.array(), 0, b.limit() );
+		return b == null ? null : CharsetHelper.stringAscii( b.array(), 0, b.limit() );
 	}
 
 	public static HandshakeBuilder translateHandshakeHttp( ByteBuffer buf, Role role ) throws InvalidHandshakeException , IncompleteHandshakeException {
@@ -90,13 +90,13 @@ public abstract class Draft {
 
 		if( role == Role.CLIENT ) {
 			// translating/parsing the response from the SERVER
-			handshake = new HandshakeImplServer();
+			handshake = new ServerHandshakeImplementation();
 			ServerHandshakeBuilder serverhandshake = (ServerHandshakeBuilder) handshake;
 			serverhandshake.setHttpStatus( Short.parseShort( firstLineTokens[ 1 ] ) );
 			serverhandshake.setHttpStatusMessage( firstLineTokens[ 2 ] );
 		} else {
 			// translating/parsing the request from the CLIENT
-			ClientHandshakeBuilder clienthandshake = new HandshakeImplClient();
+			ClientHandshakeBuilder clienthandshake = new ClientHandshakeImplementation();
 			clienthandshake.setResourceDescriptor( firstLineTokens[ 1 ] );
 			handshake = clienthandshake;
 		}
@@ -139,7 +139,7 @@ public abstract class Draft {
 			continuousFrameType = op;
 		}
 
-		FrameBuilder bui = new FrameDataImpl( continuousFrameType );
+		FrameBuilder bui = new FrameDataImplementation( continuousFrameType );
 		try {
 			bui.setPayload( buffer );
 		} catch ( InvalidDataException e ) {
@@ -182,7 +182,7 @@ public abstract class Draft {
 			bui.append( "\r\n" );
 		}
 		bui.append( "\r\n" );
-		byte[] httpheader = Charsetfunctions.asciiBytes( bui.toString() );
+		byte[] httpheader = CharsetHelper.asciiBytes( bui.toString() );
 
 		byte[] content = withcontent ? handshakeData.getContent() : null;
 		ByteBuffer bytebuffer = ByteBuffer.allocate( ( content == null ? 0 : content.length ) + httpheader.length );

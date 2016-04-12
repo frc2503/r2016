@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import org.usfirst.frc.team2503.lib.websocket.WebSocket;
-import org.usfirst.frc.team2503.lib.websocket.WebSocketAdapter;
-import org.usfirst.frc.team2503.lib.websocket.WebSocketImpl;
+import org.usfirst.frc.team2503.lib.websocket.WebSocketAdaptor;
+import org.usfirst.frc.team2503.lib.websocket.WebSocketImplementation;
 import org.usfirst.frc.team2503.lib.websocket.drafts.Draft;
 import org.usfirst.frc.team2503.lib.websocket.drafts.Draft_17;
 import org.usfirst.frc.team2503.lib.websocket.exceptions.InvalidHandshakeException;
@@ -22,14 +22,14 @@ import org.usfirst.frc.team2503.lib.websocket.framing.CloseFrame;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData;
 import org.usfirst.frc.team2503.lib.websocket.framing.FrameData.Opcode;
 import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeData;
-import org.usfirst.frc.team2503.lib.websocket.handshake.HandshakeImplClient;
+import org.usfirst.frc.team2503.lib.websocket.handshake.ClientHandshakeImplementation;
 import org.usfirst.frc.team2503.lib.websocket.handshake.ServerHandshake;
 
-public abstract class WebSocketClient extends WebSocketAdapter implements Runnable, WebSocket {
+public abstract class WebSocketClient extends WebSocketAdaptor implements Runnable, WebSocket {
 
 	protected URI uri = null;
 
-	private WebSocketImpl engine = null;
+	private WebSocketImplementation engine = null;
 
 	private Socket socket = null;
 	private InputStream istream;
@@ -60,7 +60,7 @@ public abstract class WebSocketClient extends WebSocketAdapter implements Runnab
 		this.draft = protocolDraft;
 		this.headers = httpHeaders;
 		this.connectTimeout = connectTimeout;
-		this.engine = new WebSocketImpl(this, protocolDraft);
+		this.engine = new WebSocketImplementation(this, protocolDraft);
 	}
 
 	public URI getURI() {
@@ -125,7 +125,7 @@ public abstract class WebSocketClient extends WebSocketAdapter implements Runnab
 		writeThread = new Thread(new WebsocketWriteThread());
 		writeThread.start();
 
-		byte[] rawbuffer = new byte[ WebSocketImpl.RCVBUF ];
+		byte[] rawbuffer = new byte[ WebSocketImplementation.RCVBUF ];
 		int readBytes;
 
 		try {
@@ -169,7 +169,7 @@ public abstract class WebSocketClient extends WebSocketAdapter implements Runnab
 		int port = getPort();
 		String host = uri.getHost() + (port != WebSocket.DEFAULT_PORT ? ":" + port : "");
 
-		HandshakeImplClient handshake = new HandshakeImplClient();
+		ClientHandshakeImplementation handshake = new ClientHandshakeImplementation();
 		handshake.setResourceDescriptor(path);
 		handshake.put("Host", host);
 		if(headers != null) {

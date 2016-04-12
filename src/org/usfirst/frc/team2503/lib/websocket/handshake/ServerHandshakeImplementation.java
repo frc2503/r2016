@@ -1,10 +1,10 @@
 package org.usfirst.frc.team2503.lib.websocket.handshake;
 
-public class HandshakeImplServer extends HandshakeDataImpl implements ServerHandshakeBuilder {
+public class ServerHandshakeImplementation extends HandshakeDataImplementation implements ServerHandshakeBuilder {
 	private short httpstatus;
 	private String httpstatusmessage;
 
-	public HandshakeImplServer() {
+	public ServerHandshakeImplementation() {
 	}
 
 	@Override

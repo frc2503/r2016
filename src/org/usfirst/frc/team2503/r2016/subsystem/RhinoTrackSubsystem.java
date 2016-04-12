@@ -1,13 +1,18 @@
-package org.usfirst.frc.team2503.r2016.subsystem.base;
+package org.usfirst.frc.team2503.r2016.subsystem;
+
+import org.usfirst.frc.team2503.r2016.subsystem.base.DataSpeedControllerSubsystem;
+import org.usfirst.frc.team2503.r2016.subsystem.base.DataSubsystem;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
 public class RhinoTrackSubsystem extends DataSpeedControllerSubsystem {
-
+	
 	public enum RhinoTrackSubsystemDataKey implements DataSubsystem.SubsystemDataKey {
 		POWER
 	}
 
+	
+	
 	@Override
 	public void tick() {
 		double power = (double) this.getDataKey(RhinoTrackSubsystemDataKey.POWER);
@@ -17,16 +22,6 @@ public class RhinoTrackSubsystem extends DataSpeedControllerSubsystem {
 	
 	public void setPower(double power) {
 		this.setDataKey(RhinoTrackSubsystemDataKey.POWER, power);
-	}
-
-	
-	
-	public void setDataKey(RhinoTrackSubsystemDataKey key, Object value) {
-		super.setDataKey(key, value);
-	}
-
-	public Object getDataKey(RhinoTrackSubsystemDataKey key) {
-		return this._data.get(key);
 	}
 	
 	

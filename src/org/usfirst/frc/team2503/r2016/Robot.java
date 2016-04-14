@@ -11,7 +11,6 @@ import org.usfirst.frc.team2503.r2016.subsystem.PortcullisLiftSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.ShooterSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.WinchSubsystem;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {

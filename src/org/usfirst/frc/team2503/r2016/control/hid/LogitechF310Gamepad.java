@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2503.r2016.control.hid;
 
-import org.usfirst.frc.team2503.r2016.control.hid.Joystick.AxisType;
-
 public class LogitechF310Gamepad extends Joystick {
 	
 	// These are interpreted names for some of the buttons.

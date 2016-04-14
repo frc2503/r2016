@@ -1,9 +1,5 @@
 package org.usfirst.frc.team2503.r2016.control.hid;
 
-import org.usfirst.frc.team2503.r2016.control.hid.Joystick.Axis;
-import org.usfirst.frc.team2503.r2016.control.hid.Joystick.Button;
-import org.usfirst.frc.team2503.r2016.control.hid.Joystick.POV;
-
 public abstract class Joystick extends edu.wpi.first.wpilibj.Joystick {
 
 	public class Button {

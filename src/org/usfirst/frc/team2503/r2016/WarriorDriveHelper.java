@@ -12,8 +12,6 @@ import org.usfirst.frc.team2503.r2016.subsystem.WinchSubsystem;
 import org.usfirst.frc.team2503.r2016.control.DriveHelper;
 import org.usfirst.frc.team2503.r2016.control.hid.*;
 
-import edu.wpi.first.wpilibj.GenericHID;
-
 public class WarriorDriveHelper extends DriveHelper {
 	
 	@Override

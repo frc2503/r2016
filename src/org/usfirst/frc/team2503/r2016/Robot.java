@@ -47,6 +47,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		this.warriorDriveHelper.drive(Hardware.leftStick, Hardware.rightStick, Hardware.operatorPad);
 		this.warriorDriveHelper.tick();
 	}
 
@@ -57,6 +58,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousPeriodic() {
+		this.warriorDriveHelper.drive(Hardware.leftStick, Hardware.rightStick, Hardware.operatorPad);
 		this.warriorDriveHelper.tick();
 	}
 
@@ -78,6 +80,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void testPeriodic() {
+		this.warriorDriveHelper.drive(Hardware.leftStick, Hardware.rightStick, Hardware.operatorPad);
 		this.warriorDriveHelper.tick();
 	}
 

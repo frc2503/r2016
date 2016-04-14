@@ -9,6 +9,7 @@ import org.usfirst.frc.team2503.r2016.subsystem.PortcullisLiftSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.PortcullisLiftSubsystem.PortcullisLiftSubsystemMode;
 import org.usfirst.frc.team2503.r2016.subsystem.ShooterSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.WinchSubsystem;
+import org.usfirst.frc.team2503.r2016.subsystem.WinchSubsystem.WinchSubsystemMode;
 import org.usfirst.frc.team2503.r2016.control.DriveHelper;
 import org.usfirst.frc.team2503.r2016.control.hid.*;
 
@@ -58,6 +59,7 @@ public class WarriorDriveHelper extends DriveHelper {
 	protected void autonomous(Joystick left, Joystick right, Joystick operator) {
 	}
 	
+	@SuppressWarnings("unused")
 	protected void teleoperated(Joystick _left, Joystick _right, Joystick _operator) {
 		MadCatzV1Joystick left = (MadCatzV1Joystick) _left;
 		MadCatzV1Joystick right = (MadCatzV1Joystick) _right;
@@ -66,9 +68,6 @@ public class WarriorDriveHelper extends DriveHelper {
 		// TODO: Replace logic with Velocity mapping
 		double leftPower = left.yAxis.get();
 		double rightPower = right.yAxis.get();
-		
-		double shooterPower = operator.getRawAxis(3);
-		double winchPower = operator.getY(GenericHID.Hand.kLeft) * 0.25d;
 		
 		{
 			if(operator.getRawButton(2))
@@ -91,7 +90,39 @@ public class WarriorDriveHelper extends DriveHelper {
 		}
 		
 		{
+			this._driveBaseSubsystem.drive(leftPower, rightPower);
+		}
+		
+		{
 			this._hookerSubsystem.setPower(0.0d);
+		}
+		
+		{
+			this._shooterSubsystem.setPower(operator.rightTriggerAxis.get());
+		}
+
+		{
+			if(true) {
+				double winchAxisValue = operator.leftTriggerAxis.get();
+				
+				if(winchAxisValue > 0.5000d)
+					this._winchSubsystem.setMode(WinchSubsystemMode.WINCHING);
+				else if(winchAxisValue > 0.2000d && winchAxisValue <= 0.5000d)
+					this._winchSubsystem.setMode(WinchSubsystemMode.SLOW_WINCHING);
+				else if(winchAxisValue <= 0.2000d)
+					this._winchSubsystem.setMode(WinchSubsystemMode.STOPPED);
+			} else {
+				double winchAxisValue = operator.leftTriggerAxis.get();
+
+				if(winchAxisValue > 0.5000d)
+					this._winchSubsystem.setMode(WinchSubsystemMode.WINCHING);
+				else if(winchAxisValue > 0.2000d && winchAxisValue <= 0.5000d)
+					this._winchSubsystem.setMode(WinchSubsystemMode.SLOW_WINCHING);
+				else if(winchAxisValue > 0.0500d && winchAxisValue <= 0.2000d)
+					this._winchSubsystem.setMode(WinchSubsystemMode.BASIC_SUSPENSION_WINCHING);
+				else if(winchAxisValue < 0.0500d)
+					this._winchSubsystem.setMode(WinchSubsystemMode.STOPPED);
+			}
 		}
 	}
 	

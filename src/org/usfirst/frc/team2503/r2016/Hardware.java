@@ -48,24 +48,21 @@ public class Hardware {
 	private static final DigitalInput hookerEncoderAChannel = new DigitalInput(4);
 	private static final DigitalInput hookerEncoderBChannel = new DigitalInput(5);
 
+	private static final Encoder leftTrackEncoder = new Encoder(leftTrackEncoderAChannel, leftTrackEncoderBChannel);
+	private static final Encoder rightTrackEncoder = new Encoder(rightTrackEncoderAChannel, rightTrackEncoderBChannel);
+	public static final Encoder hookerEncoder = new Encoder(hookerEncoderAChannel, hookerEncoderBChannel);
+
 	public static final LimitSwitch intakeLimitSwitch = new LimitSwitch(6);
 	public static final LimitSwitch hookerLimitSwitch = new LimitSwitch(7);
 
 	private static final Relay cameraLightsRelay = new Relay(0);
 	public static final Relay intakeIndicatorRelay = new Relay(1);
 
-	private static final Encoder leftTrackEncoder = new Encoder(leftTrackEncoderAChannel, leftTrackEncoderBChannel);
-	private static final Encoder rightTrackEncoder = new Encoder(rightTrackEncoderAChannel, rightTrackEncoderBChannel);
-	public static final Encoder hookerEncoder = new Encoder(hookerEncoderAChannel, hookerEncoderBChannel);
-
 	public static Joystick leftStick = new MadCatzV1Joystick(0);
 	public static Joystick rightStick = new MadCatzV1Joystick(1);
 	public static Joystick operatorPad = new LogitechF310Gamepad(2);
 	
 	static {
-		cameraLightsRelay.setDirection(Relay.Direction.kForward);
-		intakeIndicatorRelay.setDirection(Relay.Direction.kForward);
-
 		leftTrackSpeedController.setInverted(false);
 		rightTrackSpeedController.setInverted(true);
 
@@ -73,13 +70,16 @@ public class Hardware {
 		winchSpeedController.setInverted(true);
 		hookerSpeedController.setInverted(true);
 		intakeSpeedController.setInverted(true);
+		
+		compressor.setClosedLoopControl(true);
+		compressor.start();
 
 		leftTrackEncoder.reset();
 		rightTrackEncoder.reset();
 		hookerEncoder.reset();
 
-		compressor.setClosedLoopControl(true);
-		compressor.start();
+		cameraLightsRelay.setDirection(Relay.Direction.kForward);
+		intakeIndicatorRelay.setDirection(Relay.Direction.kForward);
 	}
 
 }

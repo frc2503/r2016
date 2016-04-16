@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2503.lib.trajectory;
 
+import org.usfirst.frc.team2503.lib.util.WarriorMath;
+
 public class BezierCurve {
 
 	public Point[] points;

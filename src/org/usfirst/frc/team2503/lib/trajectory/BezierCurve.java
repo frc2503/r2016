@@ -10,11 +10,12 @@ public class BezierCurve {
 	public double x(double time, double timeMax) {
 		return 0.0d;
 	}
-	
-	public int n() {
+
+	// TODO: Document
+	private int n() {
 		return this.points.length - 1;
 	}
-	
+
 	public BezierCurve(Point... points) {
 		this.points = points;
 	}

@@ -16,6 +16,10 @@ public class BezierCurve {
 		return this.points.length - 1;
 	}
 
+	// TODO: Document
+	private int binomialCoefficient(int n, int i) {
+		return (int) WarriorMath.nCr(n, i);
+	}
 
 	// TODO: Document
 	public BezierCurve(Point... points) {

@@ -16,6 +16,8 @@ public class BezierCurve {
 		return this.points.length - 1;
 	}
 
+
+	// TODO: Document
 	public BezierCurve(Point... points) {
 		this.points = points;
 	}

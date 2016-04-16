@@ -17,6 +17,7 @@ public class WarriorMath {
 	public static final double q0 = .89678597403663861962481162e3d;
 	public static final double PI_OVER_2 = 1.5707963267948966135e0d;
 	public static final double NaN	 = (0.0 / 0.0);
+	public static final double ALMOST_ZERO = 1e-16d;
 
 	// TODO: Document
 	// TODO: Improve, clean

@@ -207,4 +207,30 @@ public class WarriorMath {
 		return outputMinimum + ((outputMaximum - outputMinimum) / (inputMaximum - inputMinimum)) * (input - inputMinimum);
 	}
 
+	public static long factorial(long n) {
+		return factorial(1, n);
+	}
+	
+	public static long factorial(long start, long n) {
+		long i;
+		if(n <= 16) {
+			long r = start;
+			for(i = start + 1; i < start + n; i += 1) {
+				r *= i;
+			}
+			return r;
+		} else {
+			i = n / 2;
+			return factorial(start, i) * factorial(start + i, n - i);
+		}
+	}
+	
+	public static long frequencyToPeriodMilliseconds(double frequency) {
+		return (long) (1000.0d / frequency);
+	}
+		
+	public static long nCr(long n, long r) {
+		return factorial(n) / (factorial(n - r) * factorial(r));
+	}
+
 }

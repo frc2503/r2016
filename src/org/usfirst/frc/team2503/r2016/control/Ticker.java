@@ -19,6 +19,7 @@ public class Ticker implements Runnable {
 				Thread.sleep(this._periodMilliseconds - d);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				break;
 			}
 		}
 	}

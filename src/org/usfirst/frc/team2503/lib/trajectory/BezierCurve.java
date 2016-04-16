@@ -9,6 +9,11 @@ public class BezierCurve {
 	// TODO: Document
 	public double x(double time, double timeMax) {
 		return 0.0d;
+
+	// TODO: Document
+	private double coefficient(int i) {
+		return this.binomialCoefficient(this.n(), i);
+	}
 	}
 
 	// TODO: Document

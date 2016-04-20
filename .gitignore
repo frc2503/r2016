@@ -31,3 +31,6 @@ tmp/
 *.launch
 
 *.zip
+
+# Block stored data files
+*.csv

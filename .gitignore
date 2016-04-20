@@ -33,5 +33,5 @@ tmp/
 # Stored .zip archives of libraries
 *.zip
 
-# Block stored data files
+# Stored data files
 *.csv

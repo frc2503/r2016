@@ -19,6 +19,8 @@ public class CameraSubsystem implements DataSubsystem {
 	private Servo _horizontal;
 	private Servo _vertical;
 	
+	private Relay _lights;
+	
 	private double horizontalDegrees[] = {-90.0, 90.0};
 	private double verticalDegrees[] = {-90.0, 90.0};
 	
@@ -32,8 +34,17 @@ public class CameraSubsystem implements DataSubsystem {
 		double horizontalValue = WarriorMath.map(horizontalDegrees[1], horizontalDegrees[0], horizontalRotationDegrees, 0.0, 1.0);
 		double verticalValue = WarriorMath.map(verticalDegrees[1], verticalDegrees[0], verticalRotationDegrees, 0.0, 1.0);
 		
-		_horizontal.set(horizontalValue);
-		_vertical.set(verticalValue);
+		Relay.Value lightsValue = null;
+		
+		if((boolean) this.getDataKey(CameraSubsystemDataKey.LIGHTS) == true) {
+			lightsValue = Relay.Value.kOn;
+		} else {
+			lightsValue = Relay.Value.kOff;
+		}
+		
+		this._horizontal.set(horizontalValue);
+		this._vertical.set(verticalValue);
+		this._lights.set(lightsValue);
 	}
 	
 	public void calibrateDegrees(double horizontal[], double vertical[]) {
@@ -51,9 +62,10 @@ public class CameraSubsystem implements DataSubsystem {
 	
 	
 	
-	public CameraSubsystem(Servo _horizontal, Servo _vertical) {
+	public CameraSubsystem(Servo _horizontal, Servo _vertical, Relay _lights) {
 		this._horizontal = _horizontal;
 		this._vertical = _vertical;
+		this._lights = _lights;
 	}
 
 }

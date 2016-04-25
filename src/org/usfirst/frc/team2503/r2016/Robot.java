@@ -19,7 +19,7 @@ public class Robot extends IterativeRobot {
 	private IntakeSubsystem intakeSubsystem = new IntakeSubsystem(Hardware.intakeSpeedController, Hardware.intakeLimitSwitch, Hardware.intakeIndicatorRelay);
 	private ShooterSubsystem shooterSubsystem = new ShooterSubsystem(Hardware.shooterSpeedController);
 	private WinchSubsystem winchSubsystem = new WinchSubsystem(Hardware.winchSpeedController);
-	private CameraSubsystem cameraSubsystem = new CameraSubsystem(Hardware.cameraHorizontalRotationServo, Hardware.cameraVerticalRotationServo);
+	private CameraSubsystem cameraSubsystem = new CameraSubsystem(Hardware.cameraHorizontalRotationServo, Hardware.cameraVerticalRotationServo, Hardware.cameraLightsRelay);
 	private PortcullisLiftSubsystem portcullisLiftSubsystem = new PortcullisLiftSubsystem(Hardware.portcullisLift);
 	private HookerSubsystem hookerSubsystem = new HookerSubsystem(Hardware.hookerSpeedController, Hardware.hookerEncoder, Hardware.hookerLimitSwitch);
 

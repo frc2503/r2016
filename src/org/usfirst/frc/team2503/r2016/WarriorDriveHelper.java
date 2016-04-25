@@ -139,14 +139,34 @@ public class WarriorDriveHelper extends DriveHelper {
 			
 			// Only do math if we have to.
 			if(povAngle >= 0.0d) {
+				// The POV returns a North-based angle which increases clockwise.
+				//
+				// For trigonometric math, we need to convert this to a standard
+				// mathematical angle (with Easterly basis).
 				double mathAngle = WarriorMath.degreesToRadians(90.0d - povAngle);
 				
-				double sin = Math.sin(mathAngle);
+				// Compute and store the trigonometric values for
+				// the angle
 				double cos = Math.cos(mathAngle);
+				double sin = Math.sin(mathAngle);
+				
+				// This double will get multiplied by the sine and cosine
+				// of the angle.  If you want the camera to rotate faster
+				// (or slower) you can modify this value.
+				double factor = 0.1d;
+				
+				// Add to the current values the trigonometric values for
+				// the angle times a factor
+				this.horizontalRotationDegrees += cos * factor;
+				this.verticalRotationDegrees += sin * factor;
 			}
+			
+			// Set the values in the CameraSubsystem for horizontal and vertical rotation
+			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.HORIZONTAL_ROTATION_DEGREES, this.horizontalRotationDegrees);
+			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.VERTICAL_ROTATION_DEGREES, this.verticalRotationDegrees);
 
-			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.HORIZONTAL_ROTATION_DEGREES, horizontalRotationDegrees);
-			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.VERTICAL_ROTATION_DEGREES, verticalRotationDegrees);
+			// Always turn the lights on.
+			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.LIGHTS, true);
 		}
 	}
 	

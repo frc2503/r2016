@@ -143,10 +143,17 @@ public class WarriorDriveHelper extends DriveHelper {
 				
 				double cos = Math.cos(mathAngle);
 				double sin = Math.sin(mathAngle);
-			}
 
-			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.HORIZONTAL_ROTATION_DEGREES, horizontalRotationDegrees);
-			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.VERTICAL_ROTATION_DEGREES, verticalRotationDegrees);
+				double factor = 0.1d;
+
+				this.horizontalRotationDegrees += cos * factor;
+				this.verticalRotationDegrees += sin * factor;
+			}
+			
+			// Set the values in the CameraSubsystem for horizontal and vertical rotation
+			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.HORIZONTAL_ROTATION_DEGREES, this.horizontalRotationDegrees);
+			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.VERTICAL_ROTATION_DEGREES, this.verticalRotationDegrees);
+
 		}
 	}
 	

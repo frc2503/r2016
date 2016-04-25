@@ -141,8 +141,8 @@ public class WarriorDriveHelper extends DriveHelper {
 			if(povAngle >= 0.0d) {
 				double mathAngle = WarriorMath.degreesToRadians(90.0d - povAngle);
 				
-				double sin = Math.sin(mathAngle);
 				double cos = Math.cos(mathAngle);
+				double sin = Math.sin(mathAngle);
 			}
 
 			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.HORIZONTAL_ROTATION_DEGREES, horizontalRotationDegrees);

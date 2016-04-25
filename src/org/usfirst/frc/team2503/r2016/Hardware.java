@@ -68,7 +68,7 @@ public class Hardware {
 	public static final LimitSwitch intakeLimitSwitch = new LimitSwitch(6);
 	public static final LimitSwitch hookerLimitSwitch = new LimitSwitch(7);
 
-	private static final Relay cameraLightsRelay = new Relay(0);
+	public static final Relay cameraLightsRelay = new Relay(0);
 	public static final Relay intakeIndicatorRelay = new Relay(1);
 
 	public static Joystick leftStick = new MadCatzV1Joystick(0);

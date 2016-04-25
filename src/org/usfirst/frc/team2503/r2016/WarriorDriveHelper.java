@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2503.r2016;
 
 import org.usfirst.frc.team2503.r2016.subsystem.CameraSubsystem;
+import org.usfirst.frc.team2503.r2016.subsystem.CameraSubsystem.CameraSubsystemDataKey;
 import org.usfirst.frc.team2503.r2016.subsystem.DriveBaseSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.HookerSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.IntakeSubsystem;
@@ -10,6 +11,7 @@ import org.usfirst.frc.team2503.r2016.subsystem.PortcullisLiftSubsystem.Portcull
 import org.usfirst.frc.team2503.r2016.subsystem.ShooterSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.WinchSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.WinchSubsystem.WinchSubsystemMode;
+import org.usfirst.frc.team2503.lib.util.WarriorMath;
 import org.usfirst.frc.team2503.r2016.control.DriveHelper;
 import org.usfirst.frc.team2503.r2016.control.hid.*;
 
@@ -45,6 +47,9 @@ public class WarriorDriveHelper extends DriveHelper {
 	private PortcullisLiftSubsystem _portcullisLiftSubsystem;
 	private HookerSubsystem _hookerSubsystem;
 	
+	private double horizontalRotationDegrees = 90.0d;
+	private double verticalRotationDegrees = 0.0d;
+	
 	@Override
 	public void tick() {
 		this._driveBaseSubsystem.tick();
@@ -65,36 +70,40 @@ public class WarriorDriveHelper extends DriveHelper {
 		MadCatzV1Joystick right = (MadCatzV1Joystick) _right;
 		LogitechF310Gamepad operator = (LogitechF310Gamepad) _operator;
 		
-		// TODO: Replace logic with Velocity mapping
-		double leftPower = left.yAxis.get();
-		double rightPower = right.yAxis.get();
-		
 		{
-			if(operator.getRawButton(2))
+			if(operator.intakeOutputModeButton.get())
 				this._intakeSubsystem.setMode(IntakeSubsystemMode.OUTPUTTING);
-			else if(operator.getRawButton(1))
+			else if(operator.intakeIntakeModeButton.get())
 				this._intakeSubsystem.setMode(IntakeSubsystemMode.INTAKING);
-			else if(operator.getRawButton(5))
+			else if(operator.intakeFireModeButton.get())
 				this._intakeSubsystem.setMode(IntakeSubsystemMode.FIRING);
 			else
 				this._intakeSubsystem.setMode(IntakeSubsystemMode.STOPPED);
 		}
 		
 		{
-			if(right.liftRaiseButton.get())
+			if(right.liftRaiseModeButton.get())
 				this._portcullisLiftSubsystem.setMode(PortcullisLiftSubsystemMode.RAISING);
-			else if(right.liftLowerButton.get())
+			else if(right.liftLowerModeButton.get())
 				this._portcullisLiftSubsystem.setMode(PortcullisLiftSubsystemMode.LOWERING);
 			else
 				this._portcullisLiftSubsystem.setMode(PortcullisLiftSubsystemMode.STOPPED);
 		}
 		
 		{
+			double leftPower = left.yAxis.get();
+			double rightPower = right.yAxis.get();
+			
+			// Crude cubic input profile
+			// TODO: Velocity mapping
+			leftPower *= Math.abs(leftPower);
+			rightPower *= Math.abs(rightPower);
+			
 			this._driveBaseSubsystem.drive(leftPower, rightPower);
 		}
 		
 		{
-			this._hookerSubsystem.setPower(0.0d);
+			this._hookerSubsystem.setPower(operator.leftYAxis.get());
 		}
 		
 		{
@@ -123,6 +132,21 @@ public class WarriorDriveHelper extends DriveHelper {
 				else if(winchAxisValue < 0.0500d)
 					this._winchSubsystem.setMode(WinchSubsystemMode.STOPPED);
 			}
+		}
+		
+		{
+			double povAngle = (double) operator.POV.get();
+			
+			// Only do math if we have to.
+			if(povAngle >= 0.0d) {
+				double mathAngle = WarriorMath.degreesToRadians(90.0d - povAngle);
+				
+				double sin = Math.sin(mathAngle);
+				double cos = Math.cos(mathAngle);
+			}
+
+			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.HORIZONTAL_ROTATION_DEGREES, horizontalRotationDegrees);
+			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.VERTICAL_ROTATION_DEGREES, verticalRotationDegrees);
 		}
 	}
 	

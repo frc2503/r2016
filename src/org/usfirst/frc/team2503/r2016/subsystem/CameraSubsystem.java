@@ -3,13 +3,16 @@ package org.usfirst.frc.team2503.r2016.subsystem;
 import org.usfirst.frc.team2503.lib.util.WarriorMath;
 import org.usfirst.frc.team2503.r2016.subsystem.base.DataSubsystem;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
 
 public class CameraSubsystem implements DataSubsystem {
 
 	public enum CameraSubsystemDataKey implements SubsystemDataKey {
 		HORIZONTAL_ROTATION_DEGREES,
-		VERTICAL_ROTATION_DEGREES
+		VERTICAL_ROTATION_DEGREES,
+		
+		LIGHTS
 	}
 	
 	

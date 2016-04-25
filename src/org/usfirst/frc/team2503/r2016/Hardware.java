@@ -9,6 +9,7 @@ import org.usfirst.frc.team2503.r2016.control.hid.MadCatzV1Joystick;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Spark;
@@ -27,6 +28,18 @@ public class Hardware {
 	public static final Servo cameraHorizontalRotationServo = new Servo(5);
 	public static final Servo cameraVerticalRotationServo = new Servo(7);
 
+	/**
+	 * The power distribution panel is sometimes assigned a non-standard
+	 * CAN bus ID number.  This variable should be used to explicitly specify where
+	 * the PDP is to be found.
+	 *
+	 * Additional power-distribution panel WPIlib objects should use this variable for
+	 * initialization.
+	 */
+	private static final int PDPCANChannel = 0;
+	
+	public static final PowerDistributionPanel PDP = new PowerDistributionPanel(PDPCANChannel);
+	
 	/**
 	 * The pneumatics control module is sometimes assigned a non-standard
 	 * CAN bus ID number.  This variable should be used to explicitly specify where
@@ -48,24 +61,21 @@ public class Hardware {
 	private static final DigitalInput hookerEncoderAChannel = new DigitalInput(4);
 	private static final DigitalInput hookerEncoderBChannel = new DigitalInput(5);
 
-	public static final LimitSwitch intakeLimitSwitch = new LimitSwitch(6);
-	public static final LimitSwitch hookerLimitSwitch = new LimitSwitch(7);
-
-	private static final Relay cameraLightsRelay = new Relay(0);
-	public static final Relay intakeIndicatorRelay = new Relay(1);
-
 	private static final Encoder leftTrackEncoder = new Encoder(leftTrackEncoderAChannel, leftTrackEncoderBChannel);
 	private static final Encoder rightTrackEncoder = new Encoder(rightTrackEncoderAChannel, rightTrackEncoderBChannel);
 	public static final Encoder hookerEncoder = new Encoder(hookerEncoderAChannel, hookerEncoderBChannel);
+
+	public static final LimitSwitch intakeLimitSwitch = new LimitSwitch(6);
+	public static final LimitSwitch hookerLimitSwitch = new LimitSwitch(7);
+
+	public static final Relay cameraLightsRelay = new Relay(0);
+	public static final Relay intakeIndicatorRelay = new Relay(1);
 
 	public static Joystick leftStick = new MadCatzV1Joystick(0);
 	public static Joystick rightStick = new MadCatzV1Joystick(1);
 	public static Joystick operatorPad = new LogitechF310Gamepad(2);
 	
 	static {
-		cameraLightsRelay.setDirection(Relay.Direction.kForward);
-		intakeIndicatorRelay.setDirection(Relay.Direction.kForward);
-
 		leftTrackSpeedController.setInverted(false);
 		rightTrackSpeedController.setInverted(true);
 
@@ -73,13 +83,16 @@ public class Hardware {
 		winchSpeedController.setInverted(true);
 		hookerSpeedController.setInverted(true);
 		intakeSpeedController.setInverted(true);
+		
+		compressor.setClosedLoopControl(true);
+		compressor.start();
 
 		leftTrackEncoder.reset();
 		rightTrackEncoder.reset();
 		hookerEncoder.reset();
 
-		compressor.setClosedLoopControl(true);
-		compressor.start();
+		cameraLightsRelay.setDirection(Relay.Direction.kForward);
+		intakeIndicatorRelay.setDirection(Relay.Direction.kForward);
 	}
 
 }

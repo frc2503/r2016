@@ -7,8 +7,8 @@ public class MadCatzV1Joystick extends Joystick {
 	public final Button gripButton = this.button_7;
 
 	// These are the purposes of some of the buttons.
-	public final Button liftRaiseButton = this.button_2;
-	public final Button liftLowerButton = this.triggerButton;
+	public final Button liftRaiseModeButton = this.button_2;
+	public final Button liftLowerModeButton = this.triggerButton;
 
 	// These are the named POV's.
 	public final POV POV = this.pov_0;

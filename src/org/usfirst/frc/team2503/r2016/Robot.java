@@ -11,7 +11,6 @@ import org.usfirst.frc.team2503.r2016.subsystem.PortcullisLiftSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.ShooterSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.WinchSubsystem;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
@@ -20,7 +19,7 @@ public class Robot extends IterativeRobot {
 	private IntakeSubsystem intakeSubsystem = new IntakeSubsystem(Hardware.intakeSpeedController, Hardware.intakeLimitSwitch, Hardware.intakeIndicatorRelay);
 	private ShooterSubsystem shooterSubsystem = new ShooterSubsystem(Hardware.shooterSpeedController);
 	private WinchSubsystem winchSubsystem = new WinchSubsystem(Hardware.winchSpeedController);
-	private CameraSubsystem cameraSubsystem = new CameraSubsystem(Hardware.cameraHorizontalRotationServo, Hardware.cameraVerticalRotationServo);
+	private CameraSubsystem cameraSubsystem = new CameraSubsystem(Hardware.cameraHorizontalRotationServo, Hardware.cameraVerticalRotationServo, Hardware.cameraLightsRelay);
 	private PortcullisLiftSubsystem portcullisLiftSubsystem = new PortcullisLiftSubsystem(Hardware.portcullisLift);
 	private HookerSubsystem hookerSubsystem = new HookerSubsystem(Hardware.hookerSpeedController, Hardware.hookerEncoder, Hardware.hookerLimitSwitch);
 
@@ -48,6 +47,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		this.warriorDriveHelper.drive(Hardware.leftStick, Hardware.rightStick, Hardware.operatorPad);
 		this.warriorDriveHelper.tick();
 	}
 
@@ -58,6 +58,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousPeriodic() {
+		this.warriorDriveHelper.drive(Hardware.leftStick, Hardware.rightStick, Hardware.operatorPad);
 		this.warriorDriveHelper.tick();
 	}
 
@@ -79,6 +80,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void testPeriodic() {
+		this.warriorDriveHelper.drive(Hardware.leftStick, Hardware.rightStick, Hardware.operatorPad);
 		this.warriorDriveHelper.tick();
 	}
 

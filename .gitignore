@@ -30,4 +30,8 @@ tmp/
 # Locally stored "Eclipse launch configurations"
 *.launch
 
+# Stored .zip archives of libraries
 *.zip
+
+# Stored data files
+*.csv

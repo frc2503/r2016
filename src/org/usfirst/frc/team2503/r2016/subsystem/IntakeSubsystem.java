@@ -30,29 +30,33 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 	public void tick() {
 		IntakeSubsystemMode mode = (IntakeSubsystemMode) this.getMode();
 		
-		switch(mode) {
-		case INTAKING:
-			if(this.canIntake())
+		if(mode != null) {
+			switch(mode) {
+			case INTAKING:
+				if(this.canIntake())
+					this.set(1.0d);
+				
+				break;
+				
+			case OUTPUTTING:
 				this.set(1.0d);
-			
-			break;
-			
-		case OUTPUTTING:
-			this.set(1.0d);
-			break;
-			
-		case FIRING:
-			this.set(1.0d);
-			break;
-
-		case DISABLED:
-			this.stopMotor();
-			break;
-
-		case STOPPED:
-		default:
+				break;
+				
+			case FIRING:
+				this.set(1.0d);
+				break;
+	
+			case DISABLED:
+				this.stopMotor();
+				break;
+	
+			case STOPPED:
+			default:
+				this.set(0.0d);
+				break;
+			}
+		} else {
 			this.set(0.0d);
-			break;
 		}
 		
 		if(this._limitSwitch.isTripped()) {

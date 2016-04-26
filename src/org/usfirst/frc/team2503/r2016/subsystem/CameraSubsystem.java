@@ -2,6 +2,7 @@ package org.usfirst.frc.team2503.r2016.subsystem;
 
 import org.usfirst.frc.team2503.lib.util.WarriorMath;
 import org.usfirst.frc.team2503.r2016.subsystem.base.DataSubsystem;
+import org.usfirst.frc.team2503.r2016.subsystem.base.DataSubsystem.SubsystemData;
 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
@@ -69,6 +70,8 @@ public class CameraSubsystem implements DataSubsystem {
 		this._horizontal = _horizontal;
 		this._vertical = _vertical;
 		this._lights = _lights;
+		
+		this._data = new SubsystemData();
 	}
 
 }

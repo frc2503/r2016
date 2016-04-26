@@ -24,11 +24,13 @@ public class DriveBaseSubsystem implements DualMotorDrivable, DataSubsystem {
 	
 	@Override
 	public void tick() {
-		double left = (double) this.getDataKey(DriveBaseSubsystemDataKey.LEFT_POWER);
-		double right = (double) this.getDataKey(DriveBaseSubsystemDataKey.RIGHT_POWER);
-		
-		_leftSubsystem.setPower(left);
-		_rightSubsystem.setPower(right);
+		if((this.getDataKey(DriveBaseSubsystemDataKey.LEFT_POWER) != null) && (this.getDataKey(DriveBaseSubsystemDataKey.RIGHT_POWER) != null)) {
+			double left = (double) this.getDataKey(DriveBaseSubsystemDataKey.LEFT_POWER);
+			double right = (double) this.getDataKey(DriveBaseSubsystemDataKey.RIGHT_POWER);
+			
+			_leftSubsystem.setPower(left);
+			_rightSubsystem.setPower(right);
+		}
 	}
 	
 	@Override
@@ -58,6 +60,8 @@ public class DriveBaseSubsystem implements DualMotorDrivable, DataSubsystem {
 	public DriveBaseSubsystem(RhinoTrackSubsystem _leftSubsystem, RhinoTrackSubsystem _rightSubsystem) {
 		this._leftSubsystem = _leftSubsystem;
 		this._rightSubsystem = _rightSubsystem;
+		
+		this._data = new SubsystemData();
 	}
 
 }

@@ -32,6 +32,9 @@ public class DriveBaseSubsystem implements DualMotorDrivable, DataSubsystem {
 			_leftSubsystem.setPower(left);
 			_rightSubsystem.setPower(right);
 		}
+		
+		_leftSubsystem.tick();
+		_rightSubsystem.tick();
 	}
 	
 	@Override

@@ -71,14 +71,15 @@ public class WarriorDriveHelper extends DriveHelper {
 		LogitechF310Gamepad operator = (LogitechF310Gamepad) _operator;
 		
 		{
-			if(operator.intakeOutputModeButton.get())
+			if(operator.intakeOutputModeButton.get()) {
 				this._intakeSubsystem.setMode(IntakeSubsystemMode.OUTPUTTING);
-			else if(operator.intakeIntakeModeButton.get())
+			} else if(operator.intakeIntakeModeButton.get()) {
 				this._intakeSubsystem.setMode(IntakeSubsystemMode.INTAKING);
-			else if(operator.intakeFireModeButton.get())
+			} else if(operator.intakeFireModeButton.get()) {
 				this._intakeSubsystem.setMode(IntakeSubsystemMode.FIRING);
-			else
+			} else {
 				this._intakeSubsystem.setMode(IntakeSubsystemMode.STOPPED);
+			}
 		}
 		
 		{
@@ -91,8 +92,8 @@ public class WarriorDriveHelper extends DriveHelper {
 		}
 		
 		{
-			double leftPower = left.yAxis.get();
-			double rightPower = right.yAxis.get();
+			double leftPower = -left.yAxis.get();
+			double rightPower = -right.yAxis.get();
 			
 			// Crude cubic input profile
 			// TODO: Velocity mapping
@@ -114,12 +115,17 @@ public class WarriorDriveHelper extends DriveHelper {
 			if(true) {
 				double winchAxisValue = operator.leftTriggerAxis.get();
 				
-				if(winchAxisValue > 0.5000d)
-					this._winchSubsystem.setMode(WinchSubsystemMode.WINCHING);
-				else if(winchAxisValue > 0.2000d && winchAxisValue <= 0.5000d)
-					this._winchSubsystem.setMode(WinchSubsystemMode.SLOW_WINCHING);
-				else if(winchAxisValue <= 0.2000d)
-					this._winchSubsystem.setMode(WinchSubsystemMode.STOPPED);
+				if(operator.winchReleaseButton.get()) {
+					this._winchSubsystem.setMode(WinchSubsystemMode.LOWERING);
+				} else {
+					if(winchAxisValue > 0.5000d) {
+						this._winchSubsystem.setMode(WinchSubsystemMode.WINCHING);
+					} else if(winchAxisValue > 0.2000d && winchAxisValue <= 0.5000d) {
+						this._winchSubsystem.setMode(WinchSubsystemMode.SLOW_WINCHING);
+					} else if(winchAxisValue <= 0.2000d) {
+						this._winchSubsystem.setMode(WinchSubsystemMode.STOPPED);
+					}
+				}
 			} else {
 				double winchAxisValue = operator.leftTriggerAxis.get();
 
@@ -153,13 +159,15 @@ public class WarriorDriveHelper extends DriveHelper {
 				// This double will get multiplied by the sine and cosine
 				// of the angle.  If you want the camera to rotate faster
 				// (or slower) you can modify this value.
-				double factor = 0.1d;
+				double factor = 1.0d;
 				
 				// Add to the current values the trigonometric values for
 				// the angle times a factor
 				this.horizontalRotationDegrees += cos * factor;
 				this.verticalRotationDegrees += sin * factor;
 			}
+			
+			System.out.println(this.horizontalRotationDegrees + " " + this.verticalRotationDegrees);
 			
 			// Set the values in the CameraSubsystem for horizontal and vertical rotation
 			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.HORIZONTAL_ROTATION_DEGREES, this.horizontalRotationDegrees);

@@ -32,13 +32,18 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 		if(mode != null) {
 			switch(mode) {
 			case INTAKING:
-				if(this.canIntake())
+				if(this.canIntake()) {
+					System.out.println("Trying to intake, and all is good.");
 					this.set(1.0d);
+				} else {
+					System.out.println("Trying to intake, but the thing is a thing and that is bad.");
+					this.set(0.0d);
+				}
 				
 				break;
 				
 			case OUTPUTTING:
-				this.set(1.0d);
+				this.set(-1.0d);
 				break;
 				
 			case FIRING:
@@ -68,7 +73,7 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 
 	
 	private boolean canIntake() {
-		return (_limitSwitch.isTripped());
+		return !(_limitSwitch.isTripped());
 	}
 	
 

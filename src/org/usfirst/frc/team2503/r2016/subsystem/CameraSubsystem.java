@@ -25,7 +25,7 @@ public class CameraSubsystem implements DataSubsystem {
 	
 	private Relay _lights;
 	
-	private double horizontalDegrees[] = {-90.0, 90.0};
+	private double horizontalDegrees[] = {90.0, -90.0};
 	private double verticalDegrees[] = {-90.0, 90.0};
 	
 	

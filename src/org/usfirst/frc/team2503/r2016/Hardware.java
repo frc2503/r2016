@@ -80,7 +80,7 @@ public class Hardware {
 		rightTrackSpeedController.setInverted(true);
 
 		shooterSpeedController.setInverted(true);
-		winchSpeedController.setInverted(true);
+		winchSpeedController.setInverted(false);
 		hookerSpeedController.setInverted(true);
 		intakeSpeedController.setInverted(true);
 		

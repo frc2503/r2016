@@ -59,7 +59,7 @@ public class LimitSwitch extends DigitalInput {
 			break;
 		}
 		
-		return normal && this.get();
+		return (normal ^ super.get());
 	}
 
 }

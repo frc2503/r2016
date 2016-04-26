@@ -13,6 +13,8 @@ public class LogitechF310Gamepad extends Joystick {
 	public final Button startButton = this.button_8;
 	public final Button leftStickButton = this.button_9;
 	public final Button rightStickButton = this.button_10;
+	
+	public final Button winchReleaseButton = this.backButton;
 
 	// These are the purposes of some of the buttons.
 	public final Button intakeIntakeModeButton = this.aButton;

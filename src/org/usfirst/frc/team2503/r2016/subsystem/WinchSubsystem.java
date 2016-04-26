@@ -32,7 +32,7 @@ public class WinchSubsystem extends ModalSpeedControllerSubsystem {
 		 * apply a bit of vertical lifting power.
 		 */
 		case BASIC_SUSPENSION_WINCHING:
-			this.set(0.0500d);
+			this.set(0.1000d);
 			break;
 			
 		/**

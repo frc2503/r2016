@@ -19,7 +19,6 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 		
 		FIRING
 	}
-
 	
 	
 	private LimitSwitch _limitSwitch;
@@ -79,6 +78,8 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 		
 		this._limitSwitch = limitSwitch;
 		this._indicatorRelay = indicatorRelay;
+		
+		this._mode = IntakeSubsystemMode.STOPPED;
 	}
 	
 	public IntakeSubsystem(SpeedControllerSubsystemType type, final int speedControllerChannel, final int limitSwitchChannel, final int indicatorRelayChannel) {
@@ -86,6 +87,8 @@ public class IntakeSubsystem extends ModalSpeedControllerSubsystem {
 		
 		this._limitSwitch = new LimitSwitch(limitSwitchChannel);
 		this._indicatorRelay = new Relay(indicatorRelayChannel);
+		
+		this._mode = IntakeSubsystemMode.STOPPED;
 	}
 
 }

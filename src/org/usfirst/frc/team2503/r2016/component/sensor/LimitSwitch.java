@@ -13,6 +13,8 @@ public class LimitSwitch extends DigitalInput {
 	
 	public LimitSwitch(final int channel) {
 		super(channel);
+		
+		this.setSchema(LimitSwitchWiringSchema.NORMALLY_OPEN);
 	}
 	
 	public LimitSwitch(final int channel, LimitSwitchWiringSchema schema) {

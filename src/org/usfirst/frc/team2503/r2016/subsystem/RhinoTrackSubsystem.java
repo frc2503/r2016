@@ -28,10 +28,14 @@ public class RhinoTrackSubsystem extends DataSpeedControllerSubsystem {
 	
 	public RhinoTrackSubsystem(SpeedController _controller) {
 		super(_controller);
+
+		this.setDataKey(RhinoTrackSubsystemDataKey.POWER, 0.0d);
 	}
 
 	public RhinoTrackSubsystem(SpeedControllerSubsystemType type, final int channel) {
 		super(type, channel);
+
+		this.setDataKey(RhinoTrackSubsystemDataKey.POWER, 0.0d);
 	}
 
 }

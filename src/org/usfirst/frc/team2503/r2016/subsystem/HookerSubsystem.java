@@ -41,6 +41,8 @@ public class HookerSubsystem extends DataSpeedControllerSubsystem {
 
 		this._encoder = _encoder;
 		this._limitSwitch = _limitSwitch;
+
+		this.setDataKey(HookerSubsystemDataKey.POWER, 0.0d);
 	}
 	
 	public HookerSubsystem(SpeedControllerSubsystemType type, final int speedControllerChannel, final DigitalInput _encoderAChannel, final DigitalInput _encoderBChannel, final int limitSwitchChannel) {
@@ -48,6 +50,8 @@ public class HookerSubsystem extends DataSpeedControllerSubsystem {
 		
 		this._encoder = new Encoder(_encoderAChannel, _encoderBChannel);
 		this._limitSwitch = new LimitSwitch(limitSwitchChannel);
+		
+		this.setDataKey(HookerSubsystemDataKey.POWER, 0.0d);
 	}
 
 

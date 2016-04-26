@@ -24,7 +24,8 @@ public class DriveBaseSubsystem implements DualMotorDrivable, DataSubsystem {
 	
 	@Override
 	public void tick() {
-		if((this.getDataKey(DriveBaseSubsystemDataKey.LEFT_POWER) != null) && (this.getDataKey(DriveBaseSubsystemDataKey.RIGHT_POWER) != null)) {
+		if((this.getDataKey(DriveBaseSubsystemDataKey.LEFT_POWER) != null) &&
+		   (this.getDataKey(DriveBaseSubsystemDataKey.RIGHT_POWER) != null)) {
 			double left = (double) this.getDataKey(DriveBaseSubsystemDataKey.LEFT_POWER);
 			double right = (double) this.getDataKey(DriveBaseSubsystemDataKey.RIGHT_POWER);
 			
@@ -62,6 +63,8 @@ public class DriveBaseSubsystem implements DualMotorDrivable, DataSubsystem {
 		this._rightSubsystem = _rightSubsystem;
 		
 		this._data = new SubsystemData();
+		this.setDataKey(DriveBaseSubsystemDataKey.LEFT_POWER, 0.0d);
+		this.setDataKey(DriveBaseSubsystemDataKey.RIGHT_POWER, 0.d);
 	}
 
 }

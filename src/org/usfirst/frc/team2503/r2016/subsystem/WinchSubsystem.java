@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2503.r2016.subsystem;
 
+import org.usfirst.frc.team2503.r2016.subsystem.IntakeSubsystem.IntakeSubsystemMode;
 import org.usfirst.frc.team2503.r2016.subsystem.base.ModalSpeedControllerSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.base.ModalSubsystem;
 
@@ -71,10 +72,14 @@ public class WinchSubsystem extends ModalSpeedControllerSubsystem {
 	
 	public WinchSubsystem(SpeedController _controller) {
 		super(_controller);
+		
+		this._mode = WinchSubsystemMode.STOPPED;
 	}
 	
 	public WinchSubsystem(SpeedControllerSubsystemType type, final int channel) {
 		super(type, channel);
+		
+		this._mode = WinchSubsystemMode.STOPPED;
 	}
 
 }

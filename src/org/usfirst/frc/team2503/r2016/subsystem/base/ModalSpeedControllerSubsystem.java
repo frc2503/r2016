@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 public abstract class ModalSpeedControllerSubsystem extends SpeedControllerSubsystem implements ModalSubsystem {
 
-	private SubsystemMode _mode;
+	protected SubsystemMode _mode;
 
 	public void setMode(SubsystemMode mode) {
 		this._mode = mode;

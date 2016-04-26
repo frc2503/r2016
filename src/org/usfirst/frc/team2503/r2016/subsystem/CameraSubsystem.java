@@ -71,7 +71,9 @@ public class CameraSubsystem implements DataSubsystem {
 		this._vertical = _vertical;
 		this._lights = _lights;
 		
-		this._data = new SubsystemData();
+		this.setDataKey(CameraSubsystemDataKey.HORIZONTAL_ROTATION_DEGREES, 90.0d);
+		this.setDataKey(CameraSubsystemDataKey.VERTICAL_ROTATION_DEGREES, 0.0d);
+		this.setDataKey(CameraSubsystemDataKey.LIGHTS, false);
 	}
 
 }

@@ -55,6 +55,8 @@ public class PortcullisLiftSubsystem implements ModalSubsystem {
 
 	public PortcullisLiftSubsystem(PortcullisLift lift) {
 		this._lift = lift;
+		
+		this._mode = PortcullisLiftSubsystemMode.STOPPED;
 	}
 
 }

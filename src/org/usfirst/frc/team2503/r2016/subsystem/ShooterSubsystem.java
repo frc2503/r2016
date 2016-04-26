@@ -28,10 +28,14 @@ public class ShooterSubsystem extends DataSpeedControllerSubsystem {
 
 	public ShooterSubsystem(SpeedController _controller) {
 		super(_controller);
+
+		this.setDataKey(ShooterSubsystemDataKey.POWER, 0.0d);
 	}
 
 	public ShooterSubsystem(SpeedControllerSubsystemType type, final int channel) {
 		super(type, channel);
+		
+		this.setDataKey(ShooterSubsystemDataKey.POWER, 0.0d);
 	}
 
 }

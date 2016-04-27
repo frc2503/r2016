@@ -4,6 +4,9 @@ import java.util.Date;
 
 public class Ticker implements Runnable {
 
+	private Tickable _tickable;
+	private long _periodMilliseconds;
+	
 	@Override
 	public void run() {
 		while(true) {
@@ -23,9 +26,6 @@ public class Ticker implements Runnable {
 			}
 		}
 	}
-	
-	private Tickable _tickable;
-	private long _periodMilliseconds;
 	
 	public Ticker(Tickable _tickable, long periodMilliseconds) {
 		this._tickable = _tickable;

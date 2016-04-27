@@ -14,6 +14,11 @@ public class Main {
 	public static class Roomba implements Tickable {
 		public void tick() {
 			System.out.println("[Roomba] Ticking...");
+			try {
+				Thread.sleep((long)(1000L * (0.01d * Math.random())));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

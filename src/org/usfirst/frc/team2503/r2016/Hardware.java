@@ -37,9 +37,9 @@ public class Hardware {
 	 * initialization.
 	 */
 	private static final int PDPCANChannel = 0;
-	
+
 	public static final PowerDistributionPanel PDP = new PowerDistributionPanel(PDPCANChannel);
-	
+
 	/**
 	 * The pneumatics control module is sometimes assigned a non-standard
 	 * CAN bus ID number.  This variable should be used to explicitly specify where
@@ -74,7 +74,7 @@ public class Hardware {
 	public static Joystick leftStick = new MadCatzV1Joystick(0);
 	public static Joystick rightStick = new MadCatzV1Joystick(1);
 	public static Joystick operatorPad = new LogitechF310Gamepad(2);
-	
+
 	static {
 		leftTrackSpeedController.setInverted(false);
 		rightTrackSpeedController.setInverted(true);
@@ -83,7 +83,7 @@ public class Hardware {
 		winchSpeedController.setInverted(false);
 		hookerSpeedController.setInverted(true);
 		intakeSpeedController.setInverted(true);
-		
+
 		compressor.setClosedLoopControl(true);
 		compressor.start();
 

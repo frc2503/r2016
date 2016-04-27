@@ -167,8 +167,6 @@ public class WarriorDriveHelper extends DriveHelper {
 				this.verticalRotationDegrees += sin * factor;
 			}
 			
-			System.out.println(this.horizontalRotationDegrees + " " + this.verticalRotationDegrees);
-			
 			// Set the values in the CameraSubsystem for horizontal and vertical rotation
 			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.HORIZONTAL_ROTATION_DEGREES, this.horizontalRotationDegrees);
 			this._cameraSubsystem.setDataKey(CameraSubsystemDataKey.VERTICAL_ROTATION_DEGREES, this.verticalRotationDegrees);

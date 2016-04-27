@@ -6,6 +6,7 @@ public class Ticker implements Runnable {
 
 	private Tickable _tickable;
 	private long _periodMilliseconds;
+	private long _periodLength;
 	
 	@Override
 	public void run() {
@@ -16,15 +17,19 @@ public class Ticker implements Runnable {
 			
 			long dt1 = new Date().getTime();
 			
-			long d = dt1 - dt0;
+			this._periodLength = dt1 - dt0;
 			
 			try {
-				Thread.sleep(this._periodMilliseconds - d);
+				Thread.sleep(this._periodMilliseconds - this._periodLength);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				break;
 			}
 		}
+	}
+
+	public long getPreviousPeriodLength() {
+		return this._periodLength;
 	}
 	
 	public Ticker(Tickable _tickable, long periodMilliseconds) {

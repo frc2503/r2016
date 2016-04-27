@@ -3,7 +3,6 @@ package org.usfirst.frc.team2503.r2016.subsystem;
 import org.usfirst.frc.team2503.r2016.component.sensor.LimitSwitch;
 import org.usfirst.frc.team2503.r2016.subsystem.base.DataSpeedControllerSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.base.DataSubsystem;
-import org.usfirst.frc.team2503.r2016.subsystem.base.DataSubsystem.SubsystemData;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;

@@ -1,8 +1,7 @@
 package org.usfirst.frc.team2503.r2016.subsystem;
 
-import org.usfirst.frc.team2503.r2016.subsystem.IntakeSubsystem.IntakeSubsystemMode;
-import org.usfirst.frc.team2503.r2016.subsystem.base.ModalSpeedControllerSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.base.ModalSubsystem;
+import org.usfirst.frc.team2503.r2016.subsystem.base.ModalSpeedControllerSubsystem;
 
 import edu.wpi.first.wpilibj.SpeedController;
 

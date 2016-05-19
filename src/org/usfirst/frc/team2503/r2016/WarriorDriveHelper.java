@@ -95,7 +95,7 @@ public class WarriorDriveHelper extends DriveHelper {
 			double leftPower = -left.yAxis.get();
 			double rightPower = -right.yAxis.get();
 			
-			// Crude cubic input profile
+			// Crude square input profile
 			// TODO: Velocity mapping
 			leftPower *= Math.abs(leftPower);
 			rightPower *= Math.abs(rightPower);

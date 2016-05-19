@@ -95,10 +95,30 @@ public class WarriorDriveHelper extends DriveHelper {
 			double leftPower = -left.yAxis.get();
 			double rightPower = -right.yAxis.get();
 			
-			// Crude square input profile
-			// TODO: Velocity mapping
-			leftPower *= Math.abs(leftPower);
-			rightPower *= Math.abs(rightPower);
+			boolean l = left.gripButton.get();
+			boolean r = right.gripButton.get();
+
+			boolean leftAndRightOff = !l && !r;
+			boolean leftAndRightOn = l && r;
+			boolean leftOffRightOn = !l && r;
+			boolean leftOnRightOff = l && !r;
+			
+			if(leftAndRightOff) {
+				// Cubed input profile
+				// TODO: Velocity mapping
+				leftPower *= Math.abs(Math.pow(leftPower, 2.0));
+				rightPower *= Math.abs(Math.pow(rightPower, 2.0));
+			} else if(leftOffRightOn) {
+				// Cubed input profile
+				// TODO: Velocity mapping
+				leftPower *= Math.abs(leftPower);
+				rightPower *= Math.abs(rightPower);
+			} else if(leftAndRightOn) {
+				// Slowed left and right, squared
+				// TODO: Velocity mapping
+				leftPower *= (0.4500d * Math.abs(leftPower));
+				rightPower *= (0.4500d * Math.abs(rightPower));
+			}
 			
 			this._driveBaseSubsystem.drive(leftPower, rightPower);
 		}

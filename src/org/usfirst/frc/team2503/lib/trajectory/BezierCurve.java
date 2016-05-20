@@ -68,7 +68,6 @@ public class BezierCurve {
 		double dydx0 = this.dydx(time - timeIncrement, timeMax, timeIncrement);
 
 		return (dydx1 - dydx0) / (2.0d * timeIncrement);
-
 	}
 
 	// TODO: Document

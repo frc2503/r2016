@@ -61,8 +61,8 @@ public class Hardware {
 	private static final DigitalInput hookerEncoderAChannel = new DigitalInput(4);
 	private static final DigitalInput hookerEncoderBChannel = new DigitalInput(5);
 
-	private static final Encoder leftTrackEncoder = new Encoder(leftTrackEncoderAChannel, leftTrackEncoderBChannel);
-	private static final Encoder rightTrackEncoder = new Encoder(rightTrackEncoderAChannel, rightTrackEncoderBChannel);
+	public static final Encoder leftTrackEncoder = new Encoder(leftTrackEncoderAChannel, leftTrackEncoderBChannel);
+	public static final Encoder rightTrackEncoder = new Encoder(rightTrackEncoderAChannel, rightTrackEncoderBChannel);
 	public static final Encoder hookerEncoder = new Encoder(hookerEncoderAChannel, hookerEncoderBChannel);
 
 	public static final LimitSwitch intakeLimitSwitch = new LimitSwitch(6);

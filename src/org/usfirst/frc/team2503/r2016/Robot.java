@@ -38,11 +38,17 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		this.warriorDriveHelper.setMode(DriveHelperMode.DISABLED);
+
+		Hardware.leftTrackEncoder.reset();
+		Hardware.rightTrackEncoder.reset();
 	}
 
 	@Override
 	public void disabledInit() {
 		this.warriorDriveHelper.setMode(DriveHelperMode.DISABLED);
+
+		Hardware.leftTrackEncoder.reset();
+		Hardware.rightTrackEncoder.reset();
 	}
 
 	@Override
@@ -54,6 +60,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		this.warriorDriveHelper.setMode(DriveHelperMode.AUTONOMOUS);
+
+		Hardware.leftTrackEncoder.reset();
+		Hardware.rightTrackEncoder.reset();
 	}
 
 	@Override
@@ -65,6 +74,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		this.warriorDriveHelper.setMode(DriveHelperMode.TELEOPERATED);
+
+		Hardware.leftTrackEncoder.reset();
+		Hardware.rightTrackEncoder.reset();
 	}
 
 	@Override
@@ -76,6 +88,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testInit() {
 		this.warriorDriveHelper.setMode(DriveHelperMode.TEST);
+
+		Hardware.leftTrackEncoder.reset();
+		Hardware.rightTrackEncoder.reset();
 	}
 
 	@Override

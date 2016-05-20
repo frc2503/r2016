@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2503.r2016;
 
-import edu.wpi.first.wpilibj.Encoder;
-
 import org.usfirst.frc.team2503.r2016.subsystem.CameraSubsystem;
 import org.usfirst.frc.team2503.r2016.subsystem.CameraSubsystem.CameraSubsystemDataKey;
 import org.usfirst.frc.team2503.r2016.subsystem.DriveBaseSubsystem;
